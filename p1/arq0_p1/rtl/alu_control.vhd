@@ -22,6 +22,7 @@ end alu_control;
 architecture rtl of alu_control is
   -- Tipo para los codigos de control de la ALU:
   subtype t_aluControl is std_logic_vector (3 downto 0);
+  subtype t_aluOp is std_logic_vector (2 downto 0);
   -- Codigos de control:
   constant ALU_OR   : t_aluControl := "0111";
   constant ALU_NOT  : t_aluControl := "0101";
@@ -31,16 +32,23 @@ architecture rtl of alu_control is
   constant ALU_ADD  : t_aluControl := "0000";
   constant ALU_SLT  : t_aluControl := "1010";
   constant ALU_S16  : t_aluControl := "1101";
+  -- Operaciones de datos inmediatos:
+  constant AO_ADD   : t_aluOp := "001";
+  constant AO_AND   : t_aluOp := "100";
+  constant AO_SLT   : t_aluOp := "110";
 
 begin
 
   AluControl <= ALU_ADD when AluOp = "000" else -- lw o sw, que hace una suma
                 ALU_S16 when AluOp = "011" else -- lui,
+                ALU_ADD when AluOp = AO_ADD; -- addi
+                ALU_AND when AluOp = AO_AND; -- andi
+                ALU_SLT when AluOp = AO_SLT; -- slti
                 ALU_ADD when AluOp = "010" and Funct = "100000" else -- add
                 ALU_SUB when AluOp = "010" and Funct = "100010" else -- sub
                 ALU_AND when AluOp = "010" and Funct = "100100" else -- and
                 ALU_OR  when AluOp = "010" and Funct = "100101" else -- or
                 ALU_SLT when AluOp = "010" and Funct = "101010" else -- slt
-                ALU_NOT;-- when AluOp_IDEX = "10" and Inm_ext_IDEX(5 downto 0) = "100110"; -- xor
+                ALU_NOT;-- when AluOP_IDEX = "10" and Inm_ext_IDEX(5 downto 0) = "100110"; -- xor
 
 end architecture;

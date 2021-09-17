@@ -31,12 +31,22 @@ end control_unit;
 architecture rtl of control_unit is
    -- Tipo para los codigos de operacion:
    subtype t_opCode is std_logic_vector (5 downto 0);
+   subtype t_aluOp is std_logic_vector (2 downto 0);
    -- Codigos de operacion para las diferentes instrucciones:
    constant OP_RTYPE  : t_opCode := "000000";
    constant OP_BEQ    : t_opCode := "000100";
    constant OP_SW     : t_opCode := "101011";
    constant OP_LW     : t_opCode := "100011";
    constant OP_LUI    : t_opCode := "001111";
+
+   constant OP_ADDI   : t_opCode := "001000";
+   constant OP_ANDI   : t_opCode := "001100";
+   constant OP_SLTI   : t_opCode := "001010";
+   constant OP_J      : t_opCode := "000010";
+   -- Operaciones de datos inmediatos (AluOp):
+   constant AO_ADD   : t_aluOp := "001";
+   constant AO_AND   : t_aluOp := "100";
+   constant AO_SLT   : t_aluOp := "110";
 
 begin
 --   OPCode <= Instr(31 downto 26); -- 6 most significant bits
@@ -64,10 +74,13 @@ MemWrite <= '1' when opCode = OP_SW else -- sw
 MemToReg <= '1' when opCode = OP_LW else -- lw
             '0'; -- R-type, sw, beq, j, jal, I-type
 
-ALUOP    <= "000" when opCode = OP_LW  else -- lw
-            "000" when opCode = OP_SW  else -- sw
-            "001" when opCode = OP_BEQ else -- beq
-            "011" when opCode = OP_LUI else -- lui
+ALUOP    <= "000"  when opCode = OP_LW  else -- lw
+            "000"  when opCode = OP_SW  else -- sw
+            "001"  when opCode = OP_BEQ else -- beq
+            "011"  when opCode = OP_LUI else -- lui
+            AO_AND when opCode = OP_ANDI else -- andi
+            AO_ADD when opCode = OP_ADDI else -- addi
+            AO_SLT when opCode = OP_SLTI else -- slti
             "010"; -- r-type;
 
           -- Jump <= '1' when opCode = "000010" else -- j
