@@ -163,7 +163,7 @@ begin
 
   --Ctrl_Jump      <= '0'; --nunca salto incondicional
 
-  Regs_eq_branch <= '1' when (reg_RS = reg_RT) else '0';
+  Regs_eq_branch <= '1' when ALU_IGUAL else '0';
   desition_Jump  <= Ctrl_Jump or (Ctrl_Branch and Regs_eq_branch);
   Addr_Jump_dest <= Addr_Jump   when Ctrl_Jump='1' else
                     Addr_Branch when Ctrl_Branch='1' else

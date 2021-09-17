@@ -45,7 +45,8 @@ architecture rtl of control_unit is
    constant OP_SLTI   : t_opCode := "001010";
    constant OP_J      : t_opCode := "000010";
    -- Operaciones de datos inmediatos (AluOp):
-   constant AO_ADD   : t_aluOp := "001";
+   constant AO_ADD   : t_aluOp := "000";
+   constant AO_SUB   : t_aluOp := "001";
    constant AO_AND   : t_aluOp := "100";
    constant AO_SLT   : t_aluOp := "110";
 
@@ -75,9 +76,9 @@ MemWrite <= '1' when opCode = OP_SW else -- sw
 MemToReg <= '1' when opCode = OP_LW else -- lw
             '0'; -- R-type, sw, beq, j, jal, I-type
 
-ALUOP    <= "000"  when opCode = OP_LW  else -- lw
-            "000"  when opCode = OP_SW  else -- sw
-            "001"  when opCode = OP_BEQ else -- beq
+ALUOP    <= AO_ADD when opCode = OP_LW  else -- lw
+            AO_ADD when opCode = OP_SW  else -- sw
+            AO_SUB when opCode = OP_BEQ else -- beq
             "011"  when opCode = OP_LUI else -- lui
             AO_AND when opCode = OP_ANDI else -- andi
             AO_ADD when opCode = OP_ADDI else -- addi

@@ -33,7 +33,8 @@ architecture rtl of alu_control is
   constant ALU_SLT  : t_aluControl := "1010";
   constant ALU_S16  : t_aluControl := "1101";
   -- Operaciones de datos inmediatos:
-  constant AO_ADD   : t_aluOp := "001";
+  constant AO_ADD   : t_aluOp := "000";
+  constant AO_SUB   : t_aluOp := "001";
   constant AO_AND   : t_aluOp := "100";
   constant AO_SLT   : t_aluOp := "110";
 
@@ -41,6 +42,7 @@ begin
 
   AluControl <= ALU_ADD when AluOp = "000" else -- lw o sw, que hace una suma
                 ALU_S16 when AluOp = "011" else -- lui,
+                ALU_SUB when AluOp = AO_SUB; -- beq
                 ALU_ADD when AluOp = AO_ADD; -- addi
                 ALU_AND when AluOp = AO_AND; -- andi
                 ALU_SLT when AluOp = AO_SLT; -- slti
