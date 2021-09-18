@@ -141,7 +141,8 @@ begin
   port map(
     OpCode   => Instruction(31 downto 26),
     -- Señales para el PC
-    --Jump   => CONTROL_JUMP,
+    
+    Jump   => CONTROL_JUMP,
     Branch   => Ctrl_Branch,
     -- Señales para la memoria
     MemToReg => Ctrl_MemToReg,

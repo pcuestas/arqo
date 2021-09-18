@@ -41,6 +41,10 @@ begin
                 ALU_AND when AluOp = "010" and Funct = "100100" else -- and
                 ALU_OR  when AluOp = "010" and Funct = "100101" else -- or
                 ALU_SLT when AluOp = "010" and Funct = "101010" else -- slt
+                ALU_XOR when AluOp = "010" and Funct = "100110" else -- xor
+                ALU_ADD when AluOp = "100" else -- addi
+                ALU_AND when AluOP = "101" else--andi
+                ALU_SLT when AluOP = "110" else
                 ALU_NOT;-- when AluOp_IDEX = "10" and Inm_ext_IDEX(5 downto 0) = "100110"; -- xor
 
 end architecture;

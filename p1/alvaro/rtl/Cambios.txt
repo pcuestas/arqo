@@ -1,0 +1,10 @@
+En control unit
+
+    1. añadir opCode de las operaciones que faltan
+    2. añadir ALUop para las operaciones de tipo I
+
+En ALUcontrol
+
+    1. añadir los casos de las operaciones I a la señal de salida ALUop
+
+En Processor

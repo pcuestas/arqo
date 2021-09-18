@@ -24,8 +24,11 @@ entity control_unit is
       ALUOp  : out  std_logic_vector (2 downto 0); -- Tipo operacion para control de la ALU
       -- Seniales para el GPR
       RegWrite : out  std_logic; -- 1=Escribir registro
-      RegDst   : out  std_logic  -- 0=Reg. destino es rt, 1=rd
-   );
+      RegDst   : out  std_logic;  -- 0=Reg. destino es rt, 1=rd
+
+      Jump : out std_logic --1 = Jump al Jump target
+ 
+     );
 end control_unit;
 
 architecture rtl of control_unit is
@@ -37,9 +40,14 @@ architecture rtl of control_unit is
    constant OP_SW     : t_opCode := "101011";
    constant OP_LW     : t_opCode := "100011";
    constant OP_LUI    : t_opCode := "001111";
+   constant OP_ADDI   : t_opCode := "001000";
+   constant OP_ANDI   : t_opCode := "001100";
+   constant OP_SLTI   : t_opCode := "001010";
+   constant OP_J      : t_opCode := "000010";
 
 begin
---   OPCode <= Instr(31 downto 26); -- 6 most significant bits
+
+--OPCode <= Instr(31 downto 26); -- 6 most significant bits
 
 Branch   <= '1' when opCode = OP_BEQ else '0';
 
@@ -51,8 +59,8 @@ RegDst   <= '1' when opCode = OP_RTYPE else -- R-type
             '0'; -- lw, sw, beq, j, I-type
 
 RegWrite <= '0' when opCode = OP_SW  else -- sw
-            '0' when opCode = OP_BEQ else -- bew
---            '0' when opCode = "000010" else -- j
+            '0' when opCode = OP_BEQ else -- beq
+            '0' when opCode = OP_J else -- j
             '1'; -- R-type, lw, I-type, jal
 
 MemRead  <= '1' when opCode = OP_LW else --lw
@@ -68,9 +76,14 @@ ALUOP    <= "000" when opCode = OP_LW  else -- lw
             "000" when opCode = OP_SW  else -- sw
             "001" when opCode = OP_BEQ else -- beq
             "011" when opCode = OP_LUI else -- lui
+            "100" when opCode = OP_ADDI else --addi
+            "101" when opCode = OP_ANDI else --andi
+            "110" when opCode = OP_SLTI else -- slti
+            "111" when opCode = OP_J else -- j
             "010"; -- r-type;
 
-          -- Jump <= '1' when opCode = "000010" else -- j
-          --         '1' when opCode = "000011" else --jal
-          --         '0';
+Jump     <= '1' when opCode = OP_J else -- j
+            '1' when opCode = "000011" else --jal
+            '0';
+
 end architecture;
