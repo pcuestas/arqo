@@ -55,10 +55,10 @@ architecture rtl of processor is
   component control_unit
      port (
         -- Entrada = codigo de operacion en la instruccion:
-        OpCode   : in  std_logic_vector (5 downto 0);
+        Instr   : in  std_logic_vector (31 downto 0);
         -- Seniales para el PC
         Branch   : out  std_logic; -- 1 = Ejecutandose instruccion branch
-        Jump     : out std_logic; 
+        Jump     : out  std_logic; -- 1 = Ejecutandose instruccion jump
         -- Seniales relativas a la memoria
         MemToReg : out  std_logic; -- 1 = Escribir en registro la salida de la mem.
         MemWrite : out  std_logic; -- Escribir la memoria
@@ -105,7 +105,7 @@ architecture rtl of processor is
 
   signal Addr_Jump      : std_logic_vector(31 downto 0);
   signal Addr_Jump_dest : std_logic_vector(31 downto 0);
-  signal desition_Jump     : std_logic;
+  signal desition_Jump  : std_logic;
   signal Alu_Res        : std_logic_vector(31 downto 0);
 
 begin
@@ -140,10 +140,9 @@ begin
 
   UnidadControl : control_unit
   port map(
-    OpCode   => Instruction(31 downto 26),
+    Instr   => Instruction,
     -- Señales para el PC
-    
-    Jump   => Ctrl_Jump,
+    Jump     => Ctrl_Jump,
     Branch   => Ctrl_Branch,
     -- Señales para la memoria
     MemToReg => Ctrl_MemToReg,
@@ -158,13 +157,13 @@ begin
   );
 
   Inm_ext        <= x"FFFF" & Instruction(15 downto 0) when Instruction(15)='1' else
-                    x"0000" & Instruction(15 downto 0);
+                    x"0000" & Instruction(15 downto 0); -- sign extend
   Addr_Jump      <= PC_plus4(31 downto 28) & Instruction(25 downto 0) & "00";
   Addr_Branch    <= PC_plus4 + ( Inm_ext(29 downto 0) & "00");
 
   --Ctrl_Jump      <= '0'; --nunca salto incondicional
 
-  Regs_eq_branch <= '1' when (reg_RS = reg_RT) else '0';
+  Regs_eq_branch <= ALU_IGUAL;
   desition_Jump  <= Ctrl_Jump or (Ctrl_Branch and Regs_eq_branch);
   Addr_Jump_dest <= Addr_Jump   when Ctrl_Jump='1' else
                     Addr_Branch when Ctrl_Branch='1' else
@@ -199,5 +198,12 @@ begin
   dataIn_Mem <= DDataIn;
 
   reg_RD_data <= dataIn_Mem when Ctrl_MemToReg = '1' else Alu_Res;
+
+
+
+
+
+  IF_ID_reg
+
 
 end architecture;

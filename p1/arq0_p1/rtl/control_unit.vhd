@@ -12,7 +12,7 @@ use ieee.std_logic_unsigned.all;
 entity control_unit is
    port (
       -- Entrada = codigo de operacion en la instruccion:
-      OpCode  : in  std_logic_vector (5 downto 0);
+      Instr  : in  std_logic_vector (31 downto 0);
       -- Seniales para el PC
       Branch : out  std_logic; -- 1 = Ejecutandose instruccion branch
       Jump   : out  std_logic; -- 1 = Ejecutandose instruccion jump
@@ -30,6 +30,9 @@ entity control_unit is
 end control_unit;
 
 architecture rtl of control_unit is
+   signal OPCode : std_logic_vector (5 downto 0); 
+
+
    -- Tipo para los codigos de operacion:
    subtype t_opCode is std_logic_vector (5 downto 0);
    subtype t_aluOp is std_logic_vector (2 downto 0);
@@ -51,7 +54,8 @@ architecture rtl of control_unit is
    constant AO_SLT   : t_aluOp := "110";
 
 begin
---   OPCode <= Instr(31 downto 26); -- 6 most significant bits
+
+OPCode <= Instr(31 downto 26); -- 6 most significant bits
 
 Branch   <= '1' when opCode = OP_BEQ else '0';
 
@@ -64,7 +68,8 @@ RegDst   <= '1' when opCode = OP_RTYPE else -- R-type
 
 RegWrite <= '0' when opCode = OP_SW  else -- sw
             '0' when opCode = OP_BEQ else -- bew
---            '0' when opCode = "000010" else -- j
+            '0' when Instr = x"0000" else
+            '0' when opCode = OP_J else -- j
             '1'; -- R-type, lw, I-type, jal
 
 MemRead  <= '1' when opCode = OP_LW else --lw
@@ -88,4 +93,6 @@ ALUOP    <= AO_ADD when opCode = OP_LW  else -- lw
 Jump <= '1' when opCode = OP_J     else -- j
         '1' when opCode = "000011" else --jal
         '0';
+
+
 end architecture;
