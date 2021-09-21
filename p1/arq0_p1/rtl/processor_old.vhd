@@ -87,44 +87,31 @@ architecture rtl of processor is
   signal ALU_Igual    : std_logic;
   signal AluControl   : std_logic_vector(3 downto 0);
   signal reg_RD_data  : std_logic_vector(31 downto 0);
-  signal ID_add_RD1, EX_add_RD1, EX_add_RD, MEM_add_RD      : std_logic_vector(4 downto 0);
-  signal ID_add_RT, EX_add_RT       : std_logic_vector(4 downto 0);
+  signal reg_RD       : std_logic_vector(4 downto 0);
 
   signal Regs_eq_branch : std_logic;
-  signal EX_PC_next, MEM_PC_next        : std_logic_vector(31 downto 0);
+  signal PC_next        : std_logic_vector(31 downto 0);
   signal PC_reg         : std_logic_vector(31 downto 0);
-  signal ID_PC_plus4, IF_PC_plus4, EX_PC_plus4       : std_logic_vector(31 downto 0);
+  signal PC_plus4       : std_logic_vector(31 downto 0);
 
-  signal IF_Instruction, ID_Instruction    : std_logic_vector(31 downto 0); -- La instrucción desde lamem de instr
-  signal ID_Inm_ext, EX_Inm_ext        : std_logic_vector(31 downto 0); -- La parte baja de la instrucción extendida de signo
-  signal ID_reg_RS, EX_reg_RS, ID_reg_RT, EX_reg_RT, MEM_reg_RT : std_logic_vector(31 downto 0);
+  signal Instruction    : std_logic_vector(31 downto 0); -- La instrucción desde lamem de instr
+  signal Inm_ext        : std_logic_vector(31 downto 0); -- La parte baja de la instrucción extendida de signo
+  signal reg_RS, reg_RT : std_logic_vector(31 downto 0);
 
   signal dataIn_Mem     : std_logic_vector(31 downto 0); --From Data Memory
   signal Addr_Branch    : std_logic_vector(31 downto 0);
 
-  signal ID_Ctrl_ALUSrc,   EX_Ctrl_ALUSrc : std_logic;
-  signal ID_Ctrl_ALUOP,    EX_Ctrl_ALUOP    : std_logic_vector(2 downto 0);
-  signal ID_Ctrl_RegDest,  EX_Ctrl_RegDest : std_logic;
-  signal ID_Ctrl_Jump,     EX_Ctrl_Jump,      MEM__Ctrl_Jump : std_logic;
-  signal ID_Ctrl_Branch,   EX_Ctrl_Branch,    MEM__Ctrl_Branch : std_logic;
-  signal ID_Ctrl_MemWrite, EX_Ctrl_MemWrite,  MEM__Ctrl_MemWrite : std_logic;
-  signal ID_Ctrl_MemRead,  EX_Ctrl_MemRead,   MEM__Ctrl_MemRead  : std_logic;
-  signal ID_Ctrl_MemToReg, EX_Ctrl_MemToReg,  MEM__Ctrl_MemToReg : std_logic;
-  signal ID_Ctrl_RegWrite, EX_Ctrl_RegWrite,  MEM__Ctrl_RegWrite: std_logic;
+  signal Ctrl_Jump, Ctrl_Branch, Ctrl_MemWrite, Ctrl_MemRead,  Ctrl_ALUSrc, Ctrl_RegDest, Ctrl_MemToReg, Ctrl_RegWrite : std_logic;
+  signal Ctrl_ALUOP     : std_logic_vector(2 downto 0);
 
   signal Addr_Jump      : std_logic_vector(31 downto 0);
   signal Addr_Jump_dest : std_logic_vector(31 downto 0);
   signal desition_Jump  : std_logic;
   signal Alu_Res        : std_logic_vector(31 downto 0);
 
-  --Nuevas señales  
-  signal ID_Funct, EX_Funct : std_logic_vector(5 downto 0);
 begin
 
-  ID_add_RD1 <= ID_Instruction(20 downto 16);
-  ID_add_RT <= ID_Instruction(15 downto 11);
-
-  EX_PC_next <= Addr_Jump_dest when desition_Jump = '1' else EX_PC_plus4;
+  PC_next <= Addr_Jump_dest when desition_Jump = '1' else PC_plus4;
 
   PC_reg_proc: process(Clk, Reset)
   begin
@@ -135,66 +122,66 @@ begin
     end if;
   end process;
 
-  IF_PC_plus4    <= PC_reg + 4;
+  PC_plus4    <= PC_reg + 4;
   IAddr       <= PC_reg;
-  IF_Instruction <= IDataIn;
+  Instruction <= IDataIn;
 
   RegsMIPS : reg_bank
   port map (
     Clk   => Clk,
     Reset => Reset,
-    A1    => ID_Instruction(25 downto 21),
-    Rd1   => ID_reg_RS,
-    A2    => ID_Instruction(20 downto 16),
-    Rd2   => ID_reg_RT,
-    A3    => MEM_add_RD, --la que viene de la ultima etapa
+    A1    => Instruction(25 downto 21),
+    Rd1   => reg_RS,
+    A2    => Instruction(20 downto 16),
+    Rd2   => reg_RT,
+    A3    => reg_RD,
     Wd3   => reg_RD_data,
     We3   => Ctrl_RegWrite
   );
 
   UnidadControl : control_unit
   port map(
-    Instr   => ID_Instruction,
+    Instr   => Instruction,
     -- Señales para el PC
-    Jump     => ID_Ctrl_Jump,
-    Branch   => ID_Ctrl_Branch,
+    Jump     => Ctrl_Jump,
+    Branch   => Ctrl_Branch,
     -- Señales para la memoria
-    MemToReg => ID_Ctrl_MemToReg,
-    MemWrite => ID_Ctrl_MemWrite,
-    MemRead  => ID_Ctrl_MemRead,
+    MemToReg => Ctrl_MemToReg,
+    MemWrite => Ctrl_MemWrite,
+    MemRead  => Ctrl_MemRead,
     -- Señales para la ALU
-    ALUSrc   => ID_Ctrl_ALUSrc,
-    ALUOP    => ID_Ctrl_ALUOP,
+    ALUSrc   => Ctrl_ALUSrc,
+    ALUOP    => Ctrl_ALUOP,
     -- Señales para el GPR
-    RegWrite => ID_Ctrl_RegWrite,
-    RegDst   => ID_Ctrl_RegDest
+    RegWrite => Ctrl_RegWrite,
+    RegDst   => Ctrl_RegDest
   );
-  ID_Funct <= ID_Instruction(5 downto 0);
-  ID_Inm_ext     <= x"FFFF" & ID_Instruction(15 downto 0) when ID_Instruction(15)='1' else
-                    x"0000" & ID_Instruction(15 downto 0); -- sign extend
-  EX_Addr_Jump      <= EX_PC_plus4(31 downto 28) & EX_Instruction(25 downto 0) & "00";
-  Addr_Branch    <= EX_PC_plus4 + (EX_Inm_ext(29 downto 0) & "00");
+
+  Inm_ext        <= x"FFFF" & Instruction(15 downto 0) when Instruction(15)='1' else
+                    x"0000" & Instruction(15 downto 0); -- sign extend
+  Addr_Jump      <= PC_plus4(31 downto 28) & Instruction(25 downto 0) & "00";
+  Addr_Branch    <= PC_plus4 + ( Inm_ext(29 downto 0) & "00");
 
   --Ctrl_Jump      <= '0'; --nunca salto incondicional
 
   Regs_eq_branch <= ALU_IGUAL;
-  desition_Jump  <= MEM_Ctrl_Jump or (MEM_Ctrl_Branch and Regs_eq_branch);
-  Addr_Jump_dest <= Addr_Jump   when MEM_Ctrl_Jump='1' else
-                    Addr_Branch when MEM_Ctrl_Branch='1' else
+  desition_Jump  <= Ctrl_Jump or (Ctrl_Branch and Regs_eq_branch);
+  Addr_Jump_dest <= Addr_Jump   when Ctrl_Jump='1' else
+                    Addr_Branch when Ctrl_Branch='1' else
                     (others =>'0');
 
   Alu_control_i: alu_control
   port map(
     -- Entradas:
-    ALUOp  => EX_Ctrl_ALUOP, -- Codigo de control desde la unidad de control
-    Funct  => EX_Funct, -- Campo "funct" de la instruccion
+    ALUOp  => Ctrl_ALUOP, -- Codigo de control desde la unidad de control
+    Funct  => instruction (5 downto 0), -- Campo "funct" de la instruccion
     -- Salida de control para la ALU:
     ALUControl => AluControl -- Define operacion a ejecutar por la ALU
   );
 
   Alu_MIPS : alu
   port map (
-    OpA      => EX_reg_RS,
+    OpA      => reg_RS,
     OpB      => Alu_Op2,
     Control  => AluControl,
     Result   => Alu_Res,
@@ -202,61 +189,15 @@ begin
     Zflag    => ALU_IGUAL
   );
 
-  Alu_Op2    <= EX_reg_RT when EX_Ctrl_ALUSrc = '0' else EX_Inm_ext;
+  Alu_Op2    <= reg_RT when Ctrl_ALUSrc = '0' else Inm_ext;
+  reg_RD     <= Instruction(20 downto 16) when Ctrl_RegDest = '0' else Instruction(15 downto 11);
 
   DAddr      <= Alu_Res;
-  DDataOut   <= MEM_reg_RT;
+  DDataOut   <= reg_RT;
   DWrEn      <= Ctrl_MemWrite;
   dRdEn      <= Ctrl_MemRead;
   dataIn_Mem <= DDataIn;
 
   reg_RD_data <= dataIn_Mem when Ctrl_MemToReg = '1' else Alu_Res;
-  EX_add_RD <= EX_add_RD1 when EX_Ctrl_RegDest = '0' else EX_add_RT;
 
-
-  IF_ID_Reg: process(Clk,reset)
-    begin
-      if reset = '1' then
-        ID_PC_plus4 <= (others=>'0');
-        ID_Instruction <= (others => '0');
-      else rising_edge(clk) then 
-        ID_Instruction <= IF_Instruction;
-        ID_PC_plus4 <= IF_PC_plus4;
-      end if;
-    end process;
-  ID_EX_Reg: process(Clk,reset)
-    begin
-      if reset = '1' then
-        
-      else rising_edge(clk) then 
-        EX_add_RD1 <= ID_add_RD1;
-        EX_add_RT <= ID_add_RT;
-        EX_Inm_ext <= ID_Inm_ext;
-        EX_PC_plus4 <= ID_PC_plus4;
-        EX_reg_RS <= ID_reg_RS;
-        EX_reg_RT <= ID_reg_RT;
-        
-        EX_Addr_Jump <= ID_Instruction(25 downto 0);
-
-        EX_Ctrl_ALUOP <= ID__Ctrl_ALUOP; 
-        EX_Ctrl_ALUSrc <= ID__Ctrl_ALUSrc;
-        EX_Ctrl_Branch <= ID__Ctrl_Branch;
-        EX_Ctrl_Jump <= ID__Ctrl_Jump;
-        EX_Ctrl_MemRead <= ID__Ctrl_MemRead;
-        EX_Ctrl_MemToReg <= ID__Ctrl_MemToReg;
-        EX_Ctrl_MemWrite <= ID__Ctrl_MemWrite;
-        EX_Ctrl_RegDest <= ID__Ctrl_RegDest;
-        EX_Ctrl_RegWrite <= ID__Ctrl_RegWrite;
-      end if;
-    end process;
-  ID_EX_Reg: process(Clk,reset)
-    begin
-      if reset = '1' then
-        
-      else rising_edge(clk) then
-        MEM_PC_next <= EX_PC_next;
-        MEM_add_RD <= EX_add_RD;
-        MEM_reg_RT <= EX_reg_RT;
-      end if;
-    end process;
 end architecture;
