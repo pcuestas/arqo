@@ -41,10 +41,10 @@ architecture rtl of alu_control is
 begin
 
   AluControl <= ALU_ADD when AluOp = AO_ADD else -- addi, lw o sw, que hace una suma
-                ALU_S16 when AluOp = "011" else -- lui,
-                ALU_SUB when AluOp = AO_SUB; -- beq
-                ALU_AND when AluOp = AO_AND; -- andi
-                ALU_SLT when AluOp = AO_SLT; -- slti
+                ALU_S16 when AluOp = "011"  else -- lui,
+                ALU_SUB when AluOp = AO_SUB else -- beq
+                ALU_AND when AluOp = AO_AND else -- andi
+                ALU_SLT when AluOp = AO_SLT else -- slti
                 ALU_ADD when AluOp = "010" and Funct = "100000" else -- add
                 ALU_SUB when AluOp = "010" and Funct = "100010" else -- sub
                 ALU_AND when AluOp = "010" and Funct = "100100" else -- and

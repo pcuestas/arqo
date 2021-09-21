@@ -8,3 +8,15 @@ En ALUcontrol
     1. añadir los casos de las operaciones I a la señal de salida ALUop
 
 En Processor
+
+
+
+
+
+
+
+PABLO:
+Processor
+  Regs_eq_branch <= '1' when (reg_RS = reg_RT) else '0'; -- ALU_IGUAL
+AluControl
+  Branch falta, AO_---
