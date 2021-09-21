@@ -1,4 +1,4 @@
-.data 0
+.data 
 num0:  .word 1  # posic 0
 num1:  .word 2  # posic 4
 num2:  .word 4  # posic 8 
@@ -12,7 +12,7 @@ num9:  .word 0  # posic 36
 num10: .word 0  # posic 40
 num11: .word 0  # posic 44
 
-.text 0
+.text
 main:
   # carga num0 a num5 en los registros 9 a 14
   lw $t1, 0($zero)  # lw $r9,  0($r0)  -> r9  = 1
@@ -65,6 +65,16 @@ main:
 salto:
   sub $t4, $s0, $t7     # sub $r12, $r16, $r15    -> r12 = 9
   beq $s3, $s4, nosalto # beq $r19, $r20, nosalto -> este branch NO debe ejecutarse
+# new instructions (exercise 2 of P1)
+  addi $s3, $t4, 23 # r19 = r12 + 23 = 32
+  slti $s4, $s6, 13 # r20 = r22 < 13 = 0
+  slti $s4, $s6, 15 # r20 = r22 < 15 = 1
+  andi $s5, $t4, 10 # r21 = r12 and 10 = 00...1001 and 00...1010 = 00...1000 = 8
+  j tag # unconditional jump
+  addi $s2, $t2, 1 # not executed
+  addi $s3, $t4, 23 # not executed
+tag:
+  addi $t1, $zero, 64 # r9 = 64
 final:
   beq $zero, $zero, final # -> bucle infinito, volvera aqui tras varios NOPs.
   nop
