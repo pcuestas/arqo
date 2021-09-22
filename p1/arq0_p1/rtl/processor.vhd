@@ -274,8 +274,8 @@ begin
         MEM_PC_next <= (others => '0');
         MEM_add_RD <= (others => '0');
         MEM_reg_RT <= (others => '0');
-        MEM_Alu_Res <= (others => '0');
-        MEM_PC_next <= (others => '0');        
+        MEM_Alu_Res <= (others => '0');        
+        MEM_PCSrc <= '0';
         MEM_Ctrl_MemRead <= '0';
         MEM_Ctrl_MemToReg <= '0';
         MEM_Ctrl_MemWrite <= '0';
@@ -286,7 +286,6 @@ begin
         MEM_add_RD <= EX_add_RD;
         MEM_reg_RT <= EX_reg_RT;
         MEM_Alu_Res <= EX_Alu_Res;
-        MEM_PC_next <= EX_PC_plus4;
         MEM_PCSrc <= EX_PCSrc;
         
         MEM_Ctrl_MemRead <= EX_Ctrl_MemRead;
