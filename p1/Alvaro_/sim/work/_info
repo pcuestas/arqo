@@ -7,7 +7,7 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 d/home/arqo/Desktop/p/sim
+Z0 d/home/arqo/Desktop/arqo/p1/Alvaro_/sim
 Ealu
 Z1 w1631098664
 Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
@@ -23,9 +23,9 @@ V80egAHWmFeN4G74UU_jHJ1
 !s100 g`o1IGWPGBYfE:DS4U^Zk0
 Z8 OL;C;10.6c;65
 32
-Z9 !s110 1632168130
+Z9 !s110 1632255193
 !i10b 1
-Z10 !s108 1632168130.000000
+Z10 !s108 1632255193.000000
 Z11 !s90 -reportprogress|300|-work|work|-2002|-explicit|-check_synthesis|../rtl/alu.vhd|
 Z12 !s107 ../rtl/alu.vhd|
 !i113 0
@@ -52,7 +52,7 @@ R12
 R13
 R14
 Ealu_control
-Z15 w1631972110
+Z15 w1632249826
 R2
 R3
 R4
@@ -82,10 +82,10 @@ R5
 DEx4 work 11 alu_control 0 22 a1g>zJ[`YdlAfMJN5jCZQ1
 32
 R9
-l35
+l41
 L22
-Vh>@imQoFbm`7ZZ_I[hQNc0
-!s100 `Z[o6QUcF]h@E1zWO2=E02
+VJ^F?=UK32hiQ6`ej[EK6W3
+!s100 mk2D?CK9gT^69:RZ_Il6K1
 R8
 !i10b 1
 R10
@@ -95,7 +95,7 @@ R19
 R13
 R14
 Econtrol_unit
-Z20 w1631972035
+Z20 w1632249809
 R2
 R3
 R4
@@ -105,8 +105,8 @@ Z21 8../rtl/control_unit.vhd
 Z22 F../rtl/control_unit.vhd
 l0
 L12
-Vo4;emJ57[fik`F_WZg_6_0
-!s100 EQF8;TTU<4UhOaBI_4lGV2
+V3cL3BA=CTKZdb_Pe2hbM[2
+!s100 ZN636TVUOz=njCJ^gOoGW0
 R8
 32
 R9
@@ -122,13 +122,13 @@ R2
 R3
 R4
 R5
-DEx4 work 12 control_unit 0 22 o4;emJ57[fik`F_WZg_6_0
+DEx4 work 12 control_unit 0 22 3cL3BA=CTKZdb_Pe2hbM[2
 32
 R9
-l48
-L34
-VCcUX@cMNizzf5Le[6QBmi1
-!s100 `5iUMBG7[0ViG<iIM;`2m3
+l56
+L32
+V4Ul5gllcG5_U8h=5[c2jR0
+!s100 JUEn^H8FJfPISQC]085SP3
 R8
 !i10b 1
 R10
@@ -183,7 +183,7 @@ R30
 R31
 R14
 Eprocessor
-Z32 w1632167691
+Z32 w1632255166
 R2
 R3
 R4
@@ -213,10 +213,10 @@ R5
 DEx4 work 9 processor 0 22 hV6`3eAiG;h_8e=A4Szbm0
 32
 R9
-l111
+l125
 L28
-VC4_AADjDEHZ9TJFnBJ<de2
-!s100 SKZRCPVZUP7oHz0]d<jzF0
+VN^QZJdH_==WUZ?Lz6EDBF0
+!s100 `eSmI1]?2TF<;g9lnJ13c0
 R8
 !i10b 1
 R10
