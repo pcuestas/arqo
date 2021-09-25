@@ -1,1 +1,7 @@
-Names of
+Names: Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
+
+Exercise 1:
+
+Exercise 2: we have added to the provided test "programa.s" some lines so that it includes all requested instructions (including jump). The comments on the added lines explain the expected output in both the pipelined processor and the single sicle processor.
+
+Exercise 3:
