@@ -16,7 +16,4 @@ En Processor
 
 
 PABLO:
-Processor
-  Regs_eq_branch <= '1' when (reg_RS = reg_RT) else '0'; -- ALU_IGUAL
-AluControl
-  Branch falta, AO_---
+nops en el ejercicio 2

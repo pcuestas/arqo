@@ -106,12 +106,12 @@ architecture rtl of processor is
 
   signal Addr_Jump      : std_logic_vector(31 downto 0);
   signal Addr_Jump_dest : std_logic_vector(31 downto 0);
-  signal desition_Jump  : std_logic;
+  signal PCSrc  : std_logic;
   signal Alu_Res        : std_logic_vector(31 downto 0);
 
 begin
 
-  PC_next <= Addr_Jump_dest when desition_Jump = '1' else PC_plus4;
+  PC_next <= Addr_Jump_dest when PCSrc = '1' else PC_plus4;
 
   PC_reg_proc: process(Clk, Reset)
   begin
@@ -165,7 +165,7 @@ begin
   --Ctrl_Jump      <= '0'; --nunca salto incondicional
 
   Regs_eq_branch <= ALU_IGUAL;
-  desition_Jump  <= Ctrl_Jump or (Ctrl_Branch and Regs_eq_branch);
+  PCSrc  <= Ctrl_Jump or (Ctrl_Branch and Regs_eq_branch);
   Addr_Jump_dest <= Addr_Jump   when Ctrl_Jump='1' else
                     Addr_Branch when Ctrl_Branch='1' else
                     (others =>'0');

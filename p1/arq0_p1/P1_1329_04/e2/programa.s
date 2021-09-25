@@ -1,4 +1,4 @@
-.data 0
+.data 0 
 num0:  .word 1  # posic 0
 num1:  .word 2  # posic 4
 num2:  .word 4  # posic 8 
