@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Procesador MIPS con pipeline curso Arquitectura 2021-2022
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES)
+-- Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
 --
 --------------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Unidad de control principal del micro. Arq0 2021-2022
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES)
+-- Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
 --
 --------------------------------------------------------------------------------
 

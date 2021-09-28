@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Bloque de control para la ALU. Arq0 2021-2022.
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES, Quitar este mensaje)
+-- Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
 --
 --------------------------------------------------------------------------------
 
