@@ -1,7 +1,10 @@
 Names: Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
 
-Exercise 1:
+Exercise 1: in alu_control.vhd we have added the value for AluControl for the I-type instructions, as well as for BEQ, which were the ones that were not implemented. For this, we had to add some new possible values for the AluOp input, which we wrote as constants in both alu_control.vhd and control_unit.vhd.
+In control_unit.vhd, the opcode for all instructions had to be added as well.
+In the processor, the jump operation had to be implemented.
 
-Exercise 2: we have added to the provided test "programa.s" some lines so that it includes all requested instructions (including jump). The comments on the added lines explain the expected output in both the pipelined processor and the single sicle processor.
+Exercise 2: we have added to the provided test "programa.s" some lines so that it includes all requested instructions (including jump). The comments on the added lines explain the expected output in both the pipelined processor and the single sicle processor. In order to try this program (specially to try it in the pipelined version), we have compiled it in the compiler provided in moodle: http://150.244.64.61, which adds a nop after each beq or jump instruction.
 
-Exercise 3:
+Exercise 3: for the implementation of the pipelined processor, we have added 4 registers inside the processor.vhd file (4 different processes): IF_ID_Reg, ID_EX_Reg, EX_MEM_Reg and MEM_WB_Reg. We have followed the design of the processor provided in the practice statement. 
+The only difference is that our processor implements the jump instruction. Our implementation calculates the jump (or branch) address in the EX stage, and the jump (or branch) is made effective in the next clock cycle after the instruction leaves the MEM stage.
