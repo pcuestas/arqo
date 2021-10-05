@@ -56,11 +56,9 @@ begin
    ------------------------------------------------------
    -- Lectura as�ncrona de registros
    ------------------------------------------------------
-   Rd1 <=   x"0000" when A1 = "00000" else
-            regs(conv_integer(A1)) when (We3 = '0' or A1 /= A3) else 
+   Rd1 <=   regs(conv_integer(A1)) when (We3 = '0' or A1 /= A3 or A1 = "00000") else 
             Wd3;
-   Rd2 <=   x"0000" when A1 = "00000" else
-            regs(conv_integer(A2)) when (We3 = '0' or A2 /= A3) else 
+   Rd2 <=   regs(conv_integer(A2)) when (We3 = '0' or A2 /= A3 or A2 = "00000") else 
             Wd3;
 
 end architecture;

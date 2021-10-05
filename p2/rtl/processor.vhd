@@ -82,13 +82,14 @@ architecture rtl of processor is
    );
  end component alu_control;
 
-  signal Alu_Op2      : std_logic_vector(31 downto 0);
+  signal Alu_Op2,Alu_Op1      : std_logic_vector(31 downto 0);
   
   signal EX_ZFlag, MEM_ZFlag    : std_logic;
   signal AluControl   : std_logic_vector(3 downto 0);
   signal reg_RD_data  : std_logic_vector(31 downto 0);
   signal ID_add_RD1, EX_add_RD1, EX_add_RD, MEM_add_RD, WB_add_RD      : std_logic_vector(4 downto 0);
-  signal ID_add_RT, EX_add_RT       : std_logic_vector(4 downto 0);
+  signal ID_add_RT, EX_add_RT, MEM_add_RT       : std_logic_vector(4 downto 0);
+  signal ID_add_RS, EX_add_RS       : std_logic_vector(4 downto 0);
 
   signal PC_reg         : std_logic_vector(31 downto 0);
   signal ID_PC_plus4, IF_PC_plus4, EX_PC_plus4       : std_logic_vector(31 downto 0);
@@ -115,12 +116,17 @@ architecture rtl of processor is
   signal MEM_PCSrc  : std_logic;
   signal EX_Alu_Res, MEM_Alu_Res, WB_Alu_Res        : std_logic_vector(31 downto 0);
 
+
+  signal ForwardA, ForwardB : std_logic_vector(1 downto 0);
+  signal AluOp2_MuxResult   : std_logic_vector (31 downto 0);
+
   --Nuevas señales  
   signal ID_Funct, EX_Funct : std_logic_vector(5 downto 0);
 begin
 
-  ID_add_RD1 <= ID_Instruction(20 downto 16);
-  ID_add_RT <= ID_Instruction(15 downto 11);
+  ID_add_RS <= ID_Instruction(25 downto 21);
+  ID_add_RT <= ID_Instruction(20 downto 16);
+  ID_add_RD1 <= ID_Instruction(15 downto 11);
 
   PC_reg_proc: process(Clk, Reset)
   begin
@@ -193,7 +199,7 @@ begin
 
   Alu_MIPS : alu
   port map (
-    OpA      => EX_reg_RS,
+    OpA      => Alu_Op1,
     OpB      => Alu_Op2,
     Control  => AluControl,
     Result   => EX_Alu_Res,
@@ -201,19 +207,55 @@ begin
     Zflag    => EX_ZFlag
   );
 
-  Alu_Op2    <= EX_reg_RT when EX_Ctrl_ALUSrc = '0' else EX_Inm_ext
+
+  Alu_Op1    <= EX_reg_RS when ForwardA = "00" else  
+                reg_RD_data when ForwardA = "01" else
+                MEM_Alu_Res;
                 
 
+  AluOp2_MuxResult <= EX_reg_RT when ForwardB = "00" else  
+                      reg_RD_data when ForwardB = "01" else
+                      MEM_Alu_Res;
+
+  Alu_Op2    <= AluOp2_MuxResult when EX_Ctrl_ALUSrc = '0' else EX_Inm_ext;
+
+  -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  DDataOut   <= WB_Alu_Res when MEM_Ctrl_MemWrite = '1' and 
+                                 WB_Ctrl_RegWrite = '1' and 
+                                 MEM_add_RT = WB_add_RD else
+                MEM_reg_RT;
   DAddr      <= MEM_Alu_Res;
-  DDataOut   <= MEM_reg_RT;
   DWrEn      <= MEM_Ctrl_MemWrite;
   dRdEn      <= MEM_Ctrl_MemRead;
   MEM_dataIn_Mem <= DDataIn;
 
   reg_RD_data <= WB_dataIn_Mem when WB_Ctrl_MemToReg = '1' else WB_Alu_Res;
-  EX_add_RD <= EX_add_RD1 when EX_Ctrl_RegDest = '0' else EX_add_RT;
+  EX_add_RD <= EX_add_RT when EX_Ctrl_RegDest = '0' else EX_add_RD1;
 
 
+  Forwarding_unit: process(MEM_Ctrl_RegWrite, WB_Ctrl_RegWrite,
+                            MEM_add_RD, EX_add_RS, EX_add_RT, WB_add_RD)
+    begin
+      if ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000")
+          and (MEM_add_RD = EX_add_RS)) then 
+          ForwardA <= "10";
+      elsif  ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000")
+        and (WB_add_RD = EX_add_RS)) then
+          ForwardA <= "01";
+      else ForwardA <= "00"; 
+      end if;
+      
+      if  ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000")
+            and (MEM_add_RD = EX_add_RT)) then
+          ForwardB <= "10";
+      elsif ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000")
+            and (WB_add_RD = EX_add_RT)) then
+          ForwardB <= "01";
+      else ForwardB <= "00"; 
+      end if;
+    end process;
+
+    
   IF_ID_Reg: process(Clk,reset)
     begin
       if reset = '1' then
@@ -229,6 +271,7 @@ begin
       if reset = '1' then
         EX_add_RD1 <= (others => '0');
         EX_add_RT <= (others => '0');
+        EX_add_RS <= (others => '0');
         EX_Inm_ext <= (others => '0');
         EX_PC_plus4 <= (others => '0');
         EX_reg_RS <= (others => '0');
@@ -247,6 +290,7 @@ begin
       elsif rising_edge(clk) then 
         EX_add_RD1 <= ID_add_RD1;
         EX_add_RT <= ID_add_RT;
+        EX_add_RS <= ID_add_RS;
         EX_Inm_ext <= ID_Inm_ext;
         EX_PC_plus4 <= ID_PC_plus4;
         EX_reg_RS <= ID_reg_RS;
@@ -270,6 +314,7 @@ begin
     begin
       if reset = '1' then
         MEM_add_RD <= (others => '0');
+        MEM_add_RT <= (others => '0');
         MEM_reg_RT <= (others => '0');
         MEM_Alu_Res <= (others => '0');  
         MEM_ZFlag <= '0';
@@ -283,6 +328,7 @@ begin
         
       elsif rising_edge(clk) then
         MEM_add_RD <= EX_add_RD;
+        MEM_add_RT <= EX_add_RT;
         MEM_reg_RT <= EX_reg_RT;
         MEM_Alu_Res <= EX_Alu_Res;
         MEM_ZFlag <= EX_ZFlag;
