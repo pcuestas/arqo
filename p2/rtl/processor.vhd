@@ -122,6 +122,9 @@ architecture rtl of processor is
 
   --Nuevas señales  
   signal ID_Funct, EX_Funct : std_logic_vector(5 downto 0);
+
+  signal PCWrite, IF_ID_Write, ID_EX_Clear : std_logic;
+
 begin
 
   ID_add_RS <= ID_Instruction(25 downto 21);
@@ -132,7 +135,7 @@ begin
   begin
     if Reset = '1' then
       PC_reg <= (others => '0');
-    elsif rising_edge(Clk) then
+    elsif (rising_edge(Clk) and PCWrite = '1') then
       if MEM_PCSrc = '1' then 
         PC_reg <= MEM_Addr_Jump_dest;
       else
@@ -229,6 +232,21 @@ begin
   --ForwardA <= "10" when ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RT))  else
   --            "01" when ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RT)) else 
   --            "00";
+
+
+
+
+
+
+  HazardDetection: process()
+      begin
+        if (EX_Ctrl_MemRead='1' and (EX_add_RT = ID_add_RS or EX_add_RT = ID_add_RT)) then
+            PCWrite <= '0'; IF_ID_Write <= '0'; ID_EX_Clear <= '1'
+        else     
+            PCWrite <= '1'; IF_ID_Write <= '1'; ID_EX_Clear <= '0'
+        end if;
+      end process;
+
   
   Forwarding_unit: process(MEM_Ctrl_RegWrite, WB_Ctrl_RegWrite,
                           MEM_add_RD, EX_add_RS, EX_add_RT, WB_add_RD)
@@ -264,14 +282,14 @@ begin
       if reset = '1' then
         ID_PC_plus4 <= (others => '0');
         ID_Instruction <= (others => '0');
-      elsif rising_edge(clk) then 
+      elsif (rising_edge(clk) and IF_ID_Write = '1') then 
         ID_Instruction <= IF_Instruction;
         ID_PC_plus4 <= IF_PC_plus4;
       end if;
     end process;
-  ID_EX_Reg: process(Clk,reset)
+  ID_EX_Reg: process(Clk,reset,ID_EX_Clear)
     begin
-      if reset = '1' then
+      if reset = '1' or (ID_EX_Clear = '1' and rising_edge(clk) ) then
         EX_add_RD1 <= (others => '0');
         EX_add_RT <= (others => '0');
         EX_add_RS <= (others => '0');
