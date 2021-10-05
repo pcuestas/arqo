@@ -15,14 +15,14 @@ use ieee.std_logic_arith.all;
 entity reg_bank is
    port (
       Clk   : in std_logic; -- Reloj activo en flanco de subida
-      Reset : in std_logic; -- Reset asíncrono a nivel alto
-      A1    : in std_logic_vector(4 downto 0);   -- Dirección para el puerto Rd1
+      Reset : in std_logic; -- Reset asï¿½ncrono a nivel alto
+      A1    : in std_logic_vector(4 downto 0);   -- Direcciï¿½n para el puerto Rd1
       Rd1   : out std_logic_vector(31 downto 0); -- Dato del puerto Rd1
-      A2    : in std_logic_vector(4 downto 0);   -- Dirección para el puerto Rd2
+      A2    : in std_logic_vector(4 downto 0);   -- Direcciï¿½n para el puerto Rd2
       Rd2   : out std_logic_vector(31 downto 0); -- Dato del puerto Rd2
-      A3    : in std_logic_vector(4 downto 0);   -- Dirección para el puerto Wd3
+      A3    : in std_logic_vector(4 downto 0);   -- Direcciï¿½n para el puerto Wd3
       Wd3   : in std_logic_vector(31 downto 0);  -- Dato de entrada Wd3
-      We3   : in std_logic -- Habilitación de la escritura de Wd3
+      We3   : in std_logic -- Habilitaciï¿½n de la escritura de Wd3
    ); 
 end reg_bank;
 
@@ -54,10 +54,14 @@ begin
    end process;
 
    ------------------------------------------------------
-   -- Lectura asíncrona de registros
+   -- Lectura asï¿½ncrona de registros
    ------------------------------------------------------
-   Rd1 <= regs(conv_integer(A1));
-   Rd2 <= regs(conv_integer(A2));
+   Rd1 <=   x"0000" when A1 = "00000" else
+            regs(conv_integer(A1)) when (We3 = '0' or A1 /= A3) else 
+            Wd3;
+   Rd2 <=   x"0000" when A1 = "00000" else
+            regs(conv_integer(A2)) when (We3 = '0' or A2 /= A3) else 
+            Wd3;
 
 end architecture;
 
