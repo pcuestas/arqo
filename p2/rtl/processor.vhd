@@ -223,12 +223,30 @@ begin
   EX_add_RD <= EX_add_RT when EX_Ctrl_RegDest = '0' else EX_add_RD1;
 
   -- FORWARDING UNIT
-  ForwardA <= "10" when ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RS)) else
-              "01" when ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RS)) else 
-              "00";
-  ForwardA <= "10" when ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RT))  else
-              "01" when ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RT)) else 
-              "00";  
+  --ForwardA <= "10" when ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RS)) else
+  --            "01" when ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RS)) else 
+  --            "00";
+  --ForwardA <= "10" when ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RT))  else
+  --            "01" when ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RT)) else 
+  --            "00";
+  
+  Forwarding_unit: process(MEM_Ctrl_RegWrite, WB_Ctrl_RegWrite,
+                          MEM_add_RD, EX_add_RS, EX_add_RT, WB_add_RD)
+    begin
+      if ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RS)) then 
+        ForwardA <= "10";
+      elsif  ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RS)) then
+        ForwardA <= "01";
+      else ForwardA <= "00"; 
+    end if;
+
+      if ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RT)) then
+        ForwardB <= "10";
+      elsif ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RT)) then
+        ForwardB <= "01";
+      else ForwardB <= "00"; 
+      end if;
+    end process;  
 
   Alu_Op1 <= EX_reg_RS when ForwardA = "00" else  
              reg_RD_data when ForwardA = "01" else
