@@ -201,7 +201,8 @@ begin
     Zflag    => EX_ZFlag
   );
 
-  Alu_Op2    <= EX_reg_RT when EX_Ctrl_ALUSrc = '0' else EX_Inm_ext;
+  Alu_Op2    <= EX_reg_RT when EX_Ctrl_ALUSrc = '0' else EX_Inm_ext
+  
 
   DAddr      <= MEM_Alu_Res;
   DDataOut   <= MEM_reg_RT;
