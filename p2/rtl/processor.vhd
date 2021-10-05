@@ -238,12 +238,12 @@ begin
 
 
 
-  HazardDetection: process()
+  HazardDetection: process(EX_Ctrl_MemRead,EX_add_RT,ID_add_RS,ID_add_RT)
       begin
         if (EX_Ctrl_MemRead='1' and (EX_add_RT = ID_add_RS or EX_add_RT = ID_add_RT)) then
-            PCWrite <= '0'; IF_ID_Write <= '0'; ID_EX_Clear <= '1'
+            PCWrite <= '0'; IF_ID_Write <= '0'; ID_EX_Clear <= '1';
         else     
-            PCWrite <= '1'; IF_ID_Write <= '1'; ID_EX_Clear <= '0'
+            PCWrite <= '1'; IF_ID_Write <= '1'; ID_EX_Clear <= '0';
         end if;
       end process;
 
