@@ -214,8 +214,9 @@ begin
   DDataOut   <= MEM_reg_RT;
 
   -- SW hazard
-  EX_reg_RTp <= MEM_Alu_Res when EX_Ctrl_MemWrite = '1' and MEM_Ctrl_RegWrite = '1' and EX_add_RT = MEM_add_RD else
-                WB_Alu_Res  when EX_Ctrl_MemWrite = '1' and  WB_Ctrl_RegWrite = '1' and EX_add_RT =  WB_add_RD else
+  EX_reg_RTp <= MEM_dataIn_Mem when EX_Ctrl_MemWrite = '1' and MEM_Ctrl_RegWrite = '1' and EX_add_RT = MEM_add_RD  and MEM_Ctrl_MemRead = '1' else -- caso lw + sw
+                MEM_Alu_Res    when EX_Ctrl_MemWrite = '1' and MEM_Ctrl_RegWrite = '1' and EX_add_RT = MEM_add_RD  and MEM_Ctrl_MemRead = '0' else -- caso r-type + sw 
+                reg_RD_data  when EX_Ctrl_MemWrite = '1' and  WB_Ctrl_RegWrite = '1' and EX_add_RT =  WB_add_RD else
                 EX_reg_RT;
 
   DAddr      <= MEM_Alu_Res;

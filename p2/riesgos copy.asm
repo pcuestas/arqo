@@ -47,7 +47,7 @@ main:
   nop
   add $s0, $t1, $t2  # en r16 un 41 = 5 + 36
   add $s0, $s0, $s0  # Dependencia con la anterior  # en r16 un 82 = 41 + 41. 
-  add $s1, $s0, $s0  # dependencia con la anterior  # en r16 un 164 = 82 + 82
+  add $s1, $s0, $s0  # dependencia con la anterior  # en r17 un 164 = 82 + 82
   nop
   nop
   nop
@@ -58,7 +58,7 @@ main:
   nop
   nop
   nop
-  add $t4, $t1, $t2 # en r11 un 41 = 5 + 36
+  add $t4, $t1, $t2 # en r12 un 41 = 5 + 36
   nop
   sw $t4, 28($zero) # dependencia con la 2� anterior
   nop
