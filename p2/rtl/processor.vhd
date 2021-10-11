@@ -96,7 +96,7 @@ architecture rtl of processor is
 
   signal IF_Instruction, ID_Instruction    : std_logic_vector(31 downto 0); -- La instrucción desde lamem de instr
   signal ID_Inm_ext, EX_Inm_ext        : std_logic_vector(31 downto 0); -- La parte baja de la instrucción extendida de signo
-  signal ID_reg_RS, EX_reg_RS, ID_reg_RT, EX_reg_RT, EX_reg_RTp, MEM_reg_RT : std_logic_vector(31 downto 0);
+  signal ID_reg_RS, EX_reg_RS, ID_reg_RT, EX_reg_RT, MEM_reg_RT : std_logic_vector(31 downto 0);
 
   signal MEM_dataIn_Mem, WB_dataIn_Mem     : std_logic_vector(31 downto 0); --From Data Memory
   
@@ -210,15 +210,7 @@ begin
     Zflag    => EX_ZFlag
   );
 
-  
   DDataOut   <= MEM_reg_RT;
-
-  -- SW hazard
-  EX_reg_RTp <= MEM_dataIn_Mem when EX_Ctrl_MemWrite = '1' and MEM_Ctrl_RegWrite = '1' and EX_add_RT = MEM_add_RD  and MEM_Ctrl_MemRead = '1' else -- caso lw + sw
-                MEM_Alu_Res    when EX_Ctrl_MemWrite = '1' and MEM_Ctrl_RegWrite = '1' and EX_add_RT = MEM_add_RD  and MEM_Ctrl_MemRead = '0' else -- caso r-type + sw 
-                reg_RD_data  when EX_Ctrl_MemWrite = '1' and  WB_Ctrl_RegWrite = '1' and EX_add_RT =  WB_add_RD else
-                EX_reg_RT;
-
   DAddr      <= MEM_Alu_Res;
   DWrEn      <= MEM_Ctrl_MemWrite;
   dRdEn      <= MEM_Ctrl_MemRead;
@@ -279,7 +271,7 @@ begin
     end process;
   ID_EX_Reg: process(Clk,reset,ID_EX_Clear)
     begin
-      if reset = '1' or (ID_EX_Clear = '1' and rising_edge(clk) ) then
+      if reset = '1' or (ID_EX_Clear = '1' and rising_edge(clk)) then
         EX_add_RD1 <= (others => '0');
         EX_add_RT <= (others => '0');
         EX_add_RS <= (others => '0');
@@ -340,7 +332,7 @@ begin
       elsif rising_edge(clk) then
         MEM_add_RD <= EX_add_RD;
         MEM_add_RT <= EX_add_RT;
-        MEM_reg_RT <= EX_reg_RTp;
+        MEM_reg_RT <= AluOp2_MuxResult;
         MEM_Alu_Res <= EX_Alu_Res;
         MEM_ZFlag <= EX_ZFlag;
         MEM_Addr_Jump_dest <= EX_Addr_Jump_dest;
