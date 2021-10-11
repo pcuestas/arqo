@@ -210,9 +210,10 @@ begin
     Zflag    => EX_ZFlag
   );
 
-  -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
   DDataOut   <= MEM_reg_RT;
 
+  -- SW hazard
   EX_reg_RTp <= MEM_Alu_Res when EX_Ctrl_MemWrite = '1' and MEM_Ctrl_RegWrite = '1' and EX_add_RT = MEM_add_RD else
                 WB_Alu_Res  when EX_Ctrl_MemWrite = '1' and  WB_Ctrl_RegWrite = '1' and EX_add_RT =  WB_add_RD else
                 EX_reg_RT;
@@ -225,27 +226,15 @@ begin
   reg_RD_data <= WB_dataIn_Mem when WB_Ctrl_MemToReg = '1' else WB_Alu_Res;
   EX_add_RD <= EX_add_RT when EX_Ctrl_RegDest = '0' else EX_add_RD1;
 
-  -- FORWARDING UNIT
-  --ForwardA <= "10" when ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RS)) else
-  --            "01" when ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RS)) else 
-  --            "00";
-  --ForwardA <= "10" when ((MEM_Ctrl_RegWrite = '1') and (MEM_add_RD /= "00000") and (MEM_add_RD = EX_add_RT))  else
-  --            "01" when ((WB_Ctrl_RegWrite = '1') and (WB_add_RD /= "00000") and (WB_add_RD = EX_add_RT)) else 
-  --            "00";
-
-
-
-
-
 
   HazardDetection: process(EX_Ctrl_MemRead,EX_add_RT,ID_add_RS,ID_add_RT)
-      begin
-        if (EX_Ctrl_MemRead='1' and (EX_add_RT = ID_add_RS or EX_add_RT = ID_add_RT)) then
-            PCWrite <= '0'; IF_ID_Write <= '0'; ID_EX_Clear <= '1';
-        else     
-            PCWrite <= '1'; IF_ID_Write <= '1'; ID_EX_Clear <= '0';
-        end if;
-      end process;
+    begin
+      if (EX_Ctrl_MemRead='1' and (EX_add_RT = ID_add_RS or EX_add_RT = ID_add_RT)) then
+          PCWrite <= '0'; IF_ID_Write <= '0'; ID_EX_Clear <= '1';
+      else     
+          PCWrite <= '1'; IF_ID_Write <= '1'; ID_EX_Clear <= '0';
+      end if;
+    end process;
 
   
   Forwarding_unit: process(MEM_Ctrl_RegWrite, WB_Ctrl_RegWrite,
