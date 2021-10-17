@@ -228,7 +228,7 @@ begin
         if MEM_PCSrc='1' then ID_EX_Clear <='1'; -- el salto es efectivo, tenemos que eliminar una instrucción
           --  if the instruction that follows the beq is an lw, the effective jump condition must prevail over a possible stall caused by the lw
         else
-          ID_EX_Clear <= '0';
+          ID_EX_Clear <= '0';    
         end if;
       end process;
     
