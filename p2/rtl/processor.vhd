@@ -122,7 +122,7 @@ architecture rtl of processor is
 
   --Nuevas señales  
   signal ID_Funct, EX_Funct : std_logic_vector(5 downto 0);
-
+  signal Regs_equal         : std_logic;
   signal PCWrite, IF_ID_Write, ID_EX_Clear : std_logic;
 
 begin
@@ -186,10 +186,7 @@ begin
 
   --Ctrl_Jump      <= '0'; --nunca salto incondicional
 
-  MEM_PCSrc  <= MEM_Ctrl_Jump or (MEM_Ctrl_Branch and MEM_ZFlag); -- 1 si se va a saltar
-  EX_Addr_Jump_dest <=  EX_Addr_Jump   when EX_Ctrl_Jump='1' else
-                        EX_Addr_Branch when EX_Ctrl_Branch='1' else
-                        (others =>'0');
+
 
   Alu_control_i: alu_control
   port map(
@@ -218,8 +215,23 @@ begin
 
   reg_RD_data <= WB_dataIn_Mem when WB_Ctrl_MemToReg = '1' else WB_Alu_Res;
   EX_add_RD <= EX_add_RT when EX_Ctrl_RegDest = '0' else EX_add_RD1;
+  
 
+  Regs_equal <= '1' when (ID_reg_RS=ID_reg_RT) else '0';
+  MEM_PCSrc  <= ID_Ctrl_Jump or (ID_Ctrl_Branch and Regs_equal); -- 1 si se va a saltar
+  EX_Addr_Jump_dest <=  ID_Addr_Jump   when ID_Ctrl_Jump='1' else
+                        ID_Addr_Branch when ID_Ctrl_Branch='1' else
+                        (others =>'0');
 
+  BranchDetection: process(MEM_PCSrc)
+      begin
+        if MEM_PCSrc='1' then ID_EX_Clear <='1'; -- el salto es efectivo, tenemos que eliminar una instrucción
+          --  if the instruction that follows the beq is an lw, the effective jump condition must prevail over a possible stall caused by the lw
+        else
+          ID_EX_Clear <= '0';
+        end if;
+      end process;
+    
   HazardDetection: process(EX_Ctrl_MemRead,EX_add_RT,ID_add_RS,ID_add_RT)
     begin
       if (EX_Ctrl_MemRead='1' and (EX_add_RT = ID_add_RS or EX_add_RT = ID_add_RT)) then
