@@ -84,7 +84,7 @@ architecture rtl of processor is
 
   signal Alu_Op2,Alu_Op1      : std_logic_vector(31 downto 0);
   
-  signal EX_ZFlag, MEM_ZFlag    : std_logic;
+  signal EX_ZFlag    : std_logic;
   signal AluControl   : std_logic_vector(3 downto 0);
   signal reg_RD_data  : std_logic_vector(31 downto 0);
   signal ID_add_RD1, EX_add_RD1, EX_add_RD, MEM_add_RD, WB_add_RD      : std_logic_vector(4 downto 0);
@@ -103,8 +103,8 @@ architecture rtl of processor is
   signal ID_Ctrl_ALUSrc,   EX_Ctrl_ALUSrc  : std_logic;
   signal ID_Ctrl_ALUOP,    EX_Ctrl_ALUOP   : std_logic_vector(2 downto 0);
   signal ID_Ctrl_RegDest,  EX_Ctrl_RegDest : std_logic;
-  signal ID_Ctrl_Jump,     EX_Ctrl_Jump, MEM_Ctrl_Jump          : std_logic;
-  signal ID_Ctrl_Branch,   EX_Ctrl_Branch, MEM_Ctrl_Branch      : std_logic;
+  signal ID_Ctrl_Jump,     EX_Ctrl_Jump: std_logic;
+  signal ID_Ctrl_Branch,   EX_Ctrl_Branch      : std_logic;
   signal ID_Ctrl_MemWrite, EX_Ctrl_MemWrite,  MEM_Ctrl_MemWrite : std_logic;
   signal ID_Ctrl_MemRead,  EX_Ctrl_MemRead,   MEM_Ctrl_MemRead  : std_logic;
   signal ID_Ctrl_MemToReg, EX_Ctrl_MemToReg,  MEM_Ctrl_MemToReg, WB_Ctrl_MemToReg : std_logic;
@@ -113,7 +113,7 @@ architecture rtl of processor is
   signal ID_Addr_Branch, EX_Addr_Branch   : std_logic_vector(31 downto 0);
   signal ID_Addr_Jump, EX_Addr_Jump     : std_logic_vector(31 downto 0);
   signal EX_Addr_Jump_dest, MEM_Addr_Jump_dest : std_logic_vector(31 downto 0);
-  signal MEM_PCSrc  : std_logic;
+  signal EX_PCSrc, Branch_Flush  : std_logic;
   signal EX_Alu_Res, MEM_Alu_Res, WB_Alu_Res        : std_logic_vector(31 downto 0);
 
 
@@ -136,8 +136,8 @@ begin
     if Reset = '1' then
       PC_reg <= (others => '0');
     elsif (rising_edge(Clk) and PCWrite = '1') then
-      if MEM_PCSrc = '1' then 
-        PC_reg <= MEM_Addr_Jump_dest;
+      if EX_PCSrc = '1' then 
+        PC_reg <= EX_Addr_Jump_dest;
       else
         PC_reg <=  IF_PC_plus4;
       end if;
@@ -178,6 +178,7 @@ begin
     RegWrite => ID_Ctrl_RegWrite,
     RegDst   => ID_Ctrl_RegDest
   );
+  
   ID_Funct <= ID_Instruction(5 downto 0);
   ID_Inm_ext     <= x"FFFF" & ID_Instruction(15 downto 0) when ID_Instruction(15)='1' else
                     x"0000" & ID_Instruction(15 downto 0); -- sign extend
@@ -186,7 +187,7 @@ begin
 
   --Ctrl_Jump      <= '0'; --nunca salto incondicional
 
-  MEM_PCSrc  <= MEM_Ctrl_Jump or (MEM_Ctrl_Branch and MEM_ZFlag); -- 1 si se va a saltar
+  EX_PCSrc  <= EX_Ctrl_Jump or (EX_Ctrl_Branch and EX_ZFlag); -- 1 si se va a saltar
   EX_Addr_Jump_dest <=  EX_Addr_Jump   when EX_Ctrl_Jump='1' else
                         EX_Addr_Branch when EX_Ctrl_Branch='1' else
                         (others =>'0');
@@ -220,7 +221,9 @@ begin
   EX_add_RD <= EX_add_RT when EX_Ctrl_RegDest = '0' else EX_add_RD1;
 
 
-  HazardDetection: process(EX_Ctrl_MemRead,EX_add_RT,ID_add_RS,ID_add_RT)
+  Branch_Flush <= EX_PCSrc;
+
+  HazardDetection: process(EX_Ctrl_MemRead, EX_add_RT, ID_add_RS, ID_add_RT)
     begin
       if (EX_Ctrl_MemRead='1' and (EX_add_RT = ID_add_RS or EX_add_RT = ID_add_RT)) then
           PCWrite <= '0'; IF_ID_Write <= '0'; ID_EX_Clear <= '1';
@@ -261,7 +264,7 @@ begin
   -- PIPELINED PROCESSOR REGISTERS
   IF_ID_Reg: process(Clk,reset)
     begin
-      if reset = '1' then
+      if reset = '1' or (rising_edge(clk) and Branch_Flush= '1') then
         ID_PC_plus4 <= (others => '0');
         ID_Instruction <= (others => '0');
       elsif (rising_edge(clk) and IF_ID_Write = '1') then 
@@ -271,7 +274,7 @@ begin
     end process;
   ID_EX_Reg: process(Clk,reset,ID_EX_Clear)
     begin
-      if reset = '1' or (ID_EX_Clear = '1' and rising_edge(clk)) then
+      if reset = '1' or (rising_edge(clk) and (ID_EX_Clear = '1' or Branch_Flush = '1')) then
         EX_add_RD1 <= (others => '0');
         EX_add_RT <= (others => '0');
         EX_add_RS <= (others => '0');
@@ -319,11 +322,7 @@ begin
         MEM_add_RD <= (others => '0');
         MEM_add_RT <= (others => '0');
         MEM_reg_RT <= (others => '0');
-        MEM_Alu_Res <= (others => '0');  
-        MEM_ZFlag <= '0';
-        MEM_Addr_Jump_dest <= (others => '0');
-        MEM_Ctrl_Jump <= '0';
-        MEM_Ctrl_Branch <= '0';
+        MEM_Alu_Res <= (others => '0');
         MEM_Ctrl_MemRead <= '0';
         MEM_Ctrl_MemToReg <= '0';
         MEM_Ctrl_MemWrite <= '0';
@@ -334,11 +333,7 @@ begin
         MEM_add_RT <= EX_add_RT;
         MEM_reg_RT <= AluOp2_MuxResult;
         MEM_Alu_Res <= EX_Alu_Res;
-        MEM_ZFlag <= EX_ZFlag;
-        MEM_Addr_Jump_dest <= EX_Addr_Jump_dest;
 
-        MEM_Ctrl_Jump <= EX_Ctrl_Jump;
-        MEM_Ctrl_Branch <= EX_Ctrl_Branch;
         MEM_Ctrl_MemRead <= EX_Ctrl_MemRead;
         MEM_Ctrl_MemToReg <= EX_Ctrl_MemToReg;
         MEM_Ctrl_MemWrite <= EX_Ctrl_MemWrite;
