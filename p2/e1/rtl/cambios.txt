@@ -1,0 +1,5 @@
+
+
+Multiplexores para el forwarding al ALU en EX-EX y MEM-EX:
+    señal ALUOP2_MuxResult
+    forwarding unit
