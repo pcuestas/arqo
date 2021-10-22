@@ -1,7 +1,4 @@
- 
-# La condicion de salto se calcula en ID.
-# Si se salta la operacion que habia entrada se elimina (clear del IF_ID_REG)?!
-# En las diapositivas pone stall?????
+# OBSERVATION: after compiling with the provided compiler, a nop isntruction is inserted after every beq and j instruction. We have replaced that instruction (in the "instrucciones" file) by an "addi $s6, $s6, 1" 
 
 .text 0
 main:

@@ -1,4 +1,5 @@
 # Prog de prueba para Pr�ctica 2. Ej 1
+# Comments modified by Pablo Cuesta Sierra and Álvaro Zamanillo Sáez
 
 .data 0
 num0: .word 1 # posic 0
