@@ -1,0 +1,96 @@
+\documentclass{article}
+
+\usepackage[margin=2.5cm]{geometry}
+
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+
+
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+
+\usepackage{tcolorbox}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{.2,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codeblue}{rgb}{0,0.4,0.82}
+\definecolor{codeorange}{rgb}{0.94,0.34,0.0}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{backcolourgray}{rgb}{0.92,0.92,0.92}
+\definecolor{codewhite}{rgb}{1,1,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolourgray},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue},
+    numberstyle=\tiny\color{black},
+    stringstyle=\color{codeorange},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    %numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    extendedchars=true,
+    frame=single
+    %, basicstyle=\footnotesize
+}
+\lstset{style=mystyle}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Sistemas Operativos. Práctica 3.}
+\lhead{Pablo Cuesta Sierra y Álvaro Zamanillo Sáez}
+\cfoot{\thepage}
+
+
+
+%\setlength{\parskip}{0.15cm}
+
+
+
+\begin{document}
+
+
+\title{Sistemas Operativos. Práctica 3.}
+\author{Pablo Cuesta Sierra y Álvaro Zamanillo Sáez}
+%\date{}
+\maketitle
+
+\begin{tcolorbox}
+\tableofcontents
+\end{tcolorbox}
+
+\addcontentsline{toc}{subsection}{Exercise 0.}
+\subsection*{Exercise 0.}
+
+
+
+\end{document}
+
+
+\begin{lstlisting}[language=C, texcl=true]
+    typedef struct Mine_struct_{
+        long int target;
+        long int begin; //índice por el que empieza a buscar el hilo
+        long int end; //índice hasta el que el hilo busca (no incluido)
+    } Mine_struct;  \end{lstlisting}
