@@ -64,7 +64,7 @@ gnuplot << END_GNUPLOT
 set title "Cache read misses"
 set ylabel "Number of misses"
 set xlabel "Cache size (B)"
-set key right bottom
+set key right top
 set grid
 set term png
 set output "$fPNGread"
@@ -75,7 +75,7 @@ replot
 set title "Cache write misses"
 set ylabel "Number of misses"
 set xlabel "Cache size (B)"
-set key right bottom
+set key right top
 set grid
 set term png
 set output "$fPNGwrite"
