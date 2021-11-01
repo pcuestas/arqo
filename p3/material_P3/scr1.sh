@@ -12,7 +12,7 @@ fDAT=slow_fast_time.dat
 fPNG=slow_fast_time.png
 
 # borrar el fichero DAT y el fichero PNG
-rm -f $fDAT fPNG
+rm -f $fDAT $fPNG $fDATaux
 
 # generar el fichero DAT vacío
 touch $fDAT
@@ -36,7 +36,7 @@ for i in $(seq 1 1 $NMAXiterations); do
 done
 
 #calculate the means
-for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
+for N in $(awk '{ print $1 }' $fDATaux | sort -n | uniq); do
 		mean=$(grep $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
 		echo "$N	$mean" >> $fDAT
 done
