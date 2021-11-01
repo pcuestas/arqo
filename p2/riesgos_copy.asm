@@ -92,7 +92,7 @@ main:
   nop
   nop
   # RIESGOS MEMORIA MEMORIA
-  sw $t4, 0($zero)
+  sw $t4, 0($zero) # r12 = 40 is stored in memory, position 0
   lw $t2, 0($zero) # en r10 un 40
   nop
   nop
