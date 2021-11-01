@@ -17,7 +17,7 @@ fPNGwrite=cache_escritura.png
 
 # borrar el fichero DAT y el fichero PNG
 rm -f $fDAT $fPNGread $fPNGwritew
-rm -r outputs
+rm -r -f outputs
 
 touch $fDAT
 
