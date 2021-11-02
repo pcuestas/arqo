@@ -15,46 +15,6 @@ fDAT=out2/e2.dat
 fPNGread=out2/cache_lectura.png
 fPNGwrite=out2/cache_escritura.png
 
-# borrar el fichero DAT y el fichero PNG
-rm -f $fDAT $fPNGread $fPNGwritew
-
-touch $fDAT
-
-# directory for output files
-mkdir out2
-
-echo "Running slow and fast..."
-
-fileAux=auxfile.dat
-
-for ((SLone=1024;SLone<=8192;SLone=SLone*2)); do 
-	currentFile=out2/$SLone.dat
-	valgrindOptions="--I1=$SLone,1,64 --D1=$SLone,1,64 --LL=$LLsize,1,64"
-	rm -f $currentFile
-	touch $currentFile
-
-	for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
-		echo "size $SLone - N: $N / $Nfinal..."
-
-		valgrind --tool=cachegrind --cachegrind-out-file=$fileAux $valgrindOptions ./slow $N &> /dev/null
-		slowValues=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
-		rm -f $fileAux
-
-		valgrind --tool=cachegrind --cachegrind-out-file=$fileAux $valgrindOptions ./fast $N &> /dev/null
-		fastValues=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
-		rm -f $fileAux
-
-		echo "$N	$slowValues	$fastValues" >> $currentFile
-	done
-	
-	#pasar todos los datos a un mismo fichero
-	while read line; do
-		echo -e "${SLone}\t$line" >> $fDAT
-	done < $currentFile
-
-done
-
-echo "exit"
 
 for ((SLone=1024;SLone<=8192;SLone=SLone*2)); do 
 		line=$(grep -w $SLone $fDAT | awk '{ print $0 }')
