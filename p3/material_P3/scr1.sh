@@ -37,7 +37,7 @@ done
 
 #calculate the means
 for N in $(awk '{ print $1 }' $fDATaux | sort -n | uniq); do
-		mean=$(grep $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
+		mean=$(grep -w $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
 		echo "$N	$mean" >> $fDAT
 done
 

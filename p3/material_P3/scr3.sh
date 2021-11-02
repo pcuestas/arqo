@@ -43,15 +43,15 @@ valgrind_exec=valgrind --tool=cachegrind --cachegrind-out-file=$fileAux
 for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
 		echo "cache simulation - N: $N / $Nfinal..."
 		
-	valgrind_exec ./multiplication $N &> /dev/null
+	$valgrind_exec ./multiplication $N &> /dev/null
 	multTime=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
 	rm -f $fileAux
 
-	valgrind_exec ./multiplication_t $N &> /dev/null
+	$valgrind_exec ./multiplication_t $N &> /dev/null
 	mult_tTime=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
 	rm -f $fileAux
 
-	mean=$(grep $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
+	mean=$(grep -w $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
 	
 	echo "$N	${mean[0]}	$multTime	${mean[1]}	$mult_tTime" >> $fDAT
 
