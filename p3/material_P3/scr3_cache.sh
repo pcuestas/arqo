@@ -22,38 +22,24 @@ touch $fDATaux
 
 echo "Running slow and fast..."
 
-
-for i in $(seq 1 1 $NMAXiterations); do 
-	for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
-		echo " iteration $i - N: $N / $Nfinal..."
-		
-		multTime=$(./multiplication $N | grep 'time' | awk '{print $3}')
-		mult_tTime=$(./multiplication_t $N | grep 'time' | awk '{print $3}')
-
-		echo "$N	$multTime	$mult_tTime" >> $fDATaux
-	done
-done
-
-
 fileAux=auxfile.dat
-rm -f fileAux
 valgrind_exec=valgrind --tool=cachegrind --cachegrind-out-file=$fileAux 
 
 for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
-		echo "cache simulation - N: $N / $Nfinal..."
+		echo " iteration $i - N: $N / $Nfinal..."
 		
 	valgrind_exec ./multiplication $N &> /dev/null
 	multTime=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
-	rm -f $fileAux
-
-	valgrind_exec ./multiplication_t $N &> /dev/null
-	mult_tTime=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
-	rm -f $fileAux
-
-	mean=$(grep $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
+	mult_tTime=$(./multiplication_t $N | grep 'time' | awk '{print $3}')
 	
-	echo "$N	${mean[0]}	$multTime	${mean[1]}	$mult_tTime" >> $fDAT
+	echo "$N	$multTime	$mult_tTime" >> $fDATaux
 
+done
+
+#calculate the means
+for N in $(awk '{ print $1 }' $fDATaux | sort -n | uniq); do
+		mean=$(grep $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
+		echo "$N	$mean" >> $fDAT
 done
 
 echo "Generating plot..."

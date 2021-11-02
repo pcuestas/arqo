@@ -25,6 +25,8 @@ mkdir out2
 
 echo "Running slow and fast..."
 
+fileAux=auxfile.dat
+
 for ((SLone=1024;SLone<=8192;SLone=SLone*2)); do 
 	currentFile=out2/$SLone.dat
 	valgrindOptions="--I1=$SLone,1,64 --D1=$SLone,1,64 --LL=$LLsize,1,64"
@@ -34,14 +36,13 @@ for ((SLone=1024;SLone<=8192;SLone=SLone*2)); do
 	for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
 		echo "size $SLone - N: $N / $Nfinal..."
 
-		file_slow=out2/$SLone.$N.slow.dat
-		file_fast=out2/$SLone.$N.fast.dat
+		valgrind --tool=cachegrind --cachegrind-out-file=$fileAux $valgrindOptions ./slow $N &> /dev/null
+		slowValues=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
+		rm -f $fileAux
 
-		valgrind --tool=cachegrind --cachegrind-out-file=$file_slow $valgrindOptions ./slow $N &> /dev/null
-		valgrind --tool=cachegrind --cachegrind-out-file=$file_fast $valgrindOptions ./fast $N &> /dev/null
-		
-		slowValues=$(cg_annotate $file_slow | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
-		fastValues=$(cg_annotate $file_fast | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
+		valgrind --tool=cachegrind --cachegrind-out-file=$fileAux $valgrindOptions ./fast $N &> /dev/null
+		fastValues=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
+		rm -f $fileAux
 
 		echo "$N	$slowValues	$fastValues" >> $currentFile
 	done
