@@ -11,6 +11,7 @@ NMAXiterations=10
 fDATaux=out3/mult_aux.dat
 fDAT=out3/mult.dat
 fPNGTime=out3/mult_time.png
+fPNGCache=out3/mult_cache.png
 
 # borrar el fichero DAT y el fichero PNG
 rm -f $fDAT $fPNGTime $fDATaux
@@ -67,7 +68,20 @@ set grid
 set term png
 set output "$fPNGTime"
 plot "$fDAT" using 1:2 with lines lw 2 title "Regular multiplication", \
-     "$fDAT" using 1:3 with lines lw 2 title "Transposed multiplication"
+     "$fDAT" using 1:5 with lines lw 2 title "Transposed multiplication"
+replot
+
+set title "Number of misses in multiplication programs"
+set ylabel "Number of misses"
+set xlabel "Matrix Size"
+set key right bottom
+set grid
+set term png
+set output "$fPNGCache"
+plot "$fDAT" using 1:3 with lines lw 2 title "D1mr regular multiplication", \
+     "$fDAT" using 1:4 with lines lw 2 title "D1mw regular multiplication" \
+		 "$fDAT" using 1:6 with lines lw 2 title "D1mr transposed multiplication", \
+     "$fDAT" using 1:7 with lines lw 2 title "D1mw transposed multiplication" \
 replot
 quit
 END_GNUPLOT

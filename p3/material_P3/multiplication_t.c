@@ -63,7 +63,7 @@ void transpose(tipo **b, int n)
 	int i,j;
 	for(i = 0; i < n; i++)
 	{
-		for(j = 0; j < n; j++)
+		for(j = i+1; j < n; j++)
 		{
 			x = b[j][i];
 			b[j][i] = b[i][j];
