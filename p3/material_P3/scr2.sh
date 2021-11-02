@@ -11,23 +11,22 @@ Nfinal=$((1024+1024*(P+1)))
 L1sizes=(1024 2048 4096 8192)
 LLsize=8388608
 
-fDAT=e2.dat
-fPNGread=cache_lectura.png
-fPNGwrite=cache_escritura.png
+fDAT=out2/e2.dat
+fPNGread=out2/cache_lectura.png
+fPNGwrite=out2/cache_escritura.png
 
 # borrar el fichero DAT y el fichero PNG
 rm -f $fDAT $fPNGread $fPNGwritew
-rm -r -f outputs
 
 touch $fDAT
 
 # directory for output files
-mkdir outputs
+mkdir out2
 
 echo "Running slow and fast..."
 
 for ((SLone=1024;SLone<=8192;SLone=SLone*2)); do 
-	currentFile=outputs/$SLone.dat
+	currentFile=out2/$SLone.dat
 	valgrindOptions="--I1=$SLone,1,64 --D1=$SLone,1,64 --LL=$LLsize,1,64"
 	rm -f $currentFile
 	touch $currentFile
@@ -35,8 +34,8 @@ for ((SLone=1024;SLone<=8192;SLone=SLone*2)); do
 	for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
 		echo "size $SLone - N: $N / $Nfinal..."
 
-		file_slow=outputs/$SLone.$N.slow.dat
-		file_fast=outputs/$SLone.$N.fast.dat
+		file_slow=out2/$SLone.$N.slow.dat
+		file_fast=out2/$SLone.$N.fast.dat
 
 		valgrind --tool=cachegrind --cachegrind-out-file=$file_slow $valgrindOptions ./slow $N &> /dev/null
 		valgrind --tool=cachegrind --cachegrind-out-file=$file_fast $valgrindOptions ./fast $N &> /dev/null
