@@ -4,10 +4,10 @@
 
 # inicializar variables
 P=4
-Ninicio=$((256+256*P))
+Ninicio=256 #$((256+256*P))
 Npaso=32
-Nfinal=$((256+256*(P+1)))
-NMAXiterations=10
+Nfinal=450 #$((256+256*(P+1)))
+NMAXiterations=10 #20
 fDATaux=out3/mult_aux.dat
 fDAT=out3/mult.dat
 fPNGTime=out3/mult_time.png
@@ -38,7 +38,7 @@ done
 
 fileAux=auxfile.dat
 rm -f fileAux
-valgrind_exec=valgrind --tool=cachegrind --cachegrind-out-file=$fileAux 
+valgrind_exec="valgrind --tool=cachegrind --cachegrind-out-file=$fileAux" 
 
 for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
 		echo "cache simulation - N: $N / $Nfinal..."
@@ -51,7 +51,7 @@ for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
 	mult_tTime=$(cg_annotate $fileAux | grep "PROGRAM TOTALS" | awk '{ printf "%s\t%s",$5, $8}' | tr -d ',')
 	rm -f $fileAux
 
-	mean=$(grep -w $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s\n", slow/n, fast/n }')
+	mean=($(grep -w $N $fDATaux | awk '{ slow += $2; fast += $3; n++ } END { printf "%s\t%s", slow/n, fast/n }'))
 	
 	echo "$N	${mean[0]}	$multTime	${mean[1]}	$mult_tTime" >> $fDAT
 
@@ -79,9 +79,9 @@ set grid
 set term png
 set output "$fPNGCache"
 plot "$fDAT" using 1:3 with lines lw 2 title "D1mr regular multiplication", \
-     "$fDAT" using 1:4 with lines lw 2 title "D1mw regular multiplication" \
+     "$fDAT" using 1:4 with lines lw 2 title "D1mw regular multiplication", \
 		 "$fDAT" using 1:6 with lines lw 2 title "D1mr transposed multiplication", \
-     "$fDAT" using 1:7 with lines lw 2 title "D1mw transposed multiplication" \
+     "$fDAT" using 1:7 with lines lw 2 title "D1mw transposed multiplication"
 replot
 quit
 END_GNUPLOT

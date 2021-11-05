@@ -42,8 +42,7 @@ for N in $(awk '{ print $1 }' $fDATaux | sort -n | uniq); do
 done
 
 echo "Generating plot..."
-# llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
-# estándar el script que está entre "<< END_GNUPLOT" y "END_GNUPLOT"
+
 gnuplot << END_GNUPLOT
 set title "Slow-Fast Execution Time"
 set ylabel "Execution time (s)"
