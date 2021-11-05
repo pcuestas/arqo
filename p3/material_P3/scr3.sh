@@ -4,10 +4,10 @@
 
 # inicializar variables
 P=4
-Ninicio=256 #$((256+256*P))
+Ninicio=$((256+256*P))
 Npaso=32
-Nfinal=450 #$((256+256*(P+1)))
-NMAXiterations=10 #20
+Nfinal=$((256+256*(P+1)))
+NMAXiterations=20
 fDATaux=out3/mult_aux.dat
 fDAT=out3/mult.dat
 fPNGTime=out3/mult_time.png
