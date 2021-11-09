@@ -6,7 +6,7 @@
 Ninicio=1024
 Npaso=1024
 Nfinal=16384
-NMAXiterations=10
+NMAXiterations=20
 fDATaux=out1/slow_fast_time_aux.dat
 fDAT=out1/slow_fast_time.dat
 fPNG=out1/slow_fast_time.png
