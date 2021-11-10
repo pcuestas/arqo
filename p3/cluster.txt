@@ -4,4 +4,3 @@ password: BFk0e45
 comando para conectarse: ssh -X -l arqo61 150.244.56.153
 
 PENDIENTE:
-	salida rara de gnuplot gp2

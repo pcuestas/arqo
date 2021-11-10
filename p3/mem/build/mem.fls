@@ -208,6 +208,12 @@ INPUT ../material_P3/out1/mv_att4/slow_fast_time.png
 INPUT ../material_P3/out2/mv_att1/cache_escritura.png
 INPUT ../material_P3/out2/mv_att1/cache_escritura.png
 INPUT ../material_P3/out2/mv_att1/cache_escritura.png
+INPUT ../material_P3/out2/mv_att1/cache_lectura.png
+INPUT ../material_P3/out2/mv_att1/cache_lectura.png
+INPUT ../material_P3/out2/mv_att1/cache_lectura.png
+INPUT ../material_P3/out3/mv_att2/mult_time.png
+INPUT ../material_P3/out3/mv_att2/mult_time.png
+INPUT ../material_P3/out3/mv_att2/mult_time.png
 INPUT build/mem.aux
 INPUT build/mem.out
 INPUT build/mem.out
