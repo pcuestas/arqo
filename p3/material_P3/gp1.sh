@@ -1,7 +1,7 @@
 set title "Slow-Fast Execution Time"
 set ylabel "Execution time (s)"
 set xlabel "Matrix Size (N)"
-set key right bottom
+set key left top Left
 set grid
 set term png
 set output "out1/mv_att4/slow_fast_time.png"

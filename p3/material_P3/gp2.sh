@@ -1,9 +1,12 @@
 set title "Cache read misses"
-set ylabel "Number of misses"
-set xlabel "Cache size (B)"
-set key right top
+set ylabel "Number of misses" font ",11"
+set xlabel "Cache size (B)" font ",11"
+set key font ",11"
+set tics font ",11"
+set key outside
+set key right top Left
 set grid
-set term pngcairo dashed
+set term pngcairo dashed size 800,400
 set output "out2/mv_att1/cache_lectura.png"
 plot "out2/mv_att1/1024.dat" using 1:2 with lines lt rgb "#0000FF00"  dt 1 lw 2 title "D1mr slow - Level 1: 1024B", \
      "out2/mv_att1/1024.dat" using 1:4 with lines lt rgb "#0000FF00"  dt 2 lw 2 title "D1mr fast - Level 1: 1024B", \
@@ -18,7 +21,7 @@ replot
 set title "Cache write misses"
 set ylabel "Number of misses"
 set xlabel "Matrix size (N)"
-set key right top
+set key right top Left
 set grid
 set term pngcairo dashed
 set output "out2/mv_att1/cache_escritura.png"
