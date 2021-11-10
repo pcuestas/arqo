@@ -65,6 +65,16 @@
 %\setlength{\parskip}{0.15cm}
 
 
+%parameters: file, caption, label, scale
+\newcommand{\myFigure}[4]{%
+    \begin{figure}[!ht]
+        \includegraphics[scale=#4]{#1}
+        \centering
+        \caption{#2}
+        \label{#3}
+    \end{figure}
+}
+
 
 \begin{document}
 
@@ -81,18 +91,62 @@
 \addcontentsline{toc}{subsection}{Exercise 0}
 \subsection*{Exercise 0}
 
-\lstinputlisting[]{files/0_3}
+We have been submitting our tasks to the \emph{MV} queue for all exercises of the practice because it returned the best (smoothest) results. 
+
+After running the commands shown in the statement, we got these results. 
+
+As can be seen in figure \ref{cache_conf}, the first level is the only one where there are two different caches: one for data and another for instructions. Both are of the same kind: size of 32768 B (32 KB), with blocks of 64 B and 8 ways. 
+In the second level, there is a unique cache which is larger (2097152 B = 2 MB) but has the same degree of associativity. For the third level, the size increases (16777216 B = 16 MB) as well as the associativity (16 ways) whereas the block size remains the same.
+
+\begin{figure}[h]
+    \lstinputlisting[]{../material_P3/out0/mv/cache.dat}
+    \centering
+    \caption{Output of \texttt{getconf -a | grep -i cache}}
+    \label{cache_conf}
+\end{figure}
+
+\pagebreak
+
+Here is the info of the each of the processors (this is processor 0, but they are all the same):
+
+\begin{figure}[h]
+    \lstinputlisting[firstline=0,lastline=18]{../material_P3/out0/mv/cpuinfo.dat}
+    \centering
+    \caption{First lines of \texttt{/proc/cpuinfo}}
+    \label{cpuinfo}
+\end{figure}
+
+The following diagram shows the archiquetecture of the different caches in each of the 8 cores. 
+
+\myFigure{../material_P3/out0/mv/figure.png}{Topology of the used CPU.}{topology}{0.34}
+
+\pagebreak
 
 \addcontentsline{toc}{subsection}{Exercise 1}
 \subsection*{Exercise 1}
 
+The following image shows a graph with the execution time of both programs for different sizes of the matrix.
 
-\begin{figure}[h]
-    \includegraphics[scale=0.4]{../material_P3/slow_fast_time.png}
-    \centering
-    \caption{Search 8.}
-    \label{slow_fast_time_means}
-\end{figure}
+\myFigure{../material_P3/out1/mv_att4/slow_fast_time.png}{Slow vs Fast execution times.}{slow_fast_times}{0.4}
+
+As pointed by the graph the execution time for small values of N is similar for both programs (most of the matrix can be stored completely in the cache). However as N grows the execution time for the slow program shows a cuadratic behaviour while the fast version barely grows.
+
+This is due to the fact that the matrix is stored by rows in main memory, and therefore stored in the cache by rows too. The slow version access the matrix by columns which leads to a higher number of misses and consequently, a higer number of accesses to main memory. 
+
+For obtaining the results, it is necessary to run the simulation several times in order to calculate a mean and que no !!!!!!!dependa de un momento concreto!!!!!!!!. Furthermore, the chosen execution pattern alternates between the slow and fast version to avoid the program to reuse the cache from the previous execution (with the same size).
+
+
+\addcontentsline{toc}{subsection}{Exercise 1}
+\subsection*{Exercise 1}
+
+First we will analyze the write misses: 
+
+\myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache read misses.}{cache_escritura}{0.35}
+
+Looking at the graph it seems that only four lines have been plotted, however this is not the case. What is happening is that the slow and fast version have basicaaly the same number of write misses (for the same execution values of N and size of the cache). The reason behind is that the result matrix is written in the same order for both programs: by rows. If the data files are analyzed, the fast version has a few more misses which could be due to the fact that this program also has to calculate the transpose.
+
+On the other hand, 
+
 
 \end{document}
 
@@ -102,4 +156,10 @@
         long int target;
         long int begin; //índice por el que empieza a buscar el hilo
         long int end; //índice hasta el que el hilo busca (no incluido)
-    } Mine_struct;  \end{lstlisting}
+    } Mine_struct;  
+\end{lstlisting}
+
+
+
+
+

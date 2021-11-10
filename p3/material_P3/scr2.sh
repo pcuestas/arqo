@@ -66,7 +66,7 @@ replot
 
 set title "Cache write misses"
 set ylabel "Number of misses"
-set xlabel "Cache size (B)"
+set xlabel "Matrix size (N)"
 set key right top
 set grid
 set term png

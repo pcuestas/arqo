@@ -1,2 +1,3 @@
 \contentsline {subsection}{Exercise 0}{1}{section*.1}
-\contentsline {subsection}{Exercise 1}{1}{lstnumber.-1.15}
+\contentsline {subsection}{Exercise 1}{3}{figure.3}
+\contentsline {subsection}{Exercise 1}{3}{figure.4}
