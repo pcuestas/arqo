@@ -3,21 +3,5 @@ password: BFk0e45
 
 comando para conectarse: ssh -X -l arqo61 150.244.56.153
 
-PENDIENTE: (esto es con MV)
-	salida de scr3 con picos en sitios raros. 
-	el problema no es el número de iteraciones:
-		Las medias están bien calculadas-los picos salen ya antes de hacer las medias (la desviación típica en cada N es bajísima)
-	Para valores de N bajos no hay picos: P=0, por ejemplo.
-	Para P=3 ya hay un pico en 1024 y otro en 1152:
-														1024	3.656316	1.378856
-														1056	1.857515	1.503896
-														1088	2.200427	1.652023
-														1120	2.275300	1.797236
-														1152	3.672686	1.964470
-														1184	2.628495	2.138210
-														1216	3.158191	2.311713
-														1248	3.229317	2.528103
-														1280	7.746519	2.745541
-
-PENDIENTE (intel):
-	ver si los valores de out3 son raros o no
+PENDIENTE:
+	salida rara de gnuplot gp2

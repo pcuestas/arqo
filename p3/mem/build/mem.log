@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  10 NOV 2021 13:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  10 NOV 2021 13:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -821,17 +821,17 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [2 <../material_P3/out0/mv/figure.png>]
-<../material_P3/out1/mv_att4/slow_fast_time.png, id=80, 642.4pt x 481.8pt>
+<../material_P3/out1/mv_att4/slow_fast_time.png, id=80, 481.8pt x 361.35pt>
 File: ../material_P3/out1/mv_att4/slow_fast_time.png Graphic file (type png)
 <use ../material_P3/out1/mv_att4/slow_fast_time.png>
 Package pdftex.def Info: ../material_P3/out1/mv_att4/slow_fast_time.png  used on input line 130.
-(pdftex.def)             Requested size: 256.95544pt x 192.71658pt.
+(pdftex.def)             Requested size: 192.71658pt x 144.53743pt.
 <../material_P3/out2/mv_att1/cache_escritura.png, id=81, 481.8pt x 361.35pt>
 File: ../material_P3/out2/mv_att1/cache_escritura.png Graphic file (type png)
 <use ../material_P3/out2/mv_att1/cache_escritura.png>
 Package pdftex.def Info: ../material_P3/out2/mv_att1/cache_escritura.png  used on input line 144.
 (pdftex.def)             Requested size: 168.63252pt x 126.4744pt.
- [3 <../material_P3/out1/mv_att4/slow_fast_time.png> <../material_P3/out2/mv_att1/cache_escritura.png>] [4]
+ [3 <../material_P3/out1/mv_att4/slow_fast_time.png> <../material_P3/out2/mv_att1/cache_escritura.png>]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 151.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 151.
  (build/mem.aux)
@@ -841,18 +841,18 @@ Package rerunfilecheck Info: File `mem.out' has not changed.
 (rerunfilecheck)             Checksum: 221CC9F1D4D58EADD9350ACFB5B1A59E;134.
  ) 
 Here is how much of TeX's memory you used:
- 17338 strings out of 492982
- 313364 string characters out of 6134896
+ 17337 strings out of 492982
+ 313358 string characters out of 6134896
  477106 words of memory out of 5000000
  20593 multiletter control sequences out of 15000+600000
  8269 words of font info for 30 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 54i,13n,73p,834b,1135s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 54i,12n,73p,834b,1135s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on build/mem.pdf (4 pages, 142238 bytes).
+Output written on build/mem.pdf (3 pages, 144652 bytes).
 PDF statistics:
- 133 PDF objects out of 1000 (max. 8388607)
- 112 compressed objects within 2 object streams
- 49 named destinations out of 1000 (max. 500000)
+ 128 PDF objects out of 1000 (max. 8388607)
+ 108 compressed objects within 2 object streams
+ 48 named destinations out of 1000 (max. 500000)
  52 words of extra memory for PDF output out of 10000 (max. 10000000)
 
