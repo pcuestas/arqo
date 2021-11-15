@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1636574246 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1636574247
+["pdflatex"] 1636975664 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1636975672
   "../material_P3/out0/mv/cache.dat" 1636467342 581 b56c9348da13905e0c3a848e32fe5586 ""
   "../material_P3/out0/mv/cpuinfo.dat" 1636467342 4704 df2bae85f7d097d1a66d7ec96c668ad1 ""
   "../material_P3/out0/mv/figure.png" 1636467342 35147 192136de1ea772616b141f3de32ff50e ""
@@ -10,7 +10,7 @@
   "../material_P3/out3/mv_att2/mult_cache_write.png" 1636572386 61398 13656fa64626108a2b66ac77be5f8f3f ""
   "../material_P3/out3/mv_att2/mult_time.png" 1636572386 16468 62d640259432cec0eb182df3992d3ecd ""
   "/etc/texmf/web2c/texmf.cnf" 1635780879 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1636574245 8715 7f9497ad49f4d0b698ba756e08b39271 ""
+  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1636975662 8772 c2800b2b684f901d2364843528962cda ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1480098701 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1480098701 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -136,9 +136,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1635780939 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1635780974 4127780 059d6e91ad3b2397b58863332d34540d ""
-  "build/mem.aux" 1636574247 2990 6c1baee1b88810eb941e7fe2dc9fa75c ""
-  "build/mem.out" 1636574247 177 1084909cc0591d93ee8d41737a69b829 ""
-  "mem.tex" 1636574245 8715 7f9497ad49f4d0b698ba756e08b39271 ""
+  "build/mem.aux" 1636975665 2990 6fe46792026ec77ad27a0e1e312a771f ""
+  "build/mem.out" 1636975665 177 1084909cc0591d93ee8d41737a69b829 ""
+  "mem.tex" 1636975662 8772 c2800b2b684f901d2364843528962cda ""
   (generated)
   "build/mem.log"
   "build/mem.pdf"

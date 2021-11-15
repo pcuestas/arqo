@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  10 NOV 2021 20:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  15 NOV 2021 12:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -816,60 +816,61 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 File: ../material_P3/out1/mv_att4/slow_fast_time.png Graphic file (type png)
 <use ../material_P3/out1/mv_att4/slow_fast_time.png>
 Package pdftex.def Info: ../material_P3/out1/mv_att4/slow_fast_time.png  used on input line 130.
-(pdftex.def)             Requested size: 216.80798pt x 162.60599pt.
-<../material_P3/out2/mv_att1/cache_escritura.png, id=81, 803.0pt x 401.5pt>
+(pdftex.def)             Requested size: 313.16628pt x 234.87471pt.
+ [3 <../material_P3/out1/mv_att4/slow_fast_time.png>]
+<../material_P3/out2/mv_att1/cache_escritura.png, id=87, 803.0pt x 401.5pt>
 File: ../material_P3/out2/mv_att1/cache_escritura.png Graphic file (type png)
 <use ../material_P3/out2/mv_att1/cache_escritura.png>
-Package pdftex.def Info: ../material_P3/out2/mv_att1/cache_escritura.png  used on input line 144.
-(pdftex.def)             Requested size: 321.1943pt x 160.59715pt.
- [3 <../material_P3/out1/mv_att4/slow_fast_time.png> <../material_P3/out2/mv_att1/cache_escritura.png>]
-<../material_P3/out2/mv_att1/cache_lectura.png, id=90, 803.0pt x 401.5pt>
+Package pdftex.def Info: ../material_P3/out2/mv_att1/cache_escritura.png  used on input line 145.
+(pdftex.def)             Requested size: 401.49902pt x 200.7495pt.
+<../material_P3/out2/mv_att1/cache_lectura.png, id=88, 803.0pt x 401.5pt>
 File: ../material_P3/out2/mv_att1/cache_lectura.png Graphic file (type png)
 <use ../material_P3/out2/mv_att1/cache_lectura.png>
-Package pdftex.def Info: ../material_P3/out2/mv_att1/cache_lectura.png  used on input line 150.
-(pdftex.def)             Requested size: 321.1943pt x 160.59715pt.
-<../material_P3/out3/mv_att2/mult_time.png, id=92, 481.8pt x 361.35pt>
+Package pdftex.def Info: ../material_P3/out2/mv_att1/cache_lectura.png  used on input line 152.
+(pdftex.def)             Requested size: 401.49902pt x 200.7495pt.
+ [4 <../material_P3/out2/mv_att1/cache_escritura.png> <../material_P3/out2/mv_att1/cache_lectura.png>]
+<../material_P3/out3/mv_att2/mult_time.png, id=96, 481.8pt x 361.35pt>
 File: ../material_P3/out3/mv_att2/mult_time.png Graphic file (type png)
 <use ../material_P3/out3/mv_att2/mult_time.png>
-Package pdftex.def Info: ../material_P3/out3/mv_att2/mult_time.png  used on input line 162.
+Package pdftex.def Info: ../material_P3/out3/mv_att2/mult_time.png  used on input line 164.
 (pdftex.def)             Requested size: 192.71658pt x 144.53743pt.
- [4 <../material_P3/out2/mv_att1/cache_lectura.png> <../material_P3/out3/mv_att2/mult_time.png>]
+ [5 <../material_P3/out3/mv_att2/mult_time.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 168.
+(Font)              <7> on input line 170.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 168.
-<../material_P3/out3/mv_att2/mult_cache.png, id=102, 602.25pt x 301.125pt>
+(Font)              <5> on input line 170.
+<../material_P3/out3/mv_att2/mult_cache.png, id=106, 602.25pt x 301.125pt>
 File: ../material_P3/out3/mv_att2/mult_cache.png Graphic file (type png)
 <use ../material_P3/out3/mv_att2/mult_cache.png>
-Package pdftex.def Info: ../material_P3/out3/mv_att2/mult_cache.png  used on input line 172.
+Package pdftex.def Info: ../material_P3/out3/mv_att2/mult_cache.png  used on input line 174.
 (pdftex.def)             Requested size: 271.01pt x 135.50499pt.
-<../material_P3/out3/mv_att2/mult_cache_write.png, id=105, 642.4pt x 481.8pt>
+<../material_P3/out3/mv_att2/mult_cache_write.png, id=109, 642.4pt x 481.8pt>
 File: ../material_P3/out3/mv_att2/mult_cache_write.png Graphic file (type png)
 <use ../material_P3/out3/mv_att2/mult_cache_write.png>
-Package pdftex.def Info: ../material_P3/out3/mv_att2/mult_cache_write.png  used on input line 176.
+Package pdftex.def Info: ../material_P3/out3/mv_att2/mult_cache_write.png  used on input line 178.
 (pdftex.def)             Requested size: 256.95544pt x 192.71658pt.
- [5 <../material_P3/out3/mv_att2/mult_cache.png> <../material_P3/out3/mv_att2/mult_cache_write.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 178.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 178.
+ [6 <../material_P3/out3/mv_att2/mult_cache.png> <../material_P3/out3/mv_att2/mult_cache_write.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 180.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 180.
  (build/mem.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 178.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 178.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 180.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 180.
 Package rerunfilecheck Info: File `mem.out' has not changed.
 (rerunfilecheck)             Checksum: 1084909CC0591D93EE8D41737A69B829;177.
  ) 
 Here is how much of TeX's memory you used:
- 17336 strings out of 492982
- 313524 string characters out of 6134896
+ 17337 strings out of 492982
+ 313530 string characters out of 6134896
  476333 words of memory out of 5000000
  20584 multiletter control sequences out of 15000+600000
  7664 words of font info for 28 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  54i,12n,73p,907b,1135s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on build/mem.pdf (5 pages, 270853 bytes).
+Output written on build/mem.pdf (6 pages, 271596 bytes).
 PDF statistics:
- 159 PDF objects out of 1000 (max. 8388607)
- 130 compressed objects within 2 object streams
- 54 named destinations out of 1000 (max. 500000)
+ 164 PDF objects out of 1000 (max. 8388607)
+ 134 compressed objects within 2 object streams
+ 55 named destinations out of 1000 (max. 500000)
  80 words of extra memory for PDF output out of 10000 (max. 10000000)
 

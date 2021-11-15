@@ -127,27 +127,29 @@ The following diagram shows the archiquetecture of the different caches in each 
 
 The following image shows a graph with the execution time of both programs for different sizes of the matrix.
 
-\myFigure{../material_P3/out1/mv_att4/slow_fast_time.png}{Slow vs Fast execution times.}{slow_fast_times}{0.45}
+\myFigure{../material_P3/out1/mv_att4/slow_fast_time.png}{Slow vs Fast execution times.}{slow_fast_times}{0.65}
 
-As pointed by the graph the execution time for small values of N is similar for both programs (most of the matrix can be stored completely in the cache). However as N grows the execution time for the slow program shows a cuadratic behaviour while the fast version barely grows.
+As pointed by the graph, the execution time for small values of N is similar for both programs (most of the matrix can be stored completely in the cache). However, as N grows, the execution time for the slow program shows a significant cuadratic behaviour while the fast version barely grows.
 
-This is due to the fact that the matrix is stored by rows in main memory, and therefore stored in the cache by rows too. The slow version access the matrix by columns which leads to a higher number of misses and consequently, a higer number of accesses to main memory. 
+This is due to the fact that the matrix is stored by rows in main memory, and therefore stored in the cache by rows too. The slow version access the matrix by columns which leads to a higher number of misses and consequently, a higer number of accesses to main memory (hundreds of times slower). 
 
-For obtaining the results, it is necessary to run the simulation several times in order to calculate a mean and have more than one result, so that the programs do not present abnormal times because of other factors different from what we are measuring. Furthermore, the chosen execution pattern alternates between the slow and fast version to prevent the programs from reusing the cache from the previous execution (with the same size).
+For obtaining the results, it is necessary to run the simulation several times in order to calculate a mean and have more than one result, so that the programs do not present abnormal outliers because of other factors different from what we are measuring. Furthermore, the chosen execution pattern alternates between the slow and fast version to prevent the programs from reusing the cache from the previous execution (with the same size).
 
+\pagebreak
 
 \addcontentsline{toc}{subsection}{Exercise 2}
 \subsection*{Exercise 2}
 
 First, we will analyze the write misses: 
 
-\myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache write misses.}{cache_escritura}{0.4}
+\myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache write misses.}{cache_escritura}{0.5}
+
 
 It may seem that only four lines have been plotted, however this is not the case. (We have plotted the slow graphs with a bit of transparency so that the fast graphs can also be seen). The slow and fast version have (almost) the same number of write misses (for the same execution values of N and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows (\texttt{generateMatrix(int size)}).
 
 On the other hand, the read misses show different results:
 
-\myFigure{../material_P3/out2/mv_att1/cache_lectura.png}{Cache read misses.}{cache_lectura}{0.4}
+\myFigure{../material_P3/out2/mv_att1/cache_lectura.png}{Cache read misses.}{cache_lectura}{0.5}
 
 This time, we get 8 different lines, as one could expected beforehand. The dotted lines shows the fast version that necessarily must have less read misses than the fast one (when compared with the same cache size). Again this is due to the fact that the matrix is stored by rows (one row beside the next, sequentially), and the slow version accesses by columns, while the fast version accesses by rows.
 
