@@ -209,6 +209,9 @@ INPUT ../material_P3/out2/mv_att1/cache_lectura.png
 INPUT ../material_P3/out3/mv_att2/mult_time.png
 INPUT ../material_P3/out3/mv_att2/mult_time.png
 INPUT ../material_P3/out3/mv_att2/mult_time.png
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT ../material_P3/out3/mv_att2/mult_cache.png
 INPUT ../material_P3/out3/mv_att2/mult_cache.png
 INPUT ../material_P3/out3/mv_att2/mult_cache.png
@@ -218,6 +221,7 @@ INPUT ../material_P3/out3/mv_att2/mult_cache_write.png
 INPUT build/mem.aux
 INPUT build/mem.out
 INPUT build/mem.out
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb

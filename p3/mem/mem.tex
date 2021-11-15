@@ -142,38 +142,37 @@ For obtaining the results, it is necessary to run the simulation several times i
 
 First, we will analyze the write misses: 
 
-\myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache write misses.}{cache_escritura}{0.5}
+\myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache write misses.}{cache_escritura}{0.55}
 
 
 It may seem that only four lines have been plotted, however this is not the case. (We have plotted the slow graphs with a bit of transparency so that the fast graphs can also be seen). The slow and fast version have (almost) the same number of write misses (for the same execution values of N and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows (\texttt{generateMatrix(int size)}).
 
 On the other hand, the read misses show different results:
 
-\myFigure{../material_P3/out2/mv_att1/cache_lectura.png}{Cache read misses.}{cache_lectura}{0.5}
+\myFigure{../material_P3/out2/mv_att1/cache_lectura.png}{Cache read misses.}{cache_lectura}{0.55}
 
-This time, we get 8 different lines, as one could expected beforehand. The dotted lines shows the fast version that necessarily must have less read misses than the fast one (when compared with the same cache size). Again this is due to the fact that the matrix is stored by rows (one row beside the next, sequentially), and the slow version accesses by columns, while the fast version accesses by rows.
+This time, we get 8 different lines, as one could expected beforehand. The dotted lines show the fast version, which necessarily must have less read misses than the fast one (when compared with the same cache size). Again, this is due to the fact that the matrix is stored by rows (one row beside the next, sequentially), and the slow version accesses by columns, while the fast version accesses by rows.
 
-The effect of the cache size is also observed as the fast version for the smallest cache produces more misses than the slow version of the two largest caches. In general, it is to be expected that smaller sized caches would provoke a higher number of misses for the same program; which is what we see in figure \ref{cache_lectura}.
-
+The effect of the cache size can also be observed as the fast version for the smallest cache produces more misses than the slow version of the two largest caches. In general, it is to be expected that smaller sized caches would provoke a higher number of misses for the same program; which is what we see in figure \ref{cache_lectura}.
 
 
 
 \addcontentsline{toc}{subsection}{Exercise 3}
 \subsection*{Exercise 3}
 
-\myFigure{../material_P3/out3/mv_att2/mult_time.png}{Multiplication execution time}{mult_time}{0.4}
+The image below (figure \ref{mult_time}) shows the execution time for the two different multiplication methods. The transposed multiplication is significantly faster as it accesses matrixes by rows when multiplying. On the other hand, in the regular multiplication, the second operand matrix is accessed by columns which produces a high rate of read misses and as a result a higher execution time.
 
-The image above (figure \ref{mult_time}) shows the execution time for the two different multiplication methods. The transposed multiplication is significantly faster as it accesses matrixes by rows when multiplying. On the other hand, in the regular multiplication, the second operand matrix is accessed by columns which produces a high rate of read misses and as a result a higher execution time.
+Commenting on the strange peaks that appear in figure \ref{mult_time}, we do not know the real reason why this happens. These peaks are neither because of some mistake on calculating values, nor inconsistencies in execution that could be solved repeating the tests. The values of over 10 seconds when executing for size $N=1408$ are pretty consistant when executing in queue \emph{mv.q} of the cluster (the same goes for the rest of the matrix sizes); meaning that the time in each iteration does not vary more than $0.1s$ for each $N$. If we execute the same script in another queue (\emph{amd.q}, for instance), peaks still appear, but not necessarily in the same sizes ($N$). We think this strange and counterintuitive beahviour might be caused by inefficient use of caches, and that certain sizes of matrixes are managed more efficiently by the cache (because its size is a multiple of the block size, for example) than others; even if this other ones are smaller.
 
-\pagebreak
+\myFigure{../material_P3/out3/mv_att2/mult_time.png}{Multiplication execution time}{mult_time}{0.65}
 
-When simulating with \emph{valgrind}, we get very similar results to what we saw in exercise 2 (figure \ref{cache_lectura}). The less optimized program (regular multiplication), which reads matrix $B$ by columns (instead of by rows), produces a higher number of read misses than the ``transposed multiplication'', which accesses matrix $B^t$ by rows.
+When simulating with \emph{valgrind} (figure \ref{mult_misses}), we get very similar results to what we saw in exercise 2 (figure \ref{cache_lectura}). The less optimized program (regular multiplication), which reads matrix $\mathbf{B}$ by columns (instead of by rows), produces a higher number of read misses than the ``transposed multiplication'', which accesses matrix $\mathbf{B}^T$ by rows.
 
 COMENTAR LA ESCALONACIÓN(?)
 
-\myFigure{../material_P3/out3/mv_att2/mult_cache.png}{Cache misses of the multiplication programs}{mult_misses}{0.45}
+\myFigure{../material_P3/out3/mv_att2/mult_cache.png}{Cache misses of the multiplication programs}{mult_misses}{0.6}
 
-The write misses cannot be appreciated in figure \ref{mult_misses}, as they are much lower in value than the read misses, so we have plotted them in a separate graph (figure \ref{mult_misses_write}). Like in exercise 2, both programs write in the same manner: when generating matrixes $A$ and $B$, and when writing the result in matrix $C=AB$. So, as expected, the write misses are very similar. If we look closely at the exact numbers, we can see that the number of write misses is a bit higher (by less than $10$ units) in the transposed version (for all sizes of the matrixes). This is completely normal, bacause the transposed multiplication has to (re)write most of the values of matrix $B$ when transposing it before multiplying; this is what causes the (insignificant) extra write misses in this program, which do not appear in the other one. 
+The write misses cannot be appreciated in figure \ref{mult_misses}, as they are much lower in value than the read misses, so we have plotted them in a separate graph (figure \ref{mult_misses_write}). Like in exercise 2, both programs write in the same manner: when generating matrixes $\mathbf{A}$ and $\mathbf{B}$, and when writing the result in matrix $\mathbf{C}=\mathbf{AB}$. So, as expected, the write misses are very similar. If we look closely at the exact numbers, we can see that the number of write misses is a bit higher (by less than $10$ units) in the transposed version (for all sizes of the matrixes). This is completely normal, bacause the transposed multiplication has to (re)write most of the values of matrix $\mathbf{B}$ when transposing it before multiplying; this is what causes the (insignificant) extra write misses in this program, which do not appear in the other one. 
 
 \myFigure{../material_P3/out3/mv_att2/mult_cache_write.png}{Cache write misses of the multiplication programs}{mult_misses_write}{0.4}
 
