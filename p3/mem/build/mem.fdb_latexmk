@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1637092340 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637092342
+["pdflatex"] 1637092380 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637092381
   "../material_P3/out0/mv/cache.dat" 1636975944 581 b56c9348da13905e0c3a848e32fe5586 ""
   "../material_P3/out0/mv/cpuinfo.dat" 1636975944 4704 df2bae85f7d097d1a66d7ec96c668ad1 ""
   "../material_P3/out0/mv/figure.png" 1636975944 35147 192136de1ea772616b141f3de32ff50e ""
@@ -12,7 +12,7 @@
   "../material_P3/protect_out4/asoc/p2/4096/escritura.png" 1637090142 96134 53d0431d8fac2826d306a05bd845e90a ""
   "../material_P3/protect_out4/asoc/p2/4096/lectura.png" 1637090142 93768 3a9b03da1b5b0a5b7daadbde928c4b51 ""
   "/etc/texmf/web2c/texmf.cnf" 1635780879 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1637092340 13723 8674033fca85a93905e908ce518b8b79 ""
+  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1637092380 13734 9bf23f41009d738028dbe8493652dd51 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1480098701 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1480098701 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -144,11 +144,11 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1635780939 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1635780974 4127780 059d6e91ad3b2397b58863332d34540d ""
-  "build/mem.aux" 1637092342 3806 a4bedeb7ec0f630daa6b001e9ef09f0c ""
-  "build/mem.out" 1637092342 359 dee4ef73b71d90136e2c41c3c2414213 ""
-  "mem.tex" 1637092340 13723 8674033fca85a93905e908ce518b8b79 ""
+  "build/mem.aux" 1637092381 3806 a4bedeb7ec0f630daa6b001e9ef09f0c ""
+  "build/mem.out" 1637092381 359 dee4ef73b71d90136e2c41c3c2414213 ""
+  "mem.tex" 1637092380 13734 9bf23f41009d738028dbe8493652dd51 ""
   (generated)
-  "build/mem.log"
-  "build/mem.out"
   "build/mem.pdf"
   "build/mem.aux"
+  "build/mem.log"
+  "build/mem.out"
