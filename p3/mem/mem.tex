@@ -4,14 +4,14 @@
 
 \usepackage[utf8]{inputenc}
 
-
+\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{fancyvrb}
-
+\usepackage{amsmath}
 \usepackage{tcolorbox}
-
-\usepackage{listings}
+\usepackage{float}
+\usepackage{listings}  
 \usepackage{xcolor}
 
 \definecolor{codegreen}{rgb}{.2,0.6,0}
@@ -206,6 +206,66 @@ These results do actually make sense. The line size of the cache is 64B, and the
 
 \addcontentsline{toc}{subsubsection}{Experiment 2: block size}
 \subsubsection*{Exercise 4. Experiment 2: block size}
+
+For this second experiment, we are going to execute the two multiplication methods with caches of different sizes (2048B - 16384B) and see how the block size affects each time in the resulting misses. The caches used in the simulations are 1-way associative.
+
+First of all, we are going to consider only read misses:
+
+\myFigure{../material_P3/protect_out4/BlockSize_2048/cache_lectura.png}{Cache read misses with a cache of 2048B}{block_2048_lec}{0.55}
+
+
+\myFigure{../material_P3/protect_out4/BlockSize_4096/cache_lectura.png}{Cache read misses with a cache of 4096}{block_4096_lec}{0.55}
+
+\myFigure{../material_P3/protect_out4/BlockSize_8192/cache_lectura.png}{Cache read misses with a cache of 8192B}{block_8192B_lec}{0.55}
+
+\myFigure{../material_P3/protect_out4/BlockSize_16384/cache_lectura.png}{Cache read misses with a cache of 16384B}{block_16384B_lec}{0.55}
+
+The first thing we notice is that as we increase the size of the cache, the lines for each block size configuration get closer. Therefore, it makes sense to think that the impact of the block size will be greater when the size of the matrix is of the order of the cache.
+
+Let's analyze in detail the case of a 2048B cache. To determine the number of lines in the cache we have to do the following calculation: 
+\[
+\text{Number of rows} = \frac{\text{Cache Size}}{\text{Block Size}}
+\]
+
+If we subsitute for the different values of the block size, we get these number of lines.
+
+{
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lllll}
+    \hline
+    \multicolumn{1}{|l|}{Block Size}      & \multicolumn{1}{l|}{32} & \multicolumn{1}{l|}{64} & \multicolumn{1}{l|}{128} & \multicolumn{1}{l|}{256} \\ \hline
+    \multicolumn{1}{|l|}{Number of lines} & \multicolumn{1}{l|}{64} & \multicolumn{1}{l|}{32} & \multicolumn{1}{l|}{16}  & \multicolumn{1}{l|}{8}   \\ \hline
+                                          &                         &                         &                          &                          \\
+                                          &                         &                         &                          &                         
+    \end{tabular}
+\end{table}
+}
+
+
+
+When the block is 32 bytes, we can store 4 elements of the matrix in each block (the type used in the matrix has a size of 8 bytes). When obtaining the element $c_{1,1}$ we have to fetch the first part of row 1 of matrix A and the first part of rows 1-4 of matrix B (we have to fecth rows 1-4 because we have only the first 4 elements of row 1 of matrix A). As we have 64 rows, we have no need to replace. However, let see what happens when the block is 256 bytes, we have only 6 lines in the cache. Again for calculating element $c_{1,1}$ we first fecth the first part of row 1 of matrix A; this time this first part of the row contains 32 elements. Then we start fetching the beginning of the rows 1-32 of matrix B. As we only have 8 lines, we will have to replace blocks. 
+
+So the problem in using big block sizes is that we limit the number of rows in the matrix. Furthermore it is useless when doing the regular multiplication as we only need the first elements of each block, so we are fetching huge blocks just to use a few bytes of them.
+
+We could do the same analysis to the case of a 16384B cache. This time the number of lines when the block is 256B is 64, which is bigger than 32 (the number of elements that can be stored in a block). Thus, we are not getting the problem discussed above and the result does not differ much to the ones obtained with smaller values of the block size.
+
+
+
+\myFigure{../material_P3/protect_out4/BlockSize_2048/cache_escritura.png}{Cache write misses with a cache of 2048B}{block_2048_esc}{0.55}
+
+
+\myFigure{../material_P3/protect_out4/BlockSize_4096/cache_escritura.png}{Cache write misses with a cache of 4096}{block_4096_esc}{0.55}
+
+\myFigure{../material_P3/protect_out4/BlockSize_8192/cache_escritura.png}{Cache write misses with a cache of 8192B}{block_8192B_esc}{0.55}
+
+%\myFigure{../material_P3/protect_out4/BlockSize_16384/cache_escritura.png}{Cache write misses with a cache of 16384B)}{block_16384B_esc}{0.55}
+\par
+
+Now, we will look at writing misses:
+Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar as the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between rows of the operands (which produce read misses) and the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B.
+
+
 
 \end{document}
 
