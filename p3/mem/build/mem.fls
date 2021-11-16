@@ -218,6 +218,12 @@ INPUT ../material_P3/out3/mv_att2/mult_cache.png
 INPUT ../material_P3/out3/mv_att2/mult_cache_write.png
 INPUT ../material_P3/out3/mv_att2/mult_cache_write.png
 INPUT ../material_P3/out3/mv_att2/mult_cache_write.png
+INPUT ../material_P3/protect_out4/asoc/p2/4096/lectura.png
+INPUT ../material_P3/protect_out4/asoc/p2/4096/lectura.png
+INPUT ../material_P3/protect_out4/asoc/p2/4096/lectura.png
+INPUT ../material_P3/protect_out4/asoc/p2/4096/escritura.png
+INPUT ../material_P3/protect_out4/asoc/p2/4096/escritura.png
+INPUT ../material_P3/protect_out4/asoc/p2/4096/escritura.png
 INPUT build/mem.aux
 INPUT build/mem.out
 INPUT build/mem.out

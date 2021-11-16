@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  16 NOV 2021 12:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  16 NOV 2021 15:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -849,28 +849,39 @@ File: ../material_P3/out3/mv_att2/mult_cache_write.png Graphic file (type png)
 <use ../material_P3/out3/mv_att2/mult_cache_write.png>
 Package pdftex.def Info: ../material_P3/out3/mv_att2/mult_cache_write.png  used on input line 177.
 (pdftex.def)             Requested size: 256.95544pt x 192.71658pt.
+<../material_P3/protect_out4/asoc/p2/4096/lectura.png, id=120, 803.0pt x 401.5pt>
+File: ../material_P3/protect_out4/asoc/p2/4096/lectura.png Graphic file (type png)
+<use ../material_P3/protect_out4/asoc/p2/4096/lectura.png>
+Package pdftex.def Info: ../material_P3/protect_out4/asoc/p2/4096/lectura.png  used on input line 184.
+(pdftex.def)             Requested size: 441.65137pt x 220.82567pt.
+<../material_P3/protect_out4/asoc/p2/4096/escritura.png, id=121, 803.0pt x 401.5pt>
+File: ../material_P3/protect_out4/asoc/p2/4096/escritura.png Graphic file (type png)
+<use ../material_P3/protect_out4/asoc/p2/4096/escritura.png>
+Package pdftex.def Info: ../material_P3/protect_out4/asoc/p2/4096/escritura.png  used on input line 186.
+(pdftex.def)             Requested size: 441.65137pt x 220.82567pt.
  [6 <../material_P3/out3/mv_att2/mult_cache.png> <../material_P3/out3/mv_att2/mult_cache_write.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 184.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 184.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 188.
+ [7 <../material_P3/protect_out4/asoc/p2/4096/lectura.png> <../material_P3/protect_out4/asoc/p2/4096/escritura.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 188.
  (build/mem.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 184.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 184.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 188.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 188.
 Package rerunfilecheck Info: File `mem.out' has not changed.
 (rerunfilecheck)             Checksum: 4D7BA718DFD64D83FAA21A5D4C155FEF;221.
  ) 
 Here is how much of TeX's memory you used:
- 17344 strings out of 492982
- 313601 string characters out of 6134896
- 476333 words of memory out of 5000000
- 20587 multiletter control sequences out of 15000+600000
+ 17360 strings out of 492982
+ 314182 string characters out of 6134896
+ 476526 words of memory out of 5000000
+ 20597 multiletter control sequences out of 15000+600000
  8591 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  54i,12n,73p,1025b,1135s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on build/mem.pdf (6 pages, 281503 bytes).
+Output written on build/mem.pdf (7 pages, 353277 bytes).
 PDF statistics:
- 174 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
- 56 named destinations out of 1000 (max. 500000)
- 88 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 184 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
+ 59 named destinations out of 1000 (max. 500000)
+ 98 words of extra memory for PDF output out of 10000 (max. 10000000)
 
