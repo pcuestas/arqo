@@ -1,6 +1,6 @@
 set title "Cache read misses"
 set ylabel "Number of misses" font ",11"
-set xlabel "Cache size (B)" font ",11"
+set xlabel "Matrix size (N)" font ",11"
 set key font ",11"
 set tics font ",11"
 set key outside

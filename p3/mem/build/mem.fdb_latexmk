@@ -1,11 +1,11 @@
 # Fdb version 3
-["pdflatex"] 1637061374 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637061375
+["pdflatex"] 1637061814 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637061815
   "../material_P3/out0/mv/cache.dat" 1636975944 581 b56c9348da13905e0c3a848e32fe5586 ""
   "../material_P3/out0/mv/cpuinfo.dat" 1636975944 4704 df2bae85f7d097d1a66d7ec96c668ad1 ""
   "../material_P3/out0/mv/figure.png" 1636975944 35147 192136de1ea772616b141f3de32ff50e ""
   "../material_P3/out1/mv_att4/slow_fast_time.png" 1636975944 15246 fb296486de7941ead414669118c686f8 ""
-  "../material_P3/out2/mv_att1/cache_escritura.png" 1636975944 91544 d1f3a0b683052983b169a6b3bd01406e ""
-  "../material_P3/out2/mv_att1/cache_lectura.png" 1636975944 99978 408c686712c6643309fc6d0f5301beb9 ""
+  "../material_P3/out2/mv_att1/cache_escritura.png" 1637061813 91544 d1f3a0b683052983b169a6b3bd01406e ""
+  "../material_P3/out2/mv_att1/cache_lectura.png" 1637061813 100068 9a07b4eb0eb8c579149c8566117fff74 ""
   "../material_P3/out3/mv_att2/mult_cache.png" 1636975944 15704 045e0ef6731c6de7e8a94df674f86bd9 ""
   "../material_P3/out3/mv_att2/mult_cache_write.png" 1636975944 61398 13656fa64626108a2b66ac77be5f8f3f ""
   "../material_P3/out3/mv_att2/mult_time.png" 1636975944 16468 62d640259432cec0eb182df3992d3ecd ""
@@ -140,11 +140,11 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1635780939 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1635780974 4127780 059d6e91ad3b2397b58863332d34540d ""
-  "build/mem.aux" 1637061375 3060 5ed45b06632a35beb612fcb4d19a43a5 ""
-  "build/mem.out" 1637061375 221 4d7ba718dfd64d83faa21a5d4c155fef ""
+  "build/mem.aux" 1637061815 3060 5ed45b06632a35beb612fcb4d19a43a5 ""
+  "build/mem.out" 1637061815 221 4d7ba718dfd64d83faa21a5d4c155fef ""
   "mem.tex" 1637061373 10091 b334fda4ecd000aa926ae20ba28c089f ""
   (generated)
   "build/mem.pdf"
   "build/mem.aux"
-  "build/mem.log"
   "build/mem.out"
+  "build/mem.log"
