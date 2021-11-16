@@ -168,13 +168,18 @@ Commenting on the strange peaks that appear in figure \ref{mult_time}, we do not
 
 When simulating with \emph{valgrind} (figure \ref{mult_misses}), we get very similar results to what we saw in exercise 2 (figure \ref{cache_lectura}). The less optimized program (regular multiplication), which reads matrix $\mathbf{B}$ by columns (instead of by rows), produces a higher number of read misses than the ``transposed multiplication'', which accesses matrix $\mathbf{B}^T$ by rows.
 
-COMENTAR LA ESCALONACIÓN(?)
+The regular matrix multiplication shows a step pattern every two times we increase the value of N. This may be due to alignment of the data as we are increasing the matrix by 32 and the block size of the cache is 64B. 
 
 \myFigure{../material_P3/out3/mv_att2/mult_cache.png}{Cache misses of the multiplication programs}{mult_misses}{0.6}
 
 The write misses cannot be appreciated in figure \ref{mult_misses}, as they are much lower in value than the read misses, so we have plotted them in a separate graph (figure \ref{mult_misses_write}). Like in exercise 2, both programs write in the same manner: when generating matrixes $\mathbf{A}$ and $\mathbf{B}$, and when writing the result in matrix $\mathbf{C}=\mathbf{AB}$. So, as expected, the write misses are very similar. If we look closely at the exact numbers, we can see that the number of write misses is a bit higher (by less than $10$ units) in the transposed version (for all sizes of the matrixes). This is completely normal, bacause the transposed multiplication has to (re)write most of the values of matrix $\mathbf{B}$ when transposing it before multiplying; this is what causes the (insignificant) extra write misses in this program, which do not appear in the other one. 
 
 \myFigure{../material_P3/out3/mv_att2/mult_cache_write.png}{Cache write misses of the multiplication programs}{mult_misses_write}{0.4}
+
+
+\addcontentsline{toc}{subsection}{Exercise 4}
+\subsection*{Exercise 4}
+
 
 \end{document}
 
