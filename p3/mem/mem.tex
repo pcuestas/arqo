@@ -88,6 +88,8 @@
 %\tableofcontents
 %\end{tcolorbox}
 
+Note: during this whole document (in the plots), when we write ``Matrix size ($N$)'', it means we are plotting (normally in the $x$-axis) the values of $N$, where $N\times N$ is the size of the used matrices.
+
 \addcontentsline{toc}{subsection}{Exercise 0}
 \subsection*{Exercise 0}
 
@@ -180,10 +182,29 @@ The write misses cannot be appreciated in figure \ref{mult_misses}, as they are 
 \addcontentsline{toc}{subsection}{Exercise 4}
 \subsection*{Exercise 4}
 
+For this exercise, we have distinguished two main experiments. In each of them, we modify a different parameter of the cache, leaving the rest untouched. For both, as requested, we use the programs written for exercise 3: \emph{multiplication.c} and \emph{multiplication\_t.c}
+
+
+\addcontentsline{toc}{subsubsection}{Experiment 1: associativity}
+\subsubsection*{Exercise 4. Experiment 1: associativity}
+
+Here we simulate (using \emph{valgrind}) the execution of both programs, for $N\in\{3072,3328,3584,3840,4096\}$, fixing the size of the cache (all with a line size of 64B): level 1 caches (both data and instructions) are of size 4kB, and level 2 cache is of size 8MB; and each time, with a different kind of cache. In total, we use 1-way, 2-way, 4-way and 8-way caches.
+
+These are the results:
 
 \myFigure{../material_P3/protect_out4/asoc/p2/4096/lectura.png}{Cache read misses of the multiplication programs (varying associativity)}{asoc_lectura}{0.55}
 
 \myFigure{../material_P3/protect_out4/asoc/p2/4096/escritura.png}{Cache write misses of the multiplication programs (varying associativity)}{asoc_escritura}{0.55}
+
+First of all, we will comment on the difference between both programs. Write misses (figure \ref{asoc_escritura}) are the same in both programs, as we already commented in exercise 3, for figure \ref{mult_misses_write}. Read misses, on the other hand, are different. As could be expected, regular multiplication generates a much higher number of write misses than ``transposed multiplication''. Again, this is due to the fact that transposed multiplication accesses both matrices by rows, which is how they are stored in memory; making it so that data accessed is always (when multiplying) next to the previous data which has been recently used; whereas regular multiplication traverses matrix $\mathbf{B}$ by columns, making ``jumps'' in memory, and causing recently loaded blocks of the cache useless.
+
+Next, let us take a look at the differences caused by the changes in associativity. There are three distinguished sections in our plots (already explained in last paragraph): cache write misses, cache read misses of regular multiplication and cache read misses of transposed multiplication. In all of these sections, the 1-way cache generates the most number of misses, followed by the 2-way cache; 4-way and 8-way cache yield almost the exact same numbers, which are very close below the 2-way cache. 
+
+These results do actually make sense. The line size of the cache is 64B, and there are $\frac{4096}{64}=64$ blocks in the cache; so it is generally the case that a row occupies several blocks (each cache block contains 8 elements of a matrix, which means that, at a time, there cannot be more than 512 elements of a matrix in cache). This means that when $\mathbf{A}$ is being multiplied by $\mathbf{B}$, it frequently occurs that the current block being used of $\mathbf{A}$ has the same index as the one being used from $\mathbf{B}$. This means that, if the cache is 1-way associative, the two current blocks will be replacing each other; thus the much higher number of misses for this kind of cache. However, when associativity increases, we do not longer have the problem that the two current blocks rewrite each other, so the number of misses decreases significantly.
+
+
+\addcontentsline{toc}{subsubsection}{Experiment 2: block size}
+\subsubsection*{Exercise 4. Experiment 2: block size}
 
 \end{document}
 
