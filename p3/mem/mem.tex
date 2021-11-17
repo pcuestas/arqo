@@ -88,7 +88,7 @@
 \tableofcontents
 \end{tcolorbox}
 
-Bigskip
+\bigskip
 
 \textbf{Note}: throughout this whole document, when we write ``Matrix size ($N$)'', it means we are plotting (normally in the $x$-axis) the values of $N$, where $N\times N$ is the size of the used matrices.
 
@@ -136,7 +136,7 @@ The following image shows a graph with the execution time of both programs for d
 
 \myFigure{../material_P3/out1/mv_att4/slow_fast_time.png}{Slow vs Fast execution times.}{slow_fast_times}{0.65}
 
-As pointed by the graph, the execution time for small values of N is similar for both programs (most of the matrix can be stored completely in the cache). However, as $N$ grows, the execution time for the slow program shows a significant increase while the fast version barely grows in comparison: for $N=16384$, the execution time of \emph{slow} is almost 10 times higher than that of \emph{fast}.
+As pointed by the graph, the execution time for small values of $N$ is similar for both programs (most of the matrix can be stored completely in the cache). However, as $N$ grows, the execution time for the slow program shows a significant increase while the fast version barely grows in comparison: for $N=16384$, the execution time of \emph{slow} is almost 10 times higher than that of \emph{fast}.
 
 This is due to the fact that the matrix is stored by rows in main memory and, therefore, the cache blocks will contain adjacent elements of single rows (although the last elements of a row may coincide in the same block as the first elemtents of the next row). The slow version access the matrix by columns which leads to a higher number of misses and, consequently, to a higer number of accesses to main memory (hundreds of times slower than access to cache). 
 
@@ -154,7 +154,7 @@ First, we will analyze the write misses:
 \myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache write misses.}{cache_escritura}{0.545}
 
 
-It may seem that only four lines have been plotted, however this is not the case. (We have plotted the \emph{slow} graphs with a bit of transparency so that the \emph{fast} graphs can also be seen). The slow and fast versions have (almost) the same number of write misses (for the same execution values of $N$ and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows, using the function \texttt{generateMatrix(int size)}. The only other write operation that they perform is the $N^2+1$ times each program writes into the variable \texttt{sum}. 
+It may seem that only four lines have been plotted, however this is not the case. (We have plotted the \emph{slow} graphs with a bit of transparency so that the \emph{fast} graphs can also be seen). The slow and fast versions have (almost) the same number of write misses (for the same execution values of $N$ and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows, using the function \texttt{generateMatrix(int size)}. The only other write operation that they perform is updating the value of variable \texttt{sum} (whick occurs $N^2+1$ times per program). 
 
 On the other hand, the read misses show different results:
 
@@ -181,7 +181,7 @@ The regular matrix multiplication shows a step pattern every two times we increa
 
 \myFigure{../material_P3/out3/mv_att2/mult_cache.png}{Cache misses of the multiplication programs}{mult_misses}{0.65}
 
-The write misses cannot be appreciated in figure \ref{mult_misses}, as they are much lower in value than the read misses, so we have plotted them in a separate graph (figure \ref{mult_misses_write}). Like in exercise 2, both programs write in the same manner: when generating matrices $A$ and $B$, and when writing the result in matrix $C=AB$. So, as expected, the write misses are very similar. If we look closely at the exact numbers, we can see that the number of write misses is a bit higher (by less than $10$ units) in the transposed version (for all sizes of the matrices). We think that this happens bacause the transposed multiplication has to (re)write most of the values of matrix $B$ when transposing it before multiplying; so that is what may cause the (insignificant) extra write misses in this program, which do not appear in the other one. 
+The write misses cannot be appreciated in figure \ref{mult_misses}, as they are much lower in value than the read misses, so we have plotted them in a separate graph (figure \ref{mult_misses_write}). Like in exercise 2, both programs write in the same manner: when generating matrices $A$ and $B$, and when writing the result in matrix $C=AB$. So, as expected, the write misses are very similar. If we look closely at the exact numbers, we can see that the number of write misses is a bit higher (by less than $10$ units) in the transposed version (for all sizes of the matrices). We think that this may happen bacause the transposed multiplication has to (re)write most of the values of matrix $B$ when transposing it before multiplying.
 
 \myFigure{../material_P3/out3/mv_att2/mult_cache_write.png}{Cache write misses of the multiplication programs}{mult_misses_write}{0.5}
 
@@ -232,7 +232,7 @@ First of all, we are going to consider only read misses:
 \myFigure{../material_P3/protect_out4/BlockSize_16384/cache_lectura.png}{Cache read misses with a cache of 16384B}{block_16384B_lec}{0.52}
 
 
-The first thing we notice is that as we increase the size of the cache, the lines for each block size configuration get closer (take for instace the case of a 16384B cache -- figure \ref{block_16384B_lec}).  Therefore, it makes sense to think that the impact of the block size will be greater when the size of the elements of the matrix is of the order of the cache and for small caches.
+The first thing we notice is that as we increase the size of the cache, the lines for each block size configuration get closer (take for instace the case of a 16384B cache -- figure \ref{block_16384B_lec}).  Therefore, it makes sense to think that the impact of the block size (for the regular multiplication) will be greater for small caches.
 
 The key aspect is going to be the number of lines of the cache for each configuration. In order to determine this number, we have to do the following calculation: 
 \[
@@ -265,7 +265,7 @@ Thus, we are not getting the problem discussed above and the result does not dif
 \pagebreak
 
 Now, we will look at write misses:
-Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_16384B_esc}).
+Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrices and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_16384B_esc}).
 
 
 \myFigure{../material_P3/protect_out4/BlockSize_2048/cache_escritura.png}{Cache write misses with a cache of 2048B}{block_2048_esc}{0.52}
