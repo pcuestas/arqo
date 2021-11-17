@@ -205,8 +205,6 @@ Furthermore, each cache block contains 8 elements of a matrix (which means that,
 This means that when $\mathbf{A}$ is being multiplied by $\mathbf{B}$, it frequently occurs (more than once per element $c_{i,j}$ of the result $\mathbf{C}=\mathbf{AB}$) that the current block being used of $\mathbf{A}$ has the same index as the one being used from $\mathbf{B}$. This implies that, if the cache is 1-way associative, the two current blocks will be replacing each other (which is known as conflict misses); this causes the much higher number of misses for this kind of cache. However, when associativity increases, we not longer have the problem that the two current blocks rewrite each other, so the number of misses decreases significantly.
 
 
-\pagebreak
-
 \addcontentsline{toc}{subsubsection}{Experiment 2: block size}
 \subsubsection*{Exercise 4. Experiment 2: block size}
 
@@ -218,14 +216,18 @@ First of all, we are going to consider only read misses:
 
 \myFigure{../material_P3/protect_out4/BlockSize_2048/cache_lectura.png}{Cache read misses with a cache of 2048B}{block_2048_lec}{0.52}
 
+\pagebreak
 
 \myFigure{../material_P3/protect_out4/BlockSize_4096/cache_lectura.png}{Cache read misses with a cache of 4096B}{block_4096_lec}{0.52}
 
+
 \myFigure{../material_P3/protect_out4/BlockSize_8192/cache_lectura.png}{Cache read misses with a cache of 8192B}{block_8192B_lec}{0.52}
+
+\pagebreak
 
 \myFigure{../material_P3/protect_out4/BlockSize_16384/cache_lectura.png}{Cache read misses with a cache of 16384B}{block_16384B_lec}{0.52}
 
-\pagebreak 
+
 The first thing we notice is that as we increase the size of the cache, the lines for each block size configuration get closer (take for instace the case of a 16384B cache -- figure \ref{block_16384B_lec}).  Therefore, it makes sense to think that the impact of the block size will be greater when the size of the elements of the matrix is of the order of the cache and for small caches.
 
 The key aspect is going to be the number of lines of the cache for each configuration. In order to determine this number, we have to do the following calculation: 
@@ -254,8 +256,9 @@ So the problem in using big block sizes is that we limit the number of rows in t
 
 We could do the same analysis for the case of a 16384B cache. 
 This time the number of lines when the block is 256B is 64, which is bigger than 32 (the number of elements that can be stored in a block).
-Thus, we are not getting the problem discussed above and the result does not differ much to the ones obtained with smaller values of the block size.\\
+Thus, we are not getting the problem discussed above and the result does not differ much to the ones obtained with smaller values of the block size.
 
+\pagebreak
 
 Now, we will look at wrie misses:
 Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_8192B_esc}). 

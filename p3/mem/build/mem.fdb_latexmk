@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1637150553 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637150555
+["pdflatex"] 1637156652 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637156687
   "../material_P3/out0/mv/cache.dat" 1636975944 581 b56c9348da13905e0c3a848e32fe5586 ""
   "../material_P3/out0/mv/cpuinfo.dat" 1636975944 4704 df2bae85f7d097d1a66d7ec96c668ad1 ""
   "../material_P3/out0/mv/figure.png" 1636975944 35147 192136de1ea772616b141f3de32ff50e ""
@@ -19,7 +19,7 @@
   "../material_P3/protect_out4/asoc/p2/4096/escritura.png" 1637090142 96134 53d0431d8fac2826d306a05bd845e90a ""
   "../material_P3/protect_out4/asoc/p2/4096/lectura.png" 1637090142 93768 3a9b03da1b5b0a5b7daadbde928c4b51 ""
   "/etc/texmf/web2c/texmf.cnf" 1635780879 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1637150527 19718 0619cd929542a390def5034cb40c3f2c ""
+  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1637156641 19486 3fd6f0dd4a8af4bd45c6727cd9aea218 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -162,11 +162,11 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1635780939 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1635780974 4127780 059d6e91ad3b2397b58863332d34540d ""
-  "build/mem.aux" 1637150555 5622 52a47f717561812aa8c6e1aba778cd81 ""
-  "build/mem.out" 1637150555 359 dee4ef73b71d90136e2c41c3c2414213 ""
-  "mem.tex" 1637150527 19718 0619cd929542a390def5034cb40c3f2c ""
+  "build/mem.aux" 1637156654 5620 f328b65e01d8ae4d25238c349005d49d ""
+  "build/mem.out" 1637156654 359 dee4ef73b71d90136e2c41c3c2414213 ""
+  "mem.tex" 1637156641 19486 3fd6f0dd4a8af4bd45c6727cd9aea218 ""
   (generated)
+  "build/mem.aux"
+  "build/mem.pdf"
   "build/mem.out"
   "build/mem.log"
-  "build/mem.pdf"
-  "build/mem.aux"
