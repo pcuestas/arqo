@@ -22,8 +22,6 @@ rm -f $fPNGread $fPNGwrite
 # directory for output files
 mkdir out2
 
-echo "Running slow and fast..."
-
 fileAux=auxfile.dat
 
 for ((SLone=1024;SLone<=8192;SLone=SLone*2)); do 

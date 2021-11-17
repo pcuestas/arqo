@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1637178256 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637178259
+["pdflatex"] 1637181330 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637181371
   "../material_P3/out0/mv/cache.dat" 1636975944 581 b56c9348da13905e0c3a848e32fe5586 ""
   "../material_P3/out0/mv/cpuinfo.dat" 1636975944 4704 df2bae85f7d097d1a66d7ec96c668ad1 ""
   "../material_P3/out0/mv/figure.png" 1636975944 35147 192136de1ea772616b141f3de32ff50e ""
@@ -20,7 +20,7 @@
   "../material_P3/protect_out4/asoc/p2/4096/escritura.png" 1637090142 96134 53d0431d8fac2826d306a05bd845e90a ""
   "../material_P3/protect_out4/asoc/p2/4096/lectura.png" 1637090142 93768 3a9b03da1b5b0a5b7daadbde928c4b51 ""
   "/etc/texmf/web2c/texmf.cnf" 1635780879 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1637178256 20636 53e89c6387ebf3589706684cefc8252d ""
+  "/home/arqo/repo/arqo/p3/mem/mem.tex" 1637181329 20566 dcdf781f8777104f78ec031e14ab27d6 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -161,13 +161,13 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1635780939 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1635780974 4127780 059d6e91ad3b2397b58863332d34540d ""
-  "build/mem.aux" 1637178259 5929 aab169aeb08eafb2c9d8599c51e12ea3 ""
-  "build/mem.out" 1637178259 468 3af472f9d152672c808c9919c30ebc74 ""
-  "build/mem.toc" 1637178259 493 d64a43c4db0dbf5beb8f859b46041962 ""
-  "mem.tex" 1637178256 20636 53e89c6387ebf3589706684cefc8252d ""
+  "build/mem.aux" 1637181333 5962 47a09ca2303158ec40835afaa477a02a ""
+  "build/mem.out" 1637181333 501 99af93832a5e201ba5a5d212e42f0612 ""
+  "build/mem.toc" 1637181333 526 a4ea1e82260e3aafb2d40f32a1f3616b ""
+  "mem.tex" 1637181329 20566 dcdf781f8777104f78ec031e14ab27d6 ""
   (generated)
-  "build/mem.pdf"
-  "build/mem.aux"
+  "build/mem.toc"
   "build/mem.out"
   "build/mem.log"
-  "build/mem.toc"
+  "build/mem.aux"
+  "build/mem.pdf"

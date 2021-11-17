@@ -19,8 +19,7 @@ rm -f $fDAT $fPNG $fDATaux
 touch $fDAT
 
 echo "Running slow and fast..."
-# bucle para N desde P hasta Q 
-#for N in $(seq $Ninicio $Npaso $Nfinal);
+
 for i in $(seq 1 1 $NMAXiterations); do 
 	for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
 		echo " iteration $i - N: $N / $Nfinal..."

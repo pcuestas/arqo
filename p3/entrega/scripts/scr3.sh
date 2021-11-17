@@ -22,8 +22,6 @@ mkdir out3
 touch $fDAT
 touch $fDATaux
 
-echo "Running slow and fast..."
-
 
 for i in $(seq 1 1 $NMAXiterations); do 
 	for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do

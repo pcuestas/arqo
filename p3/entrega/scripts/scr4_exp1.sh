@@ -24,8 +24,6 @@ mkdir out4
 mkdir out4/asoc
 mkdir out4/asoc/$L1size
 
-echo "Running slow and fast..."
-
 fileAux=out4/asoc/$L1size/auxfile.dat
 
 for ((ASOC=1;ASOC<=16;ASOC=ASOC*2)); do 

@@ -23,8 +23,6 @@ rm -f -r out4/BlockSize_$L1size
 mkdir out4
 mkdir out4/BlockSize_$L1size
 
-echo "Running slow and fast..."
-
 fileAux=out4/BlockSize_$L1size/auxfile.dat
 
 for ((BlockSize=32;BlockSize<=256;BlockSize=BlockSize*2)); do 
