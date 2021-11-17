@@ -225,11 +225,11 @@ First of all, we are going to consider only read misses:
 \myFigure{../material_P3/protect_out4/BlockSize_16384/cache_lectura.png}{Cache read misses with a cache of 16384B}{block_16384B_lec}{0.55}
 
 \pagebreak 
-The first thing we notice is that as we increase the size of the cache, the lines for each block size configuration get closer (take for instace the case of a 16384B cache \ref{block_16384B_lec}).  Therefore, it makes sense to think that the impact of the block size will be greater when the size of the elements of the matrix is of the order of the cache and for small caches.
+The first thing we notice is that as we increase the size of the cache, the lines for each block size configuration get closer (take for instace the case of a 16384B cache -figure \ref{block_16384B_lec}-).  Therefore, it makes sense to think that the impact of the block size will be greater when the size of the elements of the matrix is of the order of the cache and for small caches.
 
 The key aspect is going to be the number of lines of the cache for each configuration. In order to determine this number, we have to do the following calculation: 
 \[
-\text{Number of rows} = \frac{\text{Cache Size}}{\text{Block Size}}
+\text{Number of lines} = \frac{\text{Cache Size}}{\text{Block Size}}
 \]
 
 Let's focus now in the case of a 2048B cache. If we subsitute the different values of the block size, we get these numbers of lines:
@@ -244,6 +244,7 @@ Let's focus now in the case of a 2048B cache. If we subsitute the different valu
                                           &                         &                         &                          &                          \\
                                           &                         &                         &                          &                         
     \end{tabular}
+    \caption{\label{tab:table-name}Relation between block size and number of lines for a 1-way 2048B cache.}
 \end{table}
 }
 
@@ -256,7 +257,7 @@ We could do the same analysis for the case of a 16384B cache. This time the numb
 
 
 Now, we will look at wrie misses:
-Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and the part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_8192B_esc}). 
+Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_8192B_esc}). 
 
 
 \myFigure{../material_P3/protect_out4/BlockSize_2048/cache_escritura.png}{Cache write misses with a cache of 2048B}{block_2048_esc}{0.55}
