@@ -6,7 +6,7 @@
 
 void multiply_t(tipo **a, tipo **bt, tipo **c, int n);
 void transpose(tipo **b, int n);
-void freeMatrixes(tipo **a, tipo **b, tipo **c);
+void freeMatrices(tipo **a, tipo **b, tipo **c);
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 	n = atoi(argv[1]);
 	if (!(a = generateMatrix(n)) || !(b = generateMatrix(n)) || !(c=generateEmptyMatrix(n)))
 	{
-		freeMatrixes(a, b, c);
+		freeMatrices(a, b, c);
 		return -1;
 	}
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
 	printf("Execution time: %f\n", ((fin.tv_sec * 1000000 + fin.tv_usec) - (ini.tv_sec * 1000000 + ini.tv_usec)) * 1.0 / 1000000.0);
 
-	freeMatrixes(a, b, c);
+	freeMatrices(a, b, c);
 	return 0;
 }
 
@@ -72,7 +72,7 @@ void transpose(tipo **b, int n)
 	}
 }
 
-void freeMatrixes(tipo **a, tipo **b, tipo **c)
+void freeMatrices(tipo **a, tipo **b, tipo **c)
 {
 	if(a) freeMatrix(a);
 	if(b) freeMatrix(b);

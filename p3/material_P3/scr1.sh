@@ -1,6 +1,7 @@
-# Ejemplo script, para P3 arq 2019-2020
-
 #!/bin/bash
+
+# Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
+# Script for the exercise 1
 
 # inicializar variables
 Ninicio=1024
@@ -23,11 +24,7 @@ echo "Running slow and fast..."
 for i in $(seq 1 1 $NMAXiterations); do 
 	for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
 		echo " iteration $i - N: $N / $Nfinal..."
-		
-		# ejecutar los programas slow y fast consecutivamente con tamaño de matriz N
-		# para cada uno, filtrar la línea que contiene el tiempo y seleccionar la
-		# tercera columna (el valor del tiempo). Dejar los valores en variables
-		# para poder imprimirlos en la misma línea del fichero de datos
+	
 		slowTime=$(./slow $N | grep 'time' | awk '{print $3}')
 		fastTime=$(./fast $N | grep 'time' | awk '{print $3}')
 

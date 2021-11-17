@@ -1,6 +1,7 @@
-# Ejemplo script, para P3 arq 2019-2020
-
 #!/bin/bash
+
+# Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
+# Script for the exercise 3
 
 # inicializar variables
 P=4
