@@ -147,13 +147,13 @@ First, we will analyze the write misses:
 \myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache write misses.}{cache_escritura}{0.55}
 
 
-It may seem that only four lines have been plotted, however this is not the case. (We have plotted the slow graphs with a bit of transparency so that the fast graphs can also be seen). The slow and fast version have (almost) the same number of write misses (for the same execution values of N and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows (\texttt{generateMatrix(int size)}).
+It may seem that only four lines have been plotted, however this is not the case. (We have plotted the slow graphs with a bit of transparency so that the fast graphs can also be seen). The slow and fast version have (almost) the same number of write misses (for the same execution values of N and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows, using the function \texttt,{generateMatrix(int size)}.
 
 On the other hand, the read misses show different results:
 
 \myFigure{../material_P3/out2/mv_att1/cache_lectura.png}{Cache read misses.}{cache_lectura}{0.55}
 
-This time, we get 8 different lines, as one could expected beforehand. The dotted lines show the fast version, which necessarily must have less read misses than the fast one (when compared with the same cache size). Again, this is due to the fact that the matrix is stored by rows (one row beside the next, sequentially), and the slow version accesses by columns, while the fast version accesses by rows.
+This time, we get 8 different lines, as one could expected beforehand. The dotted lines show the fast version, which necessarily must have less read misses than the fast one (when compared with the same cache size). Again, this is due to the fact that the matrix is stored by rows (one row beside the next, sequentially), and the slow version accesses the matrix by columns, while the fast version accesses it by rows.
 
 The effect of the cache size can also be observed as the fast version for the smallest cache produces more misses than the slow version of the two largest caches. In general, it is to be expected that smaller sized caches would provoke a higher number of misses for the same program; which is what we see in figure \ref{cache_lectura}.
 
