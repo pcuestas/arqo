@@ -20,7 +20,7 @@ replot
 
 set title "Cache write misses"
 set ylabel "Number of misses"
-set xlabel "Matrix size (N)"
+set xlabel "Matrix size (N)" font ",10"
 set key right top Left
 set grid
 set term pngcairo dashed
