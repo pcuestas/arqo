@@ -210,7 +210,7 @@ These results do actually make sense. The line size of the cache is 64B, and the
 \subsubsection*{Exercise 4. Experiment 2: block size}
 
 
-For this second experiment, we are going to execute the two multiplication methods with caches of different sizes (2048B - 16384B) and see how the block size affects each time in the resulting misses. The caches used in the simulations are 1-way associative.
+For this second experiment, we are going to execute the two multiplication methods with caches of different sizes (2048B - 16384B) and see how the block size affects each time to the resulting misses. (The caches used in the simulations are all 1-way associative.)
 
 First of all, we are going to consider only read misses:
 
@@ -256,7 +256,7 @@ We could do the same analysis for the case of a 16384B cache. This time the numb
 
 
 Now, we will look at wrie misses:
-Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between rows of the operands (which produce read misses) and the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_8192B_esc}). 
+Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and the part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_8192B_esc}). 
 
 
 \myFigure{../material_P3/protect_out4/BlockSize_2048/cache_escritura.png}{Cache write misses with a cache of 2048B}{block_2048_esc}{0.55}
@@ -267,10 +267,6 @@ Once again, we see that the number of write misses is the same for the regular a
 \myFigure{../material_P3/protect_out4/BlockSize_8192/cache_escritura.png}{Cache write misses with a cache of 8192B}{block_8192B_esc}{0.55}
 
 %\myFigure{../material_P3/protect_out4/BlockSize_16384/cache_escritura.png}{Cache write misses with a cache of 16384B)}{block_16384B_esc}{0.55}
-\par
-
-Now, we will look at write misses:
-Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrix and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between rows of the operands (which produce read misses) and the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is ``big'' enough even if we use a block size of 256B.
 
 
 
