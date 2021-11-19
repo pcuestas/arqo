@@ -147,14 +147,14 @@ For obtaining the results, it is necessary to run the simulation several times i
 \addcontentsline{toc}{section}{Exercise 2: Cache size and performance}
 \section*{Exercise 2: Cache size and performance}
 
-We are team 04, so for these tests we have used $P=4$.
+We are team 04, so for this tests we have used $P=4$.
 
 First, we will analyze the write misses: 
 
 \myFigure{../material_P3/out2/mv_att1/cache_escritura.png}{Cache write misses.}{cache_escritura}{0.545}
 
 
-It may seem that only four lines have been plotted, however this is not the case. (We have plotted the \emph{slow} graphs with a bit of transparency so that the \emph{fast} graphs can also be seen). The slow and fast versions have (almost) the same number of write misses (for the same execution values of $N$ and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows, using the function \texttt{generateMatrix(int size)}. The only other write operation that they perform is updating the value of variable \texttt{sum} (which occurs $N^2+1$ times per program). 
+It may seem that only four lines have been plotted, however this is not the case. (We have plotted the \emph{slow} graphs with a bit of transparency so that the \emph{fast} graphs can also be seen). The slow and fast versions have (almost) the same number of write misses (for the same execution values of $N$ and size of the cache). The reason behind this is that both programs fill (write) the initial matrix in the same way, by rows, using the function \texttt{generateMatrix(int size)}. The only other write operation that they perform is updating the value of variable \texttt{sum} (whick occurs $N^2+1$ times per program). 
 
 On the other hand, the read misses show different results:
 
@@ -166,8 +166,8 @@ In general, it is to be expected that smaller sized caches would provoke a highe
 The effect of the cache size can also be observed as the fast version for the smallest cache produces more misses than the slow version of the two largest caches. 
 
 
-\addcontentsline{toc}{section}{Exercise 3:  Cache and matrix multiplication}
-\section*{Exercise 3:  Cache and matrix multiplication}
+\addcontentsline{toc}{section}{Exercise 3}
+\section*{Exercise 3}
 
 The image below (figure \ref{mult_time}) shows the execution time for the two different multiplication methods. The transposed multiplication is significantly faster as it accesses matrices by rows when multiplying. On the other hand, in the regular multiplication, the second operand matrix is accessed by columns which produces a higher rate of read misses and, as a result, a higher execution time.
 
@@ -192,8 +192,8 @@ The write misses cannot be appreciated in figure \ref{mult_misses}, as they are 
 For this exercise, we have distinguished two main experiments. In each of them, we modify a different parameter of the cache, leaving the rest untouched. For both, as requested, we use the programs written for exercise 3: \emph{multiplication.c} and \emph{multiplication\_t.c}
 
 
-\addcontentsline{toc}{subsection}{Experiment 1: Associativity}
-\subsection*{Exercise 4. Experiment 1: Associativity}
+\addcontentsline{toc}{subsection}{Experiment 1: associativity}
+\subsection*{Exercise 4. Experiment 1: associativity}
 
 Here we simulate (using \emph{valgrind}) the execution of both programs. We fix the line (block) size (64B), as well as the cache sizes: level 1 caches (both data and instructions caches) are of size 4kB, and level 2 cache is of size 8MB. For each experiment, we test with matrix sizes ($N\times N$) for $N\in\{3072,3328,3584,3840,4096\}$. The difference between experiments is the type of set associative caches. We test for 1-way, 2-way, 4-way and 8-way set associative caches.
 
@@ -210,8 +210,8 @@ Furthermore, each cache block contains 8 elements of a matrix (which means that,
 This means that when $A$ is being multiplied by $B$, it frequently occurs (when calculating $c_{ij}=\sum_{k=1}^N a_{ik}b_{kj}$) that the current block being used of $A$ has the same index as the one being used from $B$. This implies that, if the cache is 1-way associative, the two current blocks will be replacing each other until one of them stops being used (which is known as conflict misses or collision misses); this causes the much higher number of misses for this kind of cache. However, when associativity increases, we not longer have the problem that the two current blocks rewrite each other in cache, so the number of misses decreases significantly.
 
 
-\addcontentsline{toc}{subsection}{Experiment 2: Block size}
-\subsection*{Exercise 4. Experiment 2: Block size}
+\addcontentsline{toc}{subsection}{Experiment 2: block size}
+\subsection*{Exercise 4. Experiment 2: block size}
 
 
 For this second experiment, we are going to execute the two multiplication methods with caches of different sizes (2048B - 16384B) and see how the block size affects each time to the resulting misses. (The caches used in the simulations are all 1-way associative -- direct mapped).
@@ -265,7 +265,7 @@ Thus, we are not getting the problem discussed above and the result does not dif
 \pagebreak
 
 Now, we will look at write misses:
-Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrices and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is ``big'' enough even if we use a block size of 256B (figure \ref{block_16384B_esc}).
+Once again, we see that the number of write misses is the same for the regular and transpose multiplication as expected. The effect of the block size is similar to the one described for the read misses. The main idea is that when the cache is small and we use a large block, we reduce significantly the number of lines. Therefore, when multiplying both matrices and writing the result, there are going to be many replaces between the blocks used for calculation and the block used for writing the result. Just to ilustrate this conflict, let's recall the case of a 2048B cache with 256B blocks. In this situation, the cache has 8 lines whose content alternates between part of the rows of the operands (which produces read misses) and part of the row of the result matrix (write misses). The scarcity of lines is what provokes a high rate of misses. Nonetheless, as we increase the size of the cache, the number of lines is "big" enough even if we use a block size of 256B (figure \ref{block_16384B_esc}).
 
 
 \myFigure{../material_P3/protect_out4/BlockSize_2048/cache_escritura.png}{Cache write misses with a cache of 2048B}{block_2048_esc}{0.52}

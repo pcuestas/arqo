@@ -1,7 +1,7 @@
 \BOOKMARK [1][-]{section*.1}{Exercise 0: System cache}{}% 1
 \BOOKMARK [1][-]{figure.3}{Exercise 1: Cache and performance}{}% 2
 \BOOKMARK [1][-]{figure.4}{Exercise 2: Cache size and performance}{}% 3
-\BOOKMARK [1][-]{figure.6}{Exercise 3: Cache and matrix multiplication}{}% 4
+\BOOKMARK [1][-]{figure.6}{Exercise 3}{}% 4
 \BOOKMARK [1][-]{figure.9}{Exercise 4: Cache parameters in matrix multiplication}{}% 5
-\BOOKMARK [2][-]{section*.6}{Experiment 1: Associativity}{figure.9}% 6
-\BOOKMARK [2][-]{figure.11}{Experiment 2: Block size}{figure.9}% 7
+\BOOKMARK [2][-]{section*.6}{Experiment 1: associativity}{figure.9}% 6
+\BOOKMARK [2][-]{figure.11}{Experiment 2: block size}{figure.9}% 7
