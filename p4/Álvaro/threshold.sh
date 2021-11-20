@@ -3,25 +3,19 @@
 
 # inicializar variables
 
-T=10000000
-MAX_STEPS=30
+T=1000000
+MAX_STEPS=20
 
-fDAT=threshold.dat
-fDAT1=threshold1.dat
-fAUX=aux.dat
-
-fPNG_time=mult_time.png
-fPNG_cache=mult_cache.png
+fDAT=out2/threshold.dat
+fAUX=out2/aux.dat
 
 REP=20
-
+INCR=100000
 # borrar el fichero DAT y el fichero PNG
-rm -f $fDAT $fPNG_time $fPNG_cache
-rm -f $fDAT1 $fDAT
+rm -f $fAUX $fDAT
 
 # generar el fichero DAT vacío
-touch $fDAT
-touch $fDAT1
+touch $fDAT $fAUX
 
 # delete the directory
 rm -f -r out2
@@ -30,45 +24,43 @@ rm -f -r out2
 mkdir out2
 
 echo "Running parallel and serial.."
-# bucle para N desde P hasta Q 
-#for N in $(seq $Ninicio $Npaso $Nfinal);
-
 
 
 i=0
-while [ i< MAX_STEPS]; do
+for (( i=0; i<= MAX_STEPS; i +=1)); do
+    echo "      Step $i, T=$T"
     for ((j = 0 ; j <= REP ; j += 1));do
-        serieInf=$(./pescalar_serie 0.8*$N | grep 'Tiempo' | awk '{print $2}')
-        paralelInf=$(./pescalar_par3 0.8*$N | grep 'time' | awk '{print $2}')
-        serieSup=$(./pescalar_serie 1.2*$N | grep 'Tiempo' | awk '{print $2}')
-        paralelSup=$(./pescalar_par3 1.2*$N | grep 'time' | awk '{print $2}')
+        echo "      Iteration $j"
+        inf=`echo "0.8*$T" | bc`
+        sup=`echo "1.2*$T" | bc`
+        serieInf=$(./pescalar_serie $inf | grep 'Tiempo' | awk '{print $2}')
+        paralelInf=$(./pescalar_par3 $inf | grep 'Tiempo' | awk '{print $2}')
+        serieSup=$(./pescalar_serie $sup | grep 'Tiempo' | awk '{print $2}')
+        paralelSup=$(./pescalar_par3 $sup | grep 'Tiempo' | awk '{print $2}')
+
+        echo "$T	$serieInf   $serieSup   $paralelInf $paralelSup" >> $fAUX
     done
 
-    echo "$N	$serie	$paralel" >> $fDAT 
-
-    i +=1
-done
-
-#Calcular las medias de las ejecuciones y el numero de misses
-for ((N = Ninicio ; N <= Nfinal ; N += Npaso)); do
-
-    echo "Ejecutando con valgrind $N / $Nfinal"
-    rm -f $fAUX
-    touch $fAUX
-
-    media_slow=$(grep $N $fDAT | awk  '{ slow += $2; count++ } END { print slow/count}')
-    media_fast=$(grep $N $fDAT | awk  '{ slow += $3; count++ } END { print slow/count}')
     
-    conf_valgrind="valgrind --tool=cachegrind --cachegrind-out-file=$fAUX"
     
-    $conf_valgrind ./multiplication $N 2> /dev/null > /dev/null
-    D1mr_slow=$(cg_annotate $fAUX | sed -n '18p' | awk '{print $5}')
-    D1mw_slow=$(cg_annotate $fAUX | sed -n '18p' | awk '{print $8}')
+    medias=$(grep -w $T $fAUX | awk  '{ sI += $2; sS+=$3; pI += $4; pS += $5; n++ } END {printf "%s\t%s\t%s\t%s", sI/n, sS/n, pI/n, pS/n}')
 
-    $conf_valgrind ./transposedmultiplication $N 2> /dev/null > /dev/null
-    D1mr_fast=$(cg_annotate $fAUX | sed -n '18p' | awk '{print $5}')
-    D1mw_fast=$(cg_annotate $fAUX | sed -n '18p' | awk '{print $8}')
     
-    echo "$N	$media_slow     $D1mr_slow      $D1mw_slow    $media_fast       $D1mr_fast      $D1mw_fast" >> $fDAT1
+    echo "$T    ${medias[0]}  ${medias[1]}  ${medias[2]}  ${medias[3]}" >> $fDAT
+  
+    echo "NO FUNCIONAN LAS MEDIAS" ##REVISAR MEDIAS !!!!!
+    echo "${medias[0]} ${medias[2]} ${medias[1]}  ${medias[3]} "
+
+
+    if [[ ${medias[0]} -lt ${medias[2]} ]] && [[ ${medias[1]} -gt ${medias[3]} ]]
+    then
+        T=$((T-INCR))
+    else
+        T=$((T+INCR))
+    fi
+
+    
+    INCR=$((INCR-5000))
+
 done
 

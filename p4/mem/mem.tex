@@ -97,6 +97,8 @@
 
 It is possible to do so: if we first execute omp1 without arguments to see the available cores and then we execute it again with a number of threads higher than the amount of cores, we will see that the execution is carried on without problems. Using more threads than cores may make no sense when the goal is simply to parrallelize tasks because the threads will interrupt each other. However, if there are several tasks to be run at the same time and any of them may provoke the thread to go asleep, then using more threads could help to take advantage of the time that particular thread is asleep. 
 
+%Quitar ultimo párrafo??
+
 \item \textcolor{gray}{How many threads should you use on the computers in the lab? And in the cluster? And on your own team?} 
 
 For a general situation, the number of threads to be used is the one determined by the function \emph{omp\_get\_max\_threads()}. Indeed this value used by default.

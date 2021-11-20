@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1637363309 "/home/zama/Escritorio/Info/Tercero/Arqo/arqo/p4/mem/mem.tex" "build/mem.pdf" "mem" 1637363310
+["pdflatex"] 1637409884 "/home/zama/Escritorio/Info/Tercero/Arqo/arqo/p4/mem/mem.tex" "build/mem.pdf" "mem" 1637409885
   "/etc/texmf/web2c/texmf.cnf" 1636414110 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/zama/Escritorio/Info/Tercero/Arqo/arqo/p4/mem/mem.tex" 1637363309 6791 428d473dc76ecc43d8c84e8f902a8a5d ""
+  "/home/zama/Escritorio/Info/Tercero/Arqo/arqo/p4/mem/mem.tex" 1637409884 6818 94d1684ea475724ac620e5e22f2f464e ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -149,13 +149,13 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1581979058 38841 ce3692aa899bb693b90b87eaa5d4d84e ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1636567475 4770781 1ed1abab22da9c3e2cc82e4db562318b ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1636567516 8259056 ef921b363f117cfbff61514ee53b2fc8 ""
-  "build/mem.aux" 1637363310 876 82c5970ef1ae0a7efaf647f4af1b18ab "pdflatex"
-  "build/mem.out" 1637363310 90 d374a9ee54884b1e6c2f94b2864ff8ef "pdflatex"
-  "build/mem.toc" 1637363310 132 20f8fa72bee7af8df8e79fd6c0448408 "pdflatex"
-  "mem.tex" 1637363309 6791 428d473dc76ecc43d8c84e8f902a8a5d ""
+  "build/mem.aux" 1637409885 876 82c5970ef1ae0a7efaf647f4af1b18ab "pdflatex"
+  "build/mem.out" 1637409885 90 d374a9ee54884b1e6c2f94b2864ff8ef "pdflatex"
+  "build/mem.toc" 1637409885 132 20f8fa72bee7af8df8e79fd6c0448408 "pdflatex"
+  "mem.tex" 1637409884 6818 94d1684ea475724ac620e5e22f2f464e ""
   (generated)
-  "build/mem.log"
-  "build/mem.toc"
-  "build/mem.aux"
-  "build/mem.pdf"
   "build/mem.out"
+  "build/mem.aux"
+  "build/mem.toc"
+  "build/mem.log"
+  "build/mem.pdf"
