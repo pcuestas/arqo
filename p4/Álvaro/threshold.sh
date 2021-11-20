@@ -10,7 +10,7 @@ fDAT=out2/threshold.dat
 fAUX=out2/aux.dat
 
 REP=20
-INCR=100000
+INCR_FACTOR=0.1
 # borrar el fichero DAT y el fichero PNG
 rm -f $fAUX $fDAT
 
@@ -25,8 +25,6 @@ mkdir out2
 
 echo "Running parallel and serial.."
 
-
-i=0
 for (( i=0; i<= MAX_STEPS; i +=1)); do
     echo "      Step $i, T=$T"
     for ((j = 0 ; j <= REP ; j += 1));do
@@ -54,13 +52,12 @@ for (( i=0; i<= MAX_STEPS; i +=1)); do
 
     if [[ ${medias[0]} -lt ${medias[2]} ]] && [[ ${medias[1]} -gt ${medias[3]} ]]
     then
-        T=$((T-INCR))
+        T=`echo "$T-$INCR_FACTOR*$T" | bc`
     else
-        T=$((T+INCR))
+        T=`echo "$T+$INCR_FACTOR*$T" | bc`
     fi
 
     
-    INCR=$((INCR-5000))
 
 done
 
