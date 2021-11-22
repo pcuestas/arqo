@@ -13,10 +13,10 @@ int main(int argc, char *argv[])
 	printf("Hay %d cores disponibles\n", nproc);
 
 	if (argc == 2)
-     		arg = atoi( argv[1] );	
-        else
-        	arg = nproc;  
-        omp_set_num_threads(arg);
+    arg = atoi( argv[1] );	
+  else
+    arg = nproc;  
+  omp_set_num_threads(arg);
 	nthr = omp_get_max_threads();
 	printf("Me han pedido que lance %d hilos\n", nthr);
 	

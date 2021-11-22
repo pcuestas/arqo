@@ -90,12 +90,12 @@
 
 
 \newpage
-\section{Exercise 1}
+\section{Exercise 1: Basic OpenMP programs}
 
 \begin{enumerate}
 \item \textcolor{gray}{Is it possible run more threads than cores on the system? Does it make sense to do it?}
 
-It is possible to do so: if we first execute omp1 without arguments to see the available cores and then we execute it again with a number of threads higher than the amount of cores, we will see that the execution is carried on without problems. Using more threads than cores may make no sense when the goal is simply to parrallelize tasks because the threads will interrupt each other. However, if there are several tasks to be run at the same time and any of them may provoke the thread to go asleep, then using more threads could help to take advantage of the time that particular thread is asleep. 
+It is possible to do so: if we first execute omp1 without arguments to see the available cores and then we execute it again with a number of threads higher than the amount of cores, we will see that the execution is carried out without problems. Using more threads than cores may make no sense when the goal is simply to parrallelize a single task because the threads will interrupt each other. However, if there are several tasks to be run at the same time and any of them may provoke the thread to go asleep, then using more threads could help to take advantage of the time that particular thread is asleep. 
 
 %Quitar ultimo párrafo??
 
@@ -105,30 +105,31 @@ For a general situation, the number of threads to be used is the one determined 
 
 \item \textcolor{gray}{Modify the omp1.c program to use the three ways to choose the number of threads and try to guess the priority among them}
 
-The priority order is: \texttt{}{OMP\_NUM\_THREADS} $<$ \emph{omp\_get\_max\_threads()} $<$ \#pragma\ omp parallel num\_threads(numthr) 
+The priority order is: \texttt{}{OMP\_NUM\_THREADS} $<$ \texttt{omp\_set\_num\_threads()} $<$ \#pragma\ omp parallel num\_threads(numthr) 
 
 \item \textcolor{gray}{How does OpenMP behave when we declare a private variable?}
 
-Each thread created will have its own variable.
+Each thread created will create its own (new) variable.
 
 \item \textcolor{gray}{What happens to the value of a private variable when the parallel region starts executing?}
 
-The variable is not initialized when allocated in the thread stack. Furthermore, it is private to that thread so its value will only change because of actions performed by that specific thread.
+The variable is not necessarily initialized when allocated in each thread stack, although when executing \texttt{omp2} in the lab computers, it is initialized as if it were a \emph{firstprivate} variable (with the value of the variable previous to the parallel section). Furthermore, it is private to each thread so its value will only change because of instructions performed by that specific thread.
 
 \item \textcolor{gray}{What happens to the value of a private variable at the end of the parallel region?}
 
-After the parallel region, the master threads resumes execution and the value of the variable is the one from before the parallel execution. (Privates variable are local to the thread and the parallel region)
+After the parallel region, the master threads resumes execution and the value of the variable is the one from before the parallel execution. Privates variable are local to the threads and the parallel region, so they are deleted when the threads terminate.
 
 \item \textcolor{gray}{Does the same happen with public variables?}
 
-Public variables are shared by all threads (no copies of the variable are created for each thread), threfore, after the parallel region, the value will be determined by the code executed in the parallel region (and, perhaps, by the order of execution of the several threads).
+Public variables are shared by all threads (no copies of the variable are created for each thread); threfore, after the parallel region, the value will be determined by the code executed in the parallel region (and, perhaps, by the order of execution of the several threads).
+
 \end{enumerate}
 
-\section{Exercise 2}
+\section{Exercise 2: Parallelize the dot product}
 
 \begin{enumerate}
 
-    \item \textcolor{gray}{ Run the serial version and understand what the result should be for different vector sizes.} 
+    \item \textcolor{gray}{Run the serial version and understand what the result should be for different vector sizes.} 
     
     As we are calculating the dot product of two vectors of size M where all the components are 1, the expected output is M.
     

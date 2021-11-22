@@ -26,23 +26,21 @@ int main(void)
 		return -1;
 	}
 	
-        nproc=omp_get_num_procs();
-        omp_set_num_threads(nproc);   
-     
-        printf("Se han lanzado %d hilos.\n",nproc);
+  nproc=omp_get_num_procs();
+  omp_set_num_threads(nproc);   
+
+  printf("Se han lanzado %d hilos.\n",nproc);
 
 	gettimeofday(&ini,NULL);
 	/* Bloque de computo */
 	sum = 0;
 	
-        #pragma omp parallel for //reduction(+:sum)
-	for(k=0;k<M;k++)
-	{	
-		#pragma omp critical
-		{
-		sum = sum + A[k]*B[k];
+  #pragma omp parallel for //reduction(+:sum)
+		for(k=0;k<M;k++)
+		{	
+			#pragma omp critical
+				sum = sum + A[k]*B[k];
 		}
-	}
 	/* Fin del computo */
 	gettimeofday(&fin,NULL);
 
