@@ -15,9 +15,9 @@ int main(int argc, char* argv[])
 	int size;
 
 	if (argc == 2)
-     		size = atoi( argv[1] );	
-    else
-        	size = M;  
+    size = atoi( argv[1] );	
+  else
+    size = M;  
 	
 	A = generateVectorOne(size);
 	B = generateVectorOne(size);

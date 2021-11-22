@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
     int size;
 
     if (argc == 2)
-     		size = atoi( argv[1] );	
+     	size = atoi( argv[1] );	
     else
-        	size = M;  
+      size = M;  
        
 	A = generateVectorOne(size);
 	B = generateVectorOne(size);
@@ -31,21 +31,20 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	
-        nproc=omp_get_num_procs();
-        omp_set_num_threads(nproc);   
-     
-        printf("Se han lanzado %d hilos.\n",nproc);
+  nproc=omp_get_num_procs();
+  omp_set_num_threads(nproc);   
+
+  printf("Se han lanzado %d hilos.\n",nproc);
 
 	gettimeofday(&ini,NULL);
 	/* Bloque de computo */
 	sum = 0;
 	
-        #pragma omp parallel for reduction(+:sum)
-	for(k=0;k<size;k++)
+  #pragma omp parallel for reduction(+:sum)
+		for(k=0;k<size;k++)
     {	
-		sum = sum + A[k]*B[k];
-
-	}
+			sum = sum + A[k]*B[k];
+		}
 	/* Fin del computo */
 	gettimeofday(&fin,NULL);
 

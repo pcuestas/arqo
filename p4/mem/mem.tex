@@ -149,8 +149,7 @@ Public variables are shared by all threads (no copies of the variable are create
         for(k=0;k<M;k++)
         {	
             #pragma omp atomic
-            sum = sum + A[k]*B[k];
-    
+                sum = sum + A[k]*B[k];
         } 
         ...
     \end{lstlisting}
