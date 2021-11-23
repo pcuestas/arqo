@@ -74,6 +74,8 @@
         \label{#3}
     \end{figure}
 }
+%grey item for enumerate
+\newcommand{\greyItem}[1]{\item \textcolor{gray}{#1}}
 
 
 \begin{document}
@@ -93,75 +95,87 @@
 \section{Exercise 1: Basic OpenMP programs}
 
 \begin{enumerate}
-\item \textcolor{gray}{Is it possible run more threads than cores on the system? Does it make sense to do it?}
+\greyItem{Is it possible run more threads than cores on the system? Does it make sense to do it?}
 
 It is possible to do so: if we first execute omp1 without arguments to see the available cores and then we execute it again with a number of threads higher than the amount of cores, we will see that the execution is carried out without problems. Using more threads than cores may make no sense when the goal is simply to parrallelize a single task because the threads will interrupt each other. However, if there are several tasks to be run at the same time and any of them may provoke the thread to go asleep, then using more threads could help to take advantage of the time that particular thread is asleep. 
 
 %Quitar ultimo párrafo??
 
-\item \textcolor{gray}{How many threads should you use on the computers in the lab? And in the cluster? And on your own team?} 
+\greyItem{How many threads should you use on the computers in the lab? And in the cluster? And on your own team?} 
 
 For a general situation, the number of threads to be used is the one determined by the function \emph{omp\_get\_max\_threads()}. Indeed this value used by default.
 
-\item \textcolor{gray}{Modify the omp1.c program to use the three ways to choose the number of threads and try to guess the priority among them}
+\greyItem{Modify the omp1.c program to use the three ways to choose the number of threads and try to guess the priority among them}
 
 The priority order is: \texttt{}{OMP\_NUM\_THREADS} $<$ \texttt{omp\_set\_num\_threads()} $<$ \#pragma\ omp parallel num\_threads(numthr) 
 
-\item \textcolor{gray}{How does OpenMP behave when we declare a private variable?}
+\greyItem{How does OpenMP behave when we declare a private variable?}
 
 Each thread created will create its own (new) variable.
 
-\item \textcolor{gray}{What happens to the value of a private variable when the parallel region starts executing?}
+\greyItem{What happens to the value of a private variable when the parallel region starts executing?}
 
 The variable is not necessarily initialized when allocated in each thread stack, although when executing \texttt{omp2} in the lab computers, it is initialized as if it were a \emph{firstprivate} variable (with the value of the variable previous to the parallel section). Furthermore, it is private to each thread so its value will only change because of instructions performed by that specific thread.
 
-\item \textcolor{gray}{What happens to the value of a private variable at the end of the parallel region?}
+\greyItem{What happens to the value of a private variable at the end of the parallel region?}
 
 After the parallel region, the master threads resumes execution and the value of the variable is the one from before the parallel execution. Privates variable are local to the threads and the parallel region, so they are deleted when the threads terminate.
 
-\item \textcolor{gray}{Does the same happen with public variables?}
+\greyItem{Does the same happen with public variables?}
 
 Public variables are shared by all threads (no copies of the variable are created for each thread); threfore, after the parallel region, the value will be determined by the code executed in the parallel region (and, perhaps, by the order of execution of the several threads).
 
 \end{enumerate}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 2: Parallelize the dot product}
 
 \begin{enumerate}
 
-    \item \textcolor{gray}{Run the serial version and understand what the result should be for different vector sizes.} 
+\greyItem{Run the serial version and understand what the result should be for different vector sizes.} 
     
-    As we are calculating the dot product of two vectors of size M where all the components are 1, the expected output is M.
+As we are calculating the dot product of two vectors of size M where all the components are 1, the expected output is M.
     
-    \item \textcolor{gray}{Run the parallelized code with the openmp pragma and answer the following questions in the document}
+\greyItem{Run the parallelized code with the openmp pragma and answer the following questions in the document}
     
-    The parallel version is not working due to the fact that variable sum is being shared (default mode). So we have severals threads writing in the same variable at the same time which produces a data race.
+The parallel version is not working due to the fact that variable sum is being shared (default mode). So we have severals threads writing in the same variable at the same time which produces a data race.
 
-    \item \textcolor{gray}{Modify the code and name the program pescalar\_par2. This version should give the correct result 
-    using the appropriate pragma:}
+\greyItem{Modify the code and name the program pescalar\_par2. This version should give the correct result using the appropriate pragma:}
 
-    The modification needed is adding the pragma clause just before the calculation.
-    Both \emph{pragmas} solve the data race. Nonetheless, the way they achieved so is different. \emph{Critial} pragma implies the use of a mutex so only one thread can access the block at a time (which is quite expensive in execution time) whereas \emph{atomic} ensures that the whole calculation (line 42) is executed as a single operation. The result is exactly the same as we are enclosing just a sentence of code, however, the second option is considerably faster.
+The modification needed is adding the pragma clause just before the calculation.
+Both \emph{pragmas} solve the data race. Nonetheless, the way they achieved so is different. \emph{Critial} pragma implies the use of a mutex so only one thread can access the block at a time (which is quite expensive in execution time) whereas \emph{atomic} ensures that the whole calculation (line 42) is executed as a single operation. The result is exactly the same as we are enclosing just a sentence of code, however, the second option is considerably faster.
 
-    \begin{lstlisting}[language=C, texcl=true]
-        ...
-        #pragma omp parallel for 
-        for(k=0;k<M;k++)
-        {	
-            #pragma omp atomic
-                sum = sum + A[k]*B[k];
-        } 
-        ...
-    \end{lstlisting}
+\begin{lstlisting}[language=C, texcl=true]
+    ...
+    #pragma omp parallel for 
+    for(k=0;k<M;k++)
+    {	
+        #pragma omp atomic
+            sum = sum + A[k]*B[k];
+    } 
+    ...
+\end{lstlisting}
 
-    \item \textcolor{gray}{Modify the code and name the resulting program pescalar\_par3. This version should give the correct 
-    result using the appropriate pragma: }
+\greyItem{Modify the code and name the resulting program pescalar\_par3. This version should give the correct result using the appropriate pragma: }
 
-    If we use \emph{reduction} we get better results than the ones obtained with \emph{atomic}
+If we use \emph{reduction} we get better results than the ones obtained with \emph{atomic}. This is the appropriate solution in this case, because it is the optimized version meant for this specific task.
 
-    \item \textcolor{gray}{Run time analysis}
+\greyItem{Run time analysis}
+
+We have written a script to test this (\emph{scr2_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in the lab computers) is very inconsistent. However, the first value that meets the requirements is $T=1200000$
+
+\myFigure{../material/outputs/out2_final/threshold.png}{Search for threshold in the lab computers}{threshold}{0.5}
 
 \end{enumerate}
+
+
+
+\section{Exercise 3: Parallel matrix multiplication}
+
+
+
+
 \end{document}
 
 
