@@ -20,7 +20,7 @@
  * @param c matrix C, where the result is stored
  * @param n size of matrices is nxn
  */
-void multiply(tipo **a, tipo **b, tipo **c, int n);
+void multiply(float **a, float **b, float **c, int n);
 
 /**
  * @brief frees the three matrices
@@ -29,15 +29,15 @@ void multiply(tipo **a, tipo **b, tipo **c, int n);
  * @param b matrix
  * @param c matrix
  */
-void freeMatrices(tipo **a, tipo **b, tipo **c);
+void freeMatrices(float **a, float **b, float **c);
 
 int main(int argc, char *argv[])
 {
 	int n;
-	tipo **a = NULL, **b = NULL, **c = NULL;
+	float **a = NULL, **b = NULL, **c = NULL;
 	struct timeval fin, ini;
 
-	printf("Word size: %ld bits\n", 8 * sizeof(tipo));
+	printf("Word size: %ld bits\n", 8 * sizeof(float));
 
 	if (argc != 2)
 	{
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void multiply(tipo **a, tipo **b, tipo **c, int n)
+void multiply(float **a, float **b, float **c, int n)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -79,7 +79,7 @@ void multiply(tipo **a, tipo **b, tipo **c, int n)
 	}
 }
 
-void freeMatrices(tipo **a, tipo **b, tipo **c)
+void freeMatrices(float **a, float **b, float **c)
 {
 	if(a) freeMatrix(a);
 	if(b) freeMatrix(b);
