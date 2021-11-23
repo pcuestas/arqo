@@ -20,7 +20,7 @@ fDAT="${DAT_DIR}threshold.dat"
 fAUX="${DAT_DIR}table.dat"
 fPNG="${DAT_DIR}threshold.png"
 
-TAB="\t\t\t\t"
+TAB="\t"
 
 
 # borrar el fichero DAT y el fichero PNGtipo

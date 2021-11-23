@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1637409471 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637409474
+["pdflatex"] 1637409471 "/home/arqo/repo/arqo/p3/mem/mem.tex" "build/mem.pdf" "mem" 1637687217
   "../material_P3/out0/mv/cache.dat" 1636975944 581 b56c9348da13905e0c3a848e32fe5586 ""
   "../material_P3/out0/mv/cpuinfo.dat" 1636975944 4704 df2bae85f7d097d1a66d7ec96c668ad1 ""
   "../material_P3/out0/mv/figure.png" 1636975944 35147 192136de1ea772616b141f3de32ff50e ""
@@ -166,8 +166,8 @@
   "build/mem.toc" 1637409473 526 a4ea1e82260e3aafb2d40f32a1f3616b ""
   "mem.tex" 1637409463 20566 dcdf781f8777104f78ec031e14ab27d6 ""
   (generated)
-  "build/mem.aux"
-  "build/mem.out"
   "build/mem.toc"
-  "build/mem.log"
   "build/mem.pdf"
+  "build/mem.aux"
+  "build/mem.log"
+  "build/mem.out"

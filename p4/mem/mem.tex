@@ -75,7 +75,7 @@
     \end{figure}
 }
 %grey item for enumerate
-\newcommand{\greyItem}[1]{\item \textcolor{gray}{#1}}
+\newcommand{\greyItem}[1]{\item \emph{\textcolor{darkgray}{#1}}}
 
 
 \begin{document}
@@ -163,18 +163,42 @@ If we use \emph{reduction} we get better results than the ones obtained with \em
 
 \greyItem{Run time analysis}
 
-We have written a script to test this (\emph{scr2_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in the lab computers) is very inconsistent. However, the first value that meets the requirements is $T=1200000$
+We have written a script to test this (\emph{scr2\_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in the lab computers) is very inconsistent. However, the first value that meets the requirements is $T=1200000$
 
 \myFigure{../material/outputs/out2_final/threshold.png}{Search for threshold in the lab computers}{threshold}{0.5}
 
 \end{enumerate}
 
 
+\pagebreak
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 3: Parallel matrix multiplication}
 
+We have sampled times for the different programs using matrices of size 2000, which yield high enough times to make a difference between the different implementations. Here are the results:
 
+\begin{figure}[h]
+    \input{./tables/table_n2000_1}
+    \centering
+    \caption{Times (seconds) for the requested tests}
+\end{figure}
 
+\begin{figure}[h]
+    \input{./tables/table_n2000_2}
+    \centering
+    \caption{Ratios for the requested tests}
+\end{figure}
+
+\begin{enumerate}
+\greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
+
+The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once (the \emph{multiplication\_loop2.c} one ``forks'' $N$ times).
+
+\greyItem{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
+
+Based on this result, coarse-grained parallelization is generally preferable, as it avoids killing and creating threads, which slows the execution.
+
+\end{enumerate}
 
 \end{document}
 
