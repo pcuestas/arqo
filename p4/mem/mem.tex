@@ -4,6 +4,7 @@
 
 \usepackage[utf8]{inputenc}
 
+\usepackage{enumitem}
 \usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
@@ -75,7 +76,7 @@
     \end{figure}
 }
 %grey item for enumerate
-\newcommand{\greyItem}[1]{\item \emph{\textcolor{darkgray}{#1}}}
+\newcommand{\greyItem}[1]{\item\emph{\textcolor{darkgray}{#1}}}
 
 
 \begin{document}
@@ -94,7 +95,7 @@
 \newpage
 \section{Exercise 1: Basic OpenMP programs}
 
-\begin{enumerate}
+\begin{enumerate}[label=1.\arabic*]
 \greyItem{Is it possible run more threads than cores on the system? Does it make sense to do it?}
 
 It is possible to do so: if we first execute omp1 without arguments to see the available cores and then we execute it again with a number of threads higher than the amount of cores, we will see that the execution is carried out without problems. Using more threads than cores may make no sense when the goal is simply to parrallelize a single task because the threads will interrupt each other. However, if there are several tasks to be run at the same time and any of them may provoke the thread to go asleep, then using more threads could help to take advantage of the time that particular thread is asleep. 
@@ -131,7 +132,7 @@ Public variables are shared by all threads (no copies of the variable are create
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 2: Parallelize the dot product}
 
-\begin{enumerate}
+\begin{enumerate}[label=2.\arabic*]
 
 \greyItem{Run the serial version and understand what the result should be for different vector sizes.} 
     
@@ -189,7 +190,7 @@ We have sampled times for the different programs using matrices of size 2000, wh
     \caption{Ratios for the requested tests}
 \end{figure}
 
-\begin{enumerate}
+\begin{enumerate}[label=3.\arabic*]
 \greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
 The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once (the \emph{multiplication\_loop2.c} one ``forks'' $N$ times).
