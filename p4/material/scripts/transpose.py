@@ -13,7 +13,7 @@ except:
 A=[]
 f=open(file)
 for line in f:
-	A+=[line.split("\t\t\t\t")]
+	A+=[line.split("\t")]
 
 rows=len(A)
 cols=len(A[0])

@@ -3,7 +3,7 @@
 
 # inicializar variables 
 
-Tmin=1500
+Tmin=2000
 STEP=400000
 Tmax=2000000
 REP=4  
@@ -16,7 +16,6 @@ LOOP1="${SRC_DIR}multiplication_loop1"
 LOOP2="${SRC_DIR}multiplication_loop2"
 LOOP3="${SRC_DIR}multiplication_loop3"
 
-fDAT="${DAT_DIR}threshold.dat"
 fAUX="${DAT_DIR}table.dat"
 fPNG="${DAT_DIR}threshold.png"
 
@@ -24,11 +23,11 @@ TAB="\t"
 
 
 # borrar el fichero DAT y el fichero PNGtipo
-rm -f $fAUX $fDAT
+rm -f $fAUX
 mkdir -p ${DAT_DIR}
 
 # generar el fichero DAT vacío
-touch $fDAT $fAUX
+touch $fAUX
 
 echo "Running multiplication..."
 
