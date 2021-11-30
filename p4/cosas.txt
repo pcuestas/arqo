@@ -1,1 +1,6 @@
 preguntas extra 2.5
+
+
+pi_par2 da resultado incorrecto!
+
+

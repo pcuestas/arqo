@@ -8,7 +8,7 @@ STEP=400000
 Tmax=2000000
 REP=4  
 
-DAT_DIR="../outputs/out3/"
+DAT_DIR="../outputs/out3/tables/"
 SRC_DIR="../src/"
 
 MULT="${SRC_DIR}multiplication"

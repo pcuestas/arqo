@@ -179,13 +179,13 @@ We have written a script to test this (\emph{scr2\_threshold.sh}). As can be see
 We have sampled times for the different programs using matrices of size 2000, which yield high enough times to make a difference between the different implementations. Here are the results:
 
 \begin{figure}[h]
-    \input{./tables/table2_n2000_1}
+    \input{./tables/table3_n2000_1}
     \centering
     \caption{Times (seconds) for the requested tests}
 \end{figure}
 
 \begin{figure}[h]
-    \input{./tables/table2_n2000_2}
+    \input{./tables/table3_n2000_2}
     \centering
     \caption{Ratios for the requested tests}
 \end{figure}
@@ -200,6 +200,39 @@ The worst performing version is the one that parallelizes the innermost loop, be
 Based on this result, coarse-grained parallelization is generally preferable, as it avoids slowing the execution by killing and creating threads multiple times.
 
 \end{enumerate}
+
+
+
+\section{Exercise 4: Example of numerical integration}
+
+\begin{enumerate}[label=2.\arabic*]
+
+
+\greyItem{How many rectangles are used in the program? Which value does h take?}
+
+The numer of rectangles is determined by the variable \emph{n} whose value is ${10^8}$. The variable \emph{h} takes the middle value of the ${10^8}$ rectangles.
+
+\greyItem{Analyze performance}
+
+\greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
+
+In pi\_par2, the variable sum (a pointer) is marked with the clause \emph{firstprivate}. As a result, each thread creates a copy of the pointer and the value its initialized with the one before the parallel region. So even though each thread has its own pointer, all of them point to the same memory position. Indeed, if the clause \emph{private} is used instead of \emph{firstprivate}, we would get segmentation fault as the pointer in each thread would point to an ''unknown'' position outside the proccess memory region.
+
+\greyItem{What are the differences between pi\_par5, pi\_par3 and pi\_par1? Explain the concept of false sharing. 
+Why does pi\_par3 obtain the linesize of the cache?}
+
+False sharing occurs when the same block of memory is in the caches of different threads and it is being modified by more than one of them. Every time one thread modifies part of the block, the block becomes no valid for the rest of the threads, and threfore they need to replace the block in the cache.
+
+Version pi\_par1 (and pi\_par2) is a clear example of false sharing: the k-th thread modifies the posisiton \emph{k} of the array \emph{sum} provoking that the block is no longer valid for the rest of threads. This occurs for every iteration of the loop and as result the execution time is largen than the one obtained with the serial version. Another example of false sharing occurs in version pi\_par4. However, this time it may only happen when the value of \emph{priv\_sum} is copied to the array \emph{sum}. On the other hand, pi\_par3 still uses an array for storing the partial sums of each thread but avoids false sharing (discussed in the next paragraph). Finaly, version pi\_par5 uses a private variable for storing the partial sums (\emph{sum}) and after the calcultion each threads add the result to the shared variable \emph{pi}. To avoid data races, that part of the code is encapsulated with the clause \emph{critical} which ensures mutual exclusion between the threads.
+
+The version pi\_par3 obstains the linesize of the cache to ensure that the positions of the array \emph{sum} that are modifies by each thread are located in different blocks. That is to say, the postion modifies by thread 1 will be placed in a different block that the position modified by thread 2 and so on. The small drawback is that we are allocating more memory than used: in each block (64 bytes), we are only using 8 bytes. 
+
+\greyItem{What is the effect of using the pragma critical? How is the performance? Why does this happen?}
+
+As mentioned before, this clause ensures mutual exclusion for an specific part of the code. This clause is used in 
+
+\end{enumerate}
+
 
 \end{document}
 

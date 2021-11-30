@@ -3,10 +3,11 @@ LIB_DIR =
 FLAGS = -g -lgomp -lm -Wall -D_GNU_SOURCE -fopenmp
 MULT_PROGS=multiplication multiplication_loop1 multiplication_loop2 multiplication_loop3
 PI_PROGS = pi_par1 pi_par2 pi_par3 pi_par4 pi_par5 pi_par6 pi_par7 pi_serie
+ALL=omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 pescalar_par3 ${MULT_PROGS} ${PI_PROGS} edgeDetector clear
 
 .PHONY: clean all
 
-all: omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 pescalar_par3 ${MULT_PROGS} edgeDetector ${PI_PROGS} clear 
+all: $(ALL)
 
 pi_serie: pi_serie.c 
 	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
@@ -76,7 +77,7 @@ stb_image_write.h:
 	wget --no-check-certificate https://raw.githubusercontent.com/nothings/stb/master/stb_image_write.h
 
 clean:
-	rm -f *.o *~ omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 edgeDetector
+	rm -f *.o *~ $(ALL)
 	
 clear:
 	rm -f *.o *~

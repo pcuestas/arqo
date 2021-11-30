@@ -1,9 +1,14 @@
 #!/bin/bash
 
-if [ $# -ne 1 ];then
+if [ $# -e 0 ];then
 	MESSAGE=auto
 else
 	MESSAGE=$1
+fi
+
+if [ $# -gt 1 ]; then 
+	git config --global user.email "$2"
+  git config --global user.name "$2"
 fi
 
 git add .
