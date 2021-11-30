@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -e 0 ];then
+if [ $# -eq 0 ];then
 	MESSAGE=auto
 else
 	MESSAGE=$1
