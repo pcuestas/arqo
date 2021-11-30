@@ -6,7 +6,10 @@ PI_PROGS = pi_par1 pi_par2 pi_par3 pi_par4 pi_par5 pi_par6 pi_par7 pi_serie
 
 .PHONY: clean all
 
-all: omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 pescalar_par3 ${MULT_PROGS} edgeDetector pi clear 
+all: omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 pescalar_par3 ${MULT_PROGS} edgeDetector ${PI_PROGS} clear 
+
+pi_serie: pi_serie.c 
+	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
 
 pi_par1: pi_par1.c 
 	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
