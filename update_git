@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 1 ];then
+	MESSAGE=auto
+else
+	MESSAGE=$1
+fi
+
+git add .
+git commit -m "$MESSAGE"
+git push
