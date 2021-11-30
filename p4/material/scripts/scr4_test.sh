@@ -14,7 +14,8 @@ max () {
 # inicializar variables
 
 REP=15  
-Versions=(0 1 2 3 4 5 6 7)
+
+
 DAT_DIR="../outputs/out3/"
 SRC_DIR="../src/"
 
@@ -68,7 +69,7 @@ done
 
 # calculate the means
 for N in $(awk '{ print $1 }' $fAUX | sort -n | uniq); do
-	means=$(grep -w $N $fAUX | awk '{ slow += $2; fast1 += $3; fast2 += $4; fast3 += $5; n++ } END { printf "%s\t%s\t%s\t%s\n", slow/n, fast1/n, fast2/n, fast3/n }')
+	means=$(grep -w $N $fAUX | awk '{ time += $2; n++ } END { printf "%s\n", time/n }')
 	echo -e "$N${TAB}$means" >> $fDAT
 done
 
