@@ -13,7 +13,7 @@ max () {
 
 # inicializar variables
 
-REP=15  
+REP=20
 
 
 DAT_DIR="../outputs/out3/"
@@ -39,9 +39,7 @@ echo "Running pi_versions"
 
 # Realizar iteraciones con las distintas versiones
 
-for ((j = 0 ; j < REP ; j += 1));do
 
-done
 for ((j = 0 ; j < REP ; j += 1));do
     echo "      Iteration $j"
 

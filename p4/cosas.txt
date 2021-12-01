@@ -1,6 +1,8 @@
 preguntas extra 2.5
 
 
-pi_par2 da resultado incorrecto!
+pi_par2 da resultado incorrecto (a veces?!)
+medias script 4
+
 
 
