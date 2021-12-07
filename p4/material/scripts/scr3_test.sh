@@ -85,6 +85,7 @@ set ylabel "Time ratio: serial/parallel"
 set xlabel "Matrix Size (N)"
 set key right bottom
 set grid
+set yrange [0:5]
 set term png
 set output "$fTimeRatios"
 plot "$fRATIOS" using 1:2 with lines lw 2 title 'Ratio 2 threads',\
