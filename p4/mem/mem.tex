@@ -201,22 +201,22 @@ Based on this result, coarse-grained parallelization is generally preferable, as
 
 \end{enumerate}
 
-Taking the best parallel version (parallelizing the outermost loop) alongside the serial version, we have tested for $N$ between $512+P$ and $512+1024+P$ with increments of $64$. And the parallel version, we have tested for $2$, $4$ and $6$ threads. These are the results: 
+Taking the best parallel version (parallelizing the outermost loop) alongside the serial version, we have tested for $N$ between $512+P$ and $512+1024+P$ with increments of $64$. And with the parallel version, we have tested for $2$, $4$ and $6$ threads. These are the results: 
 
 
 \myFigure{../material/outputs/out3/test_cl0/t_fig.png}{Time in seconds.}{times_e3}{0.63}
 
-As expected, the plots have a cubic behaviour. Comparing the different plots, as the values of $N$ are sufficiently large to take advantage of the parallelization, the higher number of threads are used, the less time it takes to compute the multiplication. The serial version is the slowest for all of these values of $N$.
+As expected, the plots have a cubic behaviour. Comparing the different plots, as the values of $N$ are sufficiently large to take advantage of the parallelization, the higher the number of threads, the less time it takes to compute the multiplication. The serial version is the slowest for all of these values of $N$.
 
 \myFigure{../material/outputs/out3/test_cl0/r_fig.png}{Time ratios.}{ratios}{0.63}
 
-As commented before, for the sizes that we have tested, the asymptotic behaviour is already present (as $N$ is big enough). The four plots (time fuctions) have, aproximately, a complexity of $\mathcal{O}(N^3)$. Which means that if we calculate the speedup for each parallel version (with different number of threads), it will stabilize around a constant in each case. This constant behaviour of the ratios is what can be seen in this plot. Again, as lower number of threads is worse than higher number of threads for big enough values of $N$, the constant in question is higher when the number of threads is higher.
+As commented before, for the sizes that we have tested, the asymptotic behaviour is already present (as $N$ is big enough). The four time fuctions have a complexity of $\mathcal{O}(N^3)$, which means that if we calculate the speedup for each parallel version (with different number of threads), it will stabilize around a constant in each case. This constant behaviour of the ratios is what can be seen in this plot. Again, as lower number of threads is worse than higher number of threads for big enough values of $N$, the constant in question is higher when the number of threads is higher.
 
 \begin{enumerate}[label=3.\arabic*]
     \setcounter{enumi}{3}
 \greyItem{3.3 If in the previous chart you did not obtain a behavior of the acceleration as a function of N that stabilizes or decreases with increasing the size of the matrix, continue increasing the value of N until you get a chart with this behavior and indicate for which value of N you begin to see the change in trend.}
 
-The values that we got already stabilize the speedup; as can be seen in figure \ref{ratios}, the values stabilize: for 2 threads, around $2.62$; for 4 threads, around $3.1$; and 6 threads, $4.6$.
+The values that we got already stabilize the speedup; as can be seen in figure \ref{ratios}, the values stabilize: for 2 threads, around $2.6$; for 4 threads, around $3.1$; and 6 threads, $4.6$.
 
 In order to check the values of $N$ that stabilize the speedup, we have to check lower values:
 
