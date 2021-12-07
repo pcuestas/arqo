@@ -8,12 +8,12 @@ ceil () {
 
 # inicializar variables
 
-Tmin=400000
-STEP=400000
-Tmax=2000000
-REP=15  
+Tmin=100000
+STEP=8000
+Tmax=200000
+REP=10  
 
-DAT_DIR="../outputs/out2/"
+DAT_DIR="../outputs/out2/threshold/"
 SRC_DIR="../src/"
 
 SERIAL="${SRC_DIR}pescalar_serie"
@@ -22,7 +22,6 @@ PARALLEL="${SRC_DIR}pescalar_par3"
 fDAT="${DAT_DIR}threshold.dat"
 fAUX="${DAT_DIR}aux.dat"
 fPNG="${DAT_DIR}threshold.png"
-
 
 # borrar el fichero DAT y el fichero PNG
 rm -f $fAUX $fDAT
@@ -60,10 +59,10 @@ set ylabel "Execution time (s)"
 set xlabel "Vector length (T)"
 set key right bottom
 set grid
-set term pngcairo dashed
+set term png
 set output "$fPNG"
-plot "$fDAT" using 1:2 with linespoints lt rgb "blue" dt 2 lw 1 title "Serial - 0.8T", \
-     "$fDAT" using 1:4 with linespoints lt rgb "red"  dt 2 lw 1 title "Parallel - 0.8T", \
+plot "$fDAT" using 1:2 with linespoints lt rgb "dark-blue" dt 1 lw 1 title "Serial - 0.8T", \
+     "$fDAT" using 1:4 with linespoints lt rgb "dark-red"  dt 1 lw 1 title "Parallel - 0.8T", \
      "$fDAT" using 1:3 with linespoints lt rgb "blue" dt 1 lw 1 title "Serial - 1.2T", \
      "$fDAT" using 1:5 with linespoints lt rgb "red"  dt 1 lw 1 title "Parallel - 1.2T"
 replot

@@ -69,7 +69,7 @@
 %parameters: file, caption, label, scale
 \newcommand{\myFigure}[4]{%
     \begin{figure}[!ht]
-        \includegraphics[scale=#4]{#1}
+        \includegraphics[width=#4\textwidth]{#1}
         \centering
         \caption{#2}
         \label{#3}
@@ -95,7 +95,7 @@
 \newpage
 \section{Exercise 1: Basic OpenMP programs}
 
-\begin{enumerate}[label=1.\arabic*]
+\begin{enumerate}[label=1.\arabic*,leftmargin=*]
 \greyItem{Is it possible run more threads than cores on the system? Does it make sense to do it?}
 
 It is possible to do so: if we first execute omp1 without arguments to see the available cores and then we execute it again with a number of threads higher than the amount of cores, we will see that the execution is carried out without problems. Using more threads than cores may make no sense when the goal is simply to parrallelize a single task because the threads will interrupt each other. However, if there are several tasks to be run at the same time and any of them may provoke the thread to go asleep, then using more threads could help to take advantage of the time that particular thread is asleep. 
@@ -132,7 +132,7 @@ Public variables are shared by all threads (no copies of the variable are create
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 2: Parallelize the dot product}
 
-\begin{enumerate}[label=2.\arabic*]
+\begin{enumerate}[label=2.\arabic*,leftmargin=*]
 
 \greyItem{Run the serial version and understand what the result should be for different vector sizes.} 
     
@@ -164,9 +164,21 @@ If we use \emph{reduction} we get better results than the ones obtained with \em
 
 \greyItem{Run time analysis}
 
-We have written a script to test this (\emph{scr2\_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in the lab computers) is very inconsistent. However, the first value that meets the requirements is $T=1200000$
+We have written a script to test this (\emph{scr2\_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in the lab computers, that use 4 threads) is very inconsistent. However, the first value that meets the requirements is $T=1200000$:
 
-\myFigure{../material/outputs/out2_final/threshold.png}{Search for threshold in the lab computers}{threshold}{0.5}
+\myFigure{../material/outputs/out2_final/threshold0.png}{Search for threshold in the lab computers}{threshold}{.7}
+
+\pagebreak
+
+\greyItem{(Optional) Exhaustive analysis}
+
+Executing the same tests in the cluster, using also 4 cores, we have reached the value that meets the requirements at, aproximately, $T=81000$, as can be seen in the following figure (\ref{threshold_cluster4}):
+
+\myFigure{../material/outputs/out2_final/threshold_4proc.png}{Search for threshold in the cluster: 4 cores}{threshold_cluster4}{.66}
+
+Changing the number of threads to 8, the number increases slightly, the threshold would be around $T=90000$. This makes sense, because, although using 8 threads would yield a much better performance for very large matrix sizes, the threshold for which creating a higher number of threads is worth the time spent creating them is also a bit higher.
+
+\myFigure{../material/outputs/out2_final/threshold_8proc.png}{Search for threshold in the cluster: 8 cores}{threshold_cluster8}{.66}
 
 \end{enumerate}
 
@@ -190,31 +202,32 @@ We have sampled times for the different programs using matrices of size 2000, wh
     \caption{Ratios for the requested tests}
 \end{figure}
 
-\begin{enumerate}[label=3.\arabic*]
+\begin{enumerate}[label=3.\arabic*,leftmargin=*]
 \greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
 The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once (the \emph{multiplication\_loop2.c} one ``forks'' $N$ times).
 
 \greyItem{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
 
-Based on this result, coarse-grained parallelization is generally preferable, as it avoids slowing the execution by killing and creating threads multiple times.
+Based on these results, coarse-grained parallelization is generally preferable, as it avoids slowing the execution by killing and creating threads multiple times.
 
 \end{enumerate}
 
 Taking the best parallel version (parallelizing the outermost loop) alongside the serial version, we have tested for $N$ between $512+P$ and $512+1024+P$ with increments of $64$. And with the parallel version, we have tested for $2$, $4$ and $6$ threads. These are the results: 
 
+\pagebreak
 
-\myFigure{../material/outputs/out3/test_cl0/t_fig.png}{Time in seconds.}{times_e3}{0.63}
+\myFigure{../material/outputs/out3/test_cl0/t_fig.png}{Time in seconds.}{times_e3}{0.65}
 
 As expected, the plots have a cubic behaviour. Comparing the different plots, as the values of $N$ are sufficiently large to take advantage of the parallelization, the higher the number of threads, the less time it takes to compute the multiplication. The serial version is the slowest for all of these values of $N$.
 
-\myFigure{../material/outputs/out3/test_cl0/r_fig.png}{Time ratios.}{ratios}{0.63}
+\myFigure{../material/outputs/out3/test_cl0/r_fig.png}{Time ratios.}{ratios}{0.65}
 
 As commented before, for the sizes that we have tested, the asymptotic behaviour is already present (as $N$ is big enough). The four time fuctions have a complexity of $\mathcal{O}(N^3)$, which means that if we calculate the speedup for each parallel version (with different number of threads), it will stabilize around a constant in each case. This constant behaviour of the ratios is what can be seen in this plot. Again, as lower number of threads is worse than higher number of threads for big enough values of $N$, the constant in question is higher when the number of threads is higher.
 
-\begin{enumerate}[label=3.\arabic*]
-    \setcounter{enumi}{3}
-\greyItem{3.3 If in the previous chart you did not obtain a behavior of the acceleration as a function of N that stabilizes or decreases with increasing the size of the matrix, continue increasing the value of N until you get a chart with this behavior and indicate for which value of N you begin to see the change in trend.}
+\begin{enumerate}[label=3.\arabic*,leftmargin=*]
+    \setcounter{enumi}{2}
+\greyItem{If in the previous chart you did not obtain a behavior of the acceleration as a function of N that stabilizes or decreases with increasing the size of the matrix, continue increasing the value of N until you get a chart with this behavior and indicate for which value of N you begin to see the change in trend.}
 
 The values that we got already stabilize the speedup; as can be seen in figure \ref{ratios}, the values stabilize: for 2 threads, around $2.6$; for 4 threads, around $3.1$; and 6 threads, $4.6$.
 
@@ -230,17 +243,17 @@ As we can see, with increasing number of threads, the sabilizing value increases
 
 \section{Exercise 4: Example of numerical integration}
 
-\begin{enumerate}[label=4.\arabic*]
+\begin{enumerate}[label=4.\arabic*,leftmargin=*]
 
 \greyItem{How many rectangles are used in the program? Which value does h take?}
 
-The numer of rectangles is determined by the variable \emph{n} whose value is ${10^8}$. The variable \emph{h} takes the middle value of the ${10^8}$ rectangles.
+The numer of rectangles is determined by the variable \emph{n}, whose value is ${10^8}$. The variable \emph{h} takes the length of the segments in which the interval $[0,1]$ is divided (the base of the rectangles), so it is $h=1/n$. In this case, $h=10^{-8}$.
 
 \greyItem{Analyze performance}
 
 \greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
-In pi\_par2, the variable sum (a pointer) is marked with the clause \emph{firstprivate}. As a result, each thread creates a copy of the pointer and the value its initialized with the one before the parallel region. So even though each thread has its own pointer, all of them point to the same memory position. Indeed, if the clause \emph{private} is used instead of \emph{firstprivate}, we would get segmentation fault as the pointer in each thread would point to an ''unknown'' position outside the proccess memory region.
+In pi\_par2, the variable sum (a pointer) is marked with the clause \emph{firstprivate}. As a result, each thread creates a copy of the pointer and the value its initialized with the one before the parallel region. So even though each thread has its own pointer, all of them point to the same memory position. Indeed, if the clause \emph{private} is used instead of \emph{firstprivate}, we would possibly get segmentation fault as the pointer in each thread would point to an ``unknown'' position outside the proccess memory region.
 
 \greyItem{What are the differences between pi\_par5, pi\_par3 and pi\_par1? Explain the concept of false sharing. 
 Why does pi\_par3 obtain the linesize of the cache?}
