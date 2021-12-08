@@ -14,4 +14,3 @@ comando para conectarse: ssh -X -l arqo61 150.244.56.153
 	python3 transpose.py ../outputs/out3/tables/table.dat 2 > ../../mem/tables/table3_n2000_2.tex
 
 PENDIENTE:
-	out3 cluster

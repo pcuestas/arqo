@@ -249,7 +249,17 @@ As we can see, with increasing number of threads, the sabilizing value increases
 
 The numer of rectangles is determined by the variable \emph{n}, whose value is ${10^8}$. The variable \emph{h} takes the length of the segments in which the interval $[0,1]$ is divided (the base of the rectangles), so it is $h=1/n$. In this case, $h=10^{-8}$.
 
-\greyItem{Analyze performance}
+\greyItem{ Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
+
+The tests are made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster, in order to make a sufficiently large number of repetitions and be able to get good results by making the means. We have used 6 cores.
+
+\begin{figure}[h]
+    \input{./tables/table_e4}
+    \centering
+    \caption{Times (seconds) and result of all the programs}
+\end{figure}
+
+As we can see, the results of the $\pi$ approximation are the same in all the programs.
 
 \greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
