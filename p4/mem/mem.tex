@@ -240,6 +240,7 @@ As we can see, with increasing number of threads, the sabilizing value increases
 
 \end{enumerate}
 
+\pagebreak
 
 \section{Exercise 4: Example of numerical integration}
 
@@ -251,7 +252,7 @@ The numer of rectangles is determined by the variable \emph{n}, whose value is $
 
 \greyItem{ Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
 
-The tests are made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster, in order to make a sufficiently large number of repetitions and be able to get good results by making the means. We have used 6 cores.
+The tests have been made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster, in order to make a sufficiently large number of repetitions (50) and be able to get good results by making the means. We have used 6 cores.
 
 \begin{figure}[h]
     \input{./tables/table_e4}
@@ -259,20 +260,24 @@ The tests are made using the \emph{scr4\_test.sh} script. We have submitted them
     \caption{Times (seconds) and result of all the programs}
 \end{figure}
 
-As we can see, the results of the $\pi$ approximation are the same in all the programs.
+As we can see, the results of the $\pi$ approximation are the same in all the programs. (And it is the best approximation that can be expressed with the precission that these programs have by default, just 6 decimal places).
+
+The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4} and \emph{pi\_par5}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7. The next best one is \emph{pi\_par7}, with over 5.5 speedup. And the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
 
 \greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
 In pi\_par2, the variable sum (a pointer) is marked with the clause \emph{firstprivate}. As a result, each thread creates a copy of the pointer and the value its initialized with the one before the parallel region. So even though each thread has its own pointer, all of them point to the same memory position. Indeed, if the clause \emph{private} is used instead of \emph{firstprivate}, we would possibly get segmentation fault as the pointer in each thread would point to an ``unknown'' position outside the proccess memory region.
 
+Regarding how this change affects the performance, as we expect, there is no difference between \emph{pi\_par1} and \emph{pi\_par2}; aside from \emph{pi\_par2} being slightly slower (by about 10 ms). Although we could think this higher execution time is caused because \emph{pi\_par2} has to do more operations when creating the threads, because of the allocation of this new variable for each thread, this is insignificant and the slightly higher execution time that we get may be just a coincidence.
+
 \greyItem{What are the differences between pi\_par5, pi\_par3 and pi\_par1? Explain the concept of false sharing. 
 Why does pi\_par3 obtain the linesize of the cache?}
 
-False sharing occurs when the same block of memory is in the caches of different threads and it is being modified by more than one of them. Every time one thread modifies part of the block, the block becomes no valid for the rest of the threads, and threfore they need to replace the block in the cache.
+False sharing occurs when even though different threads are wiriting in different memory addresses, all of these addresses are contained in the same cache block. Every time one thread modifies its part of the block, the block becomes invalid for the rest of the threads, and threfore they need to replace the block in their cache.
 
-Version pi\_par1 (and pi\_par2) is a clear example of false sharing: the k-th thread modifies the posisiton \emph{k} of the array \emph{sum} provoking that the block is no longer valid for the rest of threads. This occurs for every iteration of the loop and as result the execution time is largen than the one obtained with the serial version. Another example of false sharing occurs in version pi\_par4. However, this time it may only happen when the value of \emph{priv\_sum} is copied to the array \emph{sum}. On the other hand, pi\_par3 still uses an array for storing the partial sums of each thread but avoids false sharing (discussed in the next paragraph). Finaly, version pi\_par5 uses a private variable for storing the partial sums (\emph{sum}) and after the calcultion each threads add the result to the shared variable \emph{pi}. To avoid data races, that part of the code is encapsulated with the clause \emph{critical} which ensures mutual exclusion between the threads.
+Version \emph{pi\_par1} (and \emph{pi\_par2}) is a clear example of false sharing: the k-th thread modifies the posisiton \emph{k} of the array \emph{sum} provoking that the block is no longer valid for the rest of threads. This occurs for every iteration of the loop and as result the execution time is higher than the one obtained with the serial version. Another example of false sharing occurs in version pi\_par4. However, this time it may only happen when the value of \emph{priv\_sum} is copied to the array \emph{sum}; this is once for every thread, and only just before the thread finishes, so it does not have a significant effect (if any) on execution time. On the other hand, \emph{pi\_par3} still uses an array for storing the partial sums of each thread but avoids false sharing (as discussed in the next paragraph). Finaly, version \emph{pi\_par5} uses a private variable for storing the partial sums (\emph{sum}) and after the calcultion each threads add the result to the shared variable \emph{pi}. To avoid data races, that part of the code is encapsulated with the clause \emph{critical} which ensures mutual exclusion between the threads.
 
-The version pi\_par3 obstains the linesize of the cache to ensure that the positions of the array \emph{sum} that are modifies by each thread are located in different blocks. That is to say, the postion modifies by thread 1 will be placed in a different block that the position modified by thread 2 and so on. The small drawback is that we are allocating more memory than used: in each block (64 bytes), we are only using 8 bytes. 
+The version \emph{pi\_par3} obstains the linesize of the cache to ensure that the positions of the array \emph{sum} that are modified by each thread are located in different blocks. That is to say, the postion modifies by thread 1 will be placed in a different block that the position modified by thread 2 and so on. The small drawback is that we are allocating more memory than used: in each block (64 bytes), we are only using 8 bytes. 
 
 \greyItem{What is the effect of using the pragma critical? How is the performance? Why does this happen?}
 
