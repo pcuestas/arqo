@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1639077766 "/home/arqo/repo/arqo/p4/mem/mem.tex" "build/mem.pdf" "mem" 1639078140
+["pdflatex"] 1639086428 "/home/arqo/repo/arqo/p4/mem/mem.tex" "build/mem.pdf" "mem" 1639086429
   "../material/outputs/out2_final/threshold0.png" 1637670629 79610 2ce1a551fbde3d4eb0e67acb4c3076f2 ""
   "../material/outputs/out2_final/threshold_4proc.png" 1638905061 15558 2cd3a51fbc2a18e7797a04d3daa6b312 ""
   "../material/outputs/out2_final/threshold_8proc.png" 1638905721 17262 d0ec95f1a29c5a7f52b40692be050287 ""
@@ -7,7 +7,7 @@
   "../material/outputs/out3/test_cl0/t_fig.png" 1638897521 17224 8ff61f677d9129d5f464bd2deb0f22f3 ""
   "../material/outputs/out3/test_cl0_extended/r_fig.png" 1638897521 17878 c22dc5249cccdd8709b4ddb70975e509 ""
   "/etc/texmf/web2c/texmf.cnf" 1635780879 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/arqo/repo/arqo/p4/mem/mem.tex" 1639078140 17732 35805dc081aef69457170db485f5db8e ""
+  "/home/arqo/repo/arqo/p4/mem/mem.tex" 1639086428 23143 8064abb7a6fd6919d208a56443f6804c ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -149,10 +149,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1635780939 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1635780974 4127780 059d6e91ad3b2397b58863332d34540d ""
-  "build/mem.aux" 1639077767 2734 47eaea9a5a6977b442341f27769dbc5b ""
-  "build/mem.out" 1639077767 298 42f2d28c7dba0756958675f62e98b06c ""
-  "build/mem.toc" 1639077767 378 6be6237e9faef6087698337dbebfb7bd ""
-  "mem.tex" 1639078140 17732 35805dc081aef69457170db485f5db8e ""
+  "build/mem.aux" 1639086429 2948 84d341995dcfae2e68acf61bcba85989 ""
+  "build/mem.out" 1639086429 381 6038137fb602e2c441887b445704cb34 ""
+  "build/mem.toc" 1639086429 482 92a303ad46ae470ee1b6ccc1ec6864c2 ""
+  "mem.tex" 1639086428 23143 8064abb7a6fd6919d208a56443f6804c ""
   "tables/table3_n2000_1.tex" 1638897521 328 ef59cf5d10b99a923dcaa50aa404cbe5 ""
   "tables/table3_n2000_2.tex" 1638897521 348 9ba67cc603f151295cc36d91926b18cf ""
   "tables/table_e4" 1638956110 658 cda5adff889f0944bb3207ecd31c7ca2 ""

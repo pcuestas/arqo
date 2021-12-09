@@ -285,16 +285,92 @@ As mentioned before, this clause ensures mutual exclusion for an specific part o
 
 \end{enumerate}
 
+\pagebreak
+
+\section{Exercise 5: Optimization	of	calculation	programs}
+
+\begin{enumerate}[label=5.\arabic*,leftmargin=*]
+    \setcounter{enumi}{-1}
+
+%0
+\greyItem{Compile and run the program using some images as arguments. Examine the results that were generated and analyze briefly the provided program.}
+
+
+%1
+\greyItem{The program includes an outermost loop that iterates over the arguments applying the algorithms to each of the arguments (indicated as Loop 0). Is this loop optimal to be parallelized?}
+
+It may make sense to think that this loop could be parallelized when the task we want to perform is processing a high number of images. This way, each thread would process a different image at a time.
+
+However, this may not be the optimal approach. For example, if the images vary in size, some thread would have a lot more work to do than others, wasting resources that coul help finish the task. There are other drawbacks, as explained in the next questions.
+
+    \begin{enumerate}
+        \greyItem{What happens if fewer arguments are passed than number of cores?}
+            
+        The remaining cores will be idle, while the others work. This is a pretty inefficient way to distribute the tasks.
+
+        \greyItem{Suppose you are processing images from a space telescope that occupy up to 6GB each, is this the right option? Comment how much memory each thread consumes based on the size in pixels of the input image.}
+    \end{enumerate}
+
+%2
+\greyItem{During the previous task (task 3), we observed that the order of access to the data is important. Are there any loops that are accessing the data in a suboptimal order? Please correct it in such case.}
+
+
+\begin{enumerate}
+        \greyItem{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
+            
+        \greyItem{Explain why the order is not correct if you change it.}
+    \end{enumerate}
+    
+All nested loops in \emph{main()} access data in the suboptimal order. For instance, accessing: 
+\begin{equation}\label{array}
+    \texttt{grey\_image[j * width + i]}
+\end{equation}
+This is equivalent to accessing column $i$, row $j$. Therfore, the inermost loop should iterate on $i$, accessing contiguous data in each iteration of this loop. However, the loops in the provided code do exactly the opposite, which is why we have changed them. 
+
+In each of the nested loops inside \emph{Loop 0} we can change the order, because the instructions performed inside the innermost loop are independent from one another, which means that the order in which they are performed does not alter the result. This is similar to what we did when changing the order in which the elements were added when calculating the sum of the elements of a matrix.
+
+In the first loop (RGB to grey scale), an element of an array is accessed in each iteration (using \ref{array}). So there is no problem.
+
+The next loop (Sobel edge detection) does something similar, writing in array \emph{edges}. It also reads from array \emph{grey\_image}, but reading does not matter when we worry about changing order of insstructions. Again, there is no alteration in the result if we change the order of this loop.
+
+The last loop is a nested loop on indices $i$ and $j$, which contains another nested loop on indices $p_1$ and $p_2$. The loops on $i$ and $j$, apart from iterating on $p_1$ and $p_2$, only write to an array: \emph{edges\_denoised}, in different positions each time. The $p_1$ and $p_2$ loops write into an array in order. This is something to take into account, as changing order in the indices would alter the result of this array; however, this array is later sorted, so the order in which it was filled is not relevant. At last, this loop can also be optimized without changing the result of the computation.
+
+This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, and in all of the parallel improvements.
+
+%3
+\greyItem{Bypassing Loop 0, test different parallelizations with OpenMP explaining which ones should get better performance.}
+    \begin{enumerate}
+        \greyItem{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
+            
+        \greyItem{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
+        document.}
+    \end{enumerate}
+
+
+%4
+\greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}
+
+%5
+\greyItem{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
+
+\end{enumerate}
+
+
 
 \end{document}
 
 
 \begin{lstlisting}[language=C, texcl=true]
-    typedef struct Mine_struct_{
-        long int target;
-        long int begin; //índice por el que empieza a buscar el hilo
-        long int end; //índice hasta el que el hilo busca (no incluido)
-    } Mine_struct;  
+    // RGB to grey scale
+    int r, g, b;
+    for (int i = 0; i < width; i++)
+    {
+        for (int j = 0; j < height; j++)
+        {
+            getRGB(rgb_image, width, height, 4, i, j, &r, &g, &b);
+            grey_image[j * width + i] = (int)(0.2989 * r + 0.5870 * g + 0.1140 * b);
+        }
+    }  
 \end{lstlisting}
 
 

@@ -246,6 +246,8 @@ INPUT ../material/outputs/out3/test_cl0_extended/r_fig.png
 INPUT ../material/outputs/out3/test_cl0_extended/r_fig.png
 INPUT ./tables/table_e4
 INPUT ./tables/table_e4
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT build/mem.aux
 INPUT build/mem.out
 INPUT build/mem.out
