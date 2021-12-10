@@ -283,12 +283,13 @@ The version \emph{pi\_par3} obstains the linesize of the cache to ensure that th
 
 As mentioned before, this clause ensures mutual exclusion for an specific part of the code. This clause is used just before the threads end. By using this clause, false sharing is avoided and we get a speedup of 7.4. 
 
-\greyItem{Regarding pi_par6, how is the performance compared to other versions? Why does this effect 
-happen?}
+\greyItem{Regarding pi\_par6, how is the performance compared to other versions? Why does this effect happen?}
 
-The execution time for version pi\_par6 is almost the same as the one for the first version. Indeed, both programs are an example of false sharing. In version 6, a new caluse is used: \emph{for}. This clause divides the iterations of the loop among the threads, declare the index varibales as private ... but inside the loop, once again each thread modifies a position of the array \emph{sum} so it becomes unvalid for the rest of the threads.
+The execution time for version pi\_par6 is almost the same as the one for the first version. Indeed, both programs are an example of false sharing. In version 6, a new caluse is used: \emph{for}. This clause divides the iterations of the loop among the threads, declare the index varibales as private... but inside the loop, once again each thread modifies a position of the array \emph{sum} so it becomes unvalid for the rest of the threads.
 
-\greyItem{Which version is optimal and why?} Accoriding to the results obtained, the best version in terms of execution time is the third one (by a slight difference of hundreds of seconds). However, as discused before, this version is allocating more memory than needed. So overall, one could say that the optimal version is either the forth of the fifth.
+\greyItem{Which version is optimal and why?} 
+
+Accoriding to the results obtained, the best version in terms of execution time is the third one (by a slight difference of hundreds of seconds). However, as discused before, this version is allocating more memory than needed. So overall, one could say that the optimal version is either the forth of the fifth.
 
 \end{enumerate}
 
