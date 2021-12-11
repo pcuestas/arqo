@@ -252,7 +252,7 @@ The numer of rectangles is determined by the variable \emph{n}, whose value is $
 
 \greyItem{ Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
 
-The tests have been made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster, in order to make a sufficiently large number of repetitions (50) and be able to get good results by making the means. We have used 6 cores.
+The tests have been made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster, in order to make a sufficiently large number of repetitions (50) and be able to get good results by making the means.
 
 \begin{figure}[h]
     \input{./tables/table_e4}
@@ -262,7 +262,7 @@ The tests have been made using the \emph{scr4\_test.sh} script. We have submitte
 
 As we can see, the results of the $\pi$ approximation are the same in all the programs. (And it is the best approximation that can be expressed with the precission that these programs have by default, just 6 decimal places).
 
-The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4} and \emph{pi\_par5}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7. The next best one is \emph{pi\_par7}, with over 5.5 speedup. And the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
+The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, {pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7.On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
 
 \greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
@@ -289,7 +289,7 @@ The execution time for version pi\_par6 is almost the same as the one for the fi
 
 \greyItem{Which version is optimal and why?} 
 
-Accoriding to the results obtained, the best version in terms of execution time is the third one (by a slight difference of hundreds of seconds). However, as discused before, this version is allocating more memory than needed. So overall, one could say that the optimal version is either the forth of the fifth.
+Accoriding to the results obtained, the best version in terms of execution time is the third one (by a slight difference of hundreds of seconds). However, as discused before, this version is allocating more memory than needed. So overall, one could say that the optimal version is either the forth, the fifth or the seventh.
 
 \end{enumerate}
 
@@ -303,6 +303,26 @@ Accoriding to the results obtained, the best version in terms of execution time 
 %0
 \greyItem{Compile and run the program using some images as arguments. Examine the results that were generated and analyze briefly the provided program.}
 
+After executing the program, we see that we get three new images. A grey scale version, another in grey scale but with the edges significantly diferenciated and finally, a black and white image where the edges are clear. 
+
+The first step is to convert a RGB image into a greyscale one. To do so, the program iterates through all the pixels in the image and apply the following conversion:  0.2989R + 0.5870G + 0.1140B - where R,G,B are the values for each primary colour of the original image.
+
+Then it applies the Sobel operator. This consist of placing two matrices
+
+\begin{center}
+$\begin{bmatrix}
+    1 & 0 & -1\\
+    2 & 0 & -2\\
+    1 & 0 & -1
+\end{bmatrix}$ \text{      } $\begin{bmatrix}
+        1 & 2 & 1\\
+        0 & 0 & 0\\
+       -1 & -2 & -1
+\end{bmatrix}$
+\end{center}
+in every pixel (except those on the borders) and, for each matrix, we compute the sum (weighted by the matrix) of its neighbours elements. Then we calculate the norm of the 2 dimesion vector whose components are the numbers just obtained.With this procedure, we get an image in greyscale where the edges are clearly marked. However, because we are using 3x3 integers matrices as the convolute operators, it is likely to happen that some lines are shown as edges when they are not. 
+
+To deal with this problem, the last step is carried out: denoising. In this part of the program, a gaussian kernel is used to ponderate the results obtained with the Sobel operator. If a pixel mets a threshold to be considerated part of an edge, it is assigned color white and if not, black. 
 
 %1
 \greyItem{The program includes an outermost loop that iterates over the arguments applying the algorithms to each of the arguments (indicated as Loop 0). Is this loop optimal to be parallelized?}

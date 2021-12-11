@@ -2,13 +2,10 @@ preguntas extra 2.5
 
 
 pi_par2 da resultado incorrecto (a veces?!)
-medias script 4
 
 
 
-cual es la mejor version. CAMBIAR. version 7!!!!!!
 
-revisar 4.1 comentarios sobre los cores. 
 
 
 
