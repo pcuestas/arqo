@@ -362,6 +362,11 @@ However, this may not be the optimal approach. For example, if the images vary i
         The remaining cores will be idle, while the others work. This is a pretty inefficient way to distribute the tasks.
 
         \greyItem{Suppose you are processing images from a space telescope that occupy up to 6GB each, is this the right option? Comment how much memory each thread consumes based on the size in pixels of the input image.}
+
+        Each thread would need to allocate memory for the RGB image and for the three new images created during the algorithm. In an RGB image, each pixel is represented with 3 bytes, one for each colour. So, if the images occupy up to 6GB, the corresponding number of pixels is given by: ${6\text{GB}}*\frac{2^{30}\text{B}}{1\text{GB}}*\frac{1\text{pixel}}{3\text{B}}=2^{31}\text{ pixels}$. (The program als accepts RGBA images which have an extra byte per pixel for the alpha channel).
+        
+        Then, each thread would need to allocate memory for the three new images it creates (grey, edges and edges\_denoised version). All of them consist of an array of bytes, one for each pixel. So it would sum up to $3\text{ grey images}*\frac{2^{31}\text{(1 channel) pixel}}{\text{1 grey image}}*\frac{1\text{B}}{\text{(1 channel) pixel}}= 6 \text{GB}$ of memory needed (apart from loading the original image of 6GB). There are other memory allocations but are insignificant when compared to the ones just commented. To sum up, every thread would need the double of memory of the image it is processing. Furthermore, this memory is freed at the end of the algorithm instead of just after where it has been used, so the total comsumption of memory of all the threads together would be even greater.
+        
     \end{enumerate}
 
 %2
