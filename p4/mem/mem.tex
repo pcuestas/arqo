@@ -14,6 +14,7 @@
 \usepackage{float}
 \usepackage{listings}  
 \usepackage{xcolor}
+\usepackage{subfigure}
 
 \definecolor{codegreen}{rgb}{.2,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -307,6 +308,14 @@ After executing the program, we see that we get three new images. A grey scale v
 
 The first step is to convert a RGB image into a greyscale one. To do so, the program iterates through all the pixels in the image and apply the following conversion:  0.2989R + 0.5870G + 0.1140B - where R,G,B are the values for each primary colour of the original image.
 
+\begin{figure}[htbp]
+    \centering
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/im4.jpg}} 
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/im4_grey.jpg}} 
+    \caption{(a) RGB image (b) Greyscale image }
+    \label{fig:foobar}
+\end{figure}
+
 Then it applies the Sobel operator. This consist of placing two matrices
 
 \begin{center}
@@ -322,8 +331,24 @@ $\begin{bmatrix}
 \end{center}
 in every pixel (except those on the borders) and, for each matrix, we compute the sum (weighted by the matrix) of its neighbours elements. By applying each matrix, we get a measure of the variation of intensity near a pixel in the $x$ and $y$ direction. Then we calculate the norm of the 2 dimesion vector whose components are the numbers just obtained before; that is to say, we calculate the norm of the ''intensity variation'' near each pixel. With this procedure, we get an image in greyscale where the edges are clearly marked. However, because we are using 3x3 integers matrices as the convolute operator, it is likely to happen that some lines are shown as edges when they are not. 
 
-To deal with this problem, denoising is carried out. For this part of the program, a gaussian kernel is used to ponderate the results obtained with the Sobel operator. If a pixel mets a threshold to be considerated part of an edge, it is assigned color white and, if not, black. 
 
+\begin{figure}[h!]
+    \centering
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/ejex.jpg}} 
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/ejey.jpg}} 
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/eje.jpg}}
+    \caption{(a) Sobel in x direction (b) Sobel in y direction (c) Global Sobel}
+    \label{fig:foobar}
+    \label{sobel}
+\end{figure}
+
+
+To deal with this problem, denoising is carried out. For this part of the program, a gaussian kernel is used to ponderate the results obtained with the Sobel operator for each pixel with its local neighbours results. If a pixel mets a threshold to be considerated part of an edge, it is assigned color white and, if not, black. With this procedure, we get rid of the noise (the light blurred inside the shapes in \ref{sobel}) 
+
+\myFigure{../material/img/im4_grad_denoised}{Imaged denoised}{denoised}{0.35}
+
+
+\newpage
 %1
 \greyItem{The program includes an outermost loop that iterates over the arguments applying the algorithms to each of the arguments (indicated as Loop 0). Is this loop optimal to be parallelized?}
 
