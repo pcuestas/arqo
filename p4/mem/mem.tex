@@ -189,16 +189,16 @@ Changing the number of threads to 8, the number increases slightly, the threshol
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 3: Parallel matrix multiplication}
 
-We have sampled times for the different programs using matrices of size 2000, which yield high enough times to make a difference between the different implementations. Here are the results:
+We have sampled times for the different programs using matrices of size 3000, which yield high enough times to make a difference between the different implementations. Here are the results:
 
 \begin{figure}[h]
-    \input{./tables/table3_n2000_1}
+    \input{./tables/table_e3_times}
     \centering
     \caption{Times (seconds) for the requested tests}
 \end{figure}
 
 \begin{figure}[h]
-    \input{./tables/table3_n2000_2}
+    \input{./tables/table_e3_ratios}
     \centering
     \caption{Ratios for the requested tests}
 \end{figure}
@@ -206,11 +206,11 @@ We have sampled times for the different programs using matrices of size 2000, wh
 \begin{enumerate}[label=3.\arabic*,leftmargin=*]
 \greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
-The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once (the \emph{multiplication\_loop2.c} one ``forks'' $N$ times).
+The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. However, \emph{multiplication\_loop2.c} is not far behind, it ``forks'' $N$ times, which apparently is not relevant, at least for this sizes, as the times are very similar to the \emph{loop\_3} version.
 
 \greyItem{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
 
-Based on these results, coarse-grained parallelization is generally preferable, as it avoids slowing the execution by killing and creating threads multiple times.
+Based on these results, coarse-grained parallelization is preferable, as it avoids slowing the execution by killing and creating threads multiple times. Although this may not be the general rule.
 
 \end{enumerate}
 

@@ -3,10 +3,10 @@
 
 # inicializar variables 
 
-Tmin=2000
+Tmin=4000
 STEP=400000
-Tmax=2000000
-REP=4  
+Tmax=4000
+REP=4
 
 DAT_DIR="../outputs/out3/tables/"
 SRC_DIR="../src/"
@@ -33,12 +33,13 @@ echo "Running multiplication..."
 
 echo -e "threads${TAB}serial${TAB}loop1${TAB}loop2${TAB}loop3" >> $fAUX
 
+mult=$($MULT $T | grep 'time' | awk '{print $3}') # only one time for the serial version
+
 for ((j = 1 ; j <= REP ; j += 1));do
     echo "      Threads: $j"
     export OMP_NUM_THREADS=$j
     for (( T=Tmin; T <= Tmin; T += STEP)); do
         #echo "T=$T"
-        mult=$($MULT $T | grep 'time' | awk '{print $3}')
         loop1=$($LOOP1 $T | grep 'time' | awk '{print $3}')
         loop2=$($LOOP2 $T | grep 'time' | awk '{print $3}')
         loop3=$($LOOP3 $T | grep 'time' | awk '{print $3}')

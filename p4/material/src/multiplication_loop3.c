@@ -65,17 +65,18 @@ int main(int argc, char *argv[])
 
 void multiply(float **a, float **b, float **c, int n)
 {
-	int i, j, k;
-	#pragma omp parallel for private(i,j,k)
+	int i, j, k, sum;
+	#pragma omp parallel for private(i,j,k,sum)
 		for (i = 0; i < n; i++)
 		{
 			for (j = 0; j < n; j++)
 			{
-				c[i][j] = 0;
+				sum = 0;
 				for(k = 0; k < n; k++)
 				{
-					c[i][j] += a[i][k] * b[k][j];
+					sum += a[i][k] * b[k][j];
 				}
+				c[i][j] = sum;
 			}
 		}
 }

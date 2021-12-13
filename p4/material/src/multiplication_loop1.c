@@ -70,14 +70,13 @@ void multiply(float **a, float **b, float **c, int n)
 	{		
 		for (j = 0; j < n; j++)
 		{
-			c[i][j] = 0;
-			#pragma omp parallel for  reduction(+: c[i][j]) private(k)
+			int sum = 0;
+			#pragma omp parallel for  reduction(+: sum) private(k)
 				for(k = 0; k < n; k++)
-				{	
-
-					
-					c[i][j] += a[i][k] * b[k][j];
+				{					
+					sum += a[i][k] * b[k][j];
 				}
+			c[i][j] = sum;
 		}
 	}
 }

@@ -29,7 +29,7 @@ x = float(B[1][1])
 for j in B[1:]:
 	for i in range(len(j)):
 		try:
-			j[i]=str(float(j[i])/x)
+			j[i]=str(x/float(j[i]))
 		except:
 			j[i]=j[i]
 
