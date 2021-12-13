@@ -62,7 +62,7 @@ int main(int nargs, char **argv)
     }
     // For each image
     // Bucle 0
-    #pragma omp parallel for private(fin, ini, width, height, nchannels) 
+
     for (int file_i = 1; file_i < nargs; file_i++)
     {
         int tid = omp_get_thread_num();

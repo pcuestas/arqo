@@ -18,6 +18,7 @@ SRC_DIR="../src/"
 
 SERIAL="${SRC_DIR}pescalar_serie"
 PARALLEL="${SRC_DIR}pescalar_par3"
+ARGUMENTS="../img/im"
 
 fDAT="${DAT_DIR}threshold.dat"
 fAUX="${DAT_DIR}aux.dat"
@@ -31,6 +32,7 @@ mkdir -p ${DAT_DIR}
 touch $fDAT $fAUX
 
 echo "Running parallel and serial..."
+
 
 for ((j = 0 ; j < REP ; j += 1));do
     echo "      Iteration $j"
