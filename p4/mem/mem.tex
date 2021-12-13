@@ -306,7 +306,7 @@ Accoriding to the results obtained, the best version in terms of execution time 
 
 After executing the program, we see that we get three new images. A grey scale version, another in grey scale but with the edges significantly diferenciated and finally, a black and white image where the edges are clear. 
 
-The first step is to convert a RGB image into a greyscale one. To do so, the program iterates through all the pixels in the image and apply the following conversion:  0.2989R + 0.5870G + 0.1140B - where R,G,B are the values for each primary colour of the original image.
+The first step is to convert a RGB image into a greyscale one. To do so, the program iterates through all the pixels in the image and applies the following conversion:  grey value = 0.2989R + 0.5870G + 0.1140B - where R,G,B are the values for each primary colour of the original image.
 
 \begin{figure}[htbp]
     \centering
@@ -329,7 +329,7 @@ $\begin{bmatrix}
        -1 & -2 & -1
 \end{bmatrix}$
 \end{center}
-in every pixel (except those on the borders) and, for each matrix, we compute the sum (weighted by the matrix) of its neighbours elements. By applying each matrix, we get a measure of the variation of intensity near a pixel in the $x$ and $y$ direction. Then we calculate the norm of the 2 dimesion vector whose components are the numbers just obtained before; that is to say, we calculate the norm of the ''intensity variation'' near each pixel. With this procedure, we get an image in greyscale where the edges are clearly marked. However, because we are using 3x3 integers matrices as the convolute operator, it is likely to happen that some lines are shown as edges when they are not. 
+in every pixel (except those on the borders) and, for each matrix computing the sum (weighted by the matrix) of its neighbours elements. By applying each matrix, we get a measure of the variation of intensity near a pixel in the $x$ and $y$ direction. Then, we calculate the norm of the 2 dimesion vector whose components are the numbers just obtained before; that is to say, we calculate the norm of the ''intensity variation'' near each pixel. With this procedure, we get an image in greyscale where the edges are clearly marked. However, because we are using 3x3 integers matrices as the convolute operator, it is likely to happen that some lines are shown as edges when they are not. 
 
 
 \begin{figure}[h!]
@@ -354,7 +354,7 @@ To deal with this problem, denoising is carried out. For this part of the progra
 
 It may make sense to think that this loop could be parallelized when the task we want to perform is processing a high number of images. This way, each thread would process a different image at a time.
 
-However, this may not be the optimal approach. For example, if the images vary in size, some thread would have a lot more work to do than others, wasting resources that coul help finish the task. There are other drawbacks, as explained in the next questions.
+However, this may not be the optimal approach. For example, if the images vary in size, some thread would have a lot more work to do than others, wasting resources that could help finish the task. There are other drawbacks, as explained in the next questions.
 
     \begin{enumerate}
         \greyItem{What happens if fewer arguments are passed than number of cores?}
@@ -363,7 +363,7 @@ However, this may not be the optimal approach. For example, if the images vary i
 
         \greyItem{Suppose you are processing images from a space telescope that occupy up to 6GB each, is this the right option? Comment how much memory each thread consumes based on the size in pixels of the input image.}
 
-        Each thread would need to allocate memory for the RGB image and for the three new images created during the algorithm. In an RGB image, each pixel is represented with 3 bytes, one for each colour. So, if the images occupy up to 6GB, the corresponding number of pixels is given by: ${6\text{GB}}*\frac{2^{30}\text{B}}{1\text{GB}}*\frac{1\text{pixel}}{3\text{B}}=2^{31}\text{ pixels}$. (The program als accepts RGBA images which have an extra byte per pixel for the alpha channel).
+        Each thread would need to allocate memory for the RGB image and for the three new images created during the algorithm. In an RGB image, each pixel is represented with 3 bytes, one for each colour. So, if the images occupy up to 6GB, the corresponding number of pixels per image is given by: ${6\text{GB}}*\frac{2^{30}\text{B}}{1\text{GB}}*\frac{1\text{pixel}}{3\text{B}}=2^{31}\text{ pixels}$. (The program also accepts RGBA images which have an extra byte per pixel for the alpha channel).
         
         Then, each thread would need to allocate memory for the three new images it creates (grey, edges and edges\_denoised version). All of them consist of an array of bytes, one for each pixel. So it would sum up to $3\text{ grey images}*\frac{2^{31}\text{(1 channel) pixel}}{\text{1 grey image}}*\frac{1\text{B}}{\text{(1 channel) pixel}}= 6 \text{GB}$ of memory needed (apart from loading the original image of 6GB). There are other memory allocations but are insignificant when compared to the ones just commented. To sum up, every thread would need the double of memory of the image it is processing. Furthermore, this memory is freed at the end of the algorithm instead of just after where it has been used, so the total comsumption of memory of all the threads together would be even greater.
         
@@ -391,7 +391,7 @@ In the first loop (RGB to grey scale), an element of an array is accessed in eac
 
 The next loop (Sobel edge detection) does something similar, writing in array \emph{edges}. It also reads from array \emph{grey\_image}, but reading does not matter when we worry about changing order of insstructions. Again, there is no alteration in the result if we change the order of this loop.
 
-The last loop is a nested loop on indices $i$ and $j$, which contains another nested loop on indices $p_1$ and $p_2$. The loops on $i$ and $j$, apart from iterating on $p_1$ and $p_2$, only write to an array: \emph{edges\_denoised}, in different positions each time. The $p_1$ and $p_2$ loops write into an array in order. This is something to take into account, as changing order in the indices would alter the result of this array; however, this array is later sorted, so the order in which it was filled is not relevant. At last, this loop can also be optimized without changing the result of the computation.
+Lastly, in the \emph{salt\$peper filer}, there is a nested loop on indices $i$ and $j$, which contains another nested loop on indices $p_1$ and $p_2$. The loops on $i$ and $j$, apart from iterating on $p_1$ and $p_2$, only write to an array: \emph{edges\_denoised}, in different positions each time. The $p_1$ and $p_2$ loops write into an array in order. This is something to take into account, as changing order in the indices would alter the result of this array; however, this array is later sorted, so the order in which it was filled is not relevant. At last, this loop can also be optimized without changing the result of the computation. In the case of the gaussian filter, the loops on indices $p_1$ and $p_2$ are used to perform an addition over the acumulator \emph{sum}; becuase the sum is conmutative, there is nothing to worry about. 
 
 This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, and in all of the parallel improvements.
 
