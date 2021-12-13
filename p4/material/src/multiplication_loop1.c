@@ -71,9 +71,11 @@ void multiply(float **a, float **b, float **c, int n)
 		for (j = 0; j < n; j++)
 		{
 			c[i][j] = 0;
-			#pragma omp parallel for private(k)
+			#pragma omp parallel for  reduction(+: c[i][j]) private(k)
 				for(k = 0; k < n; k++)
-				{
+				{	
+
+					
 					c[i][j] += a[i][k] * b[k][j];
 				}
 		}

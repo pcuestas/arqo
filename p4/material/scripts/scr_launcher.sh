@@ -5,7 +5,9 @@
 #$ -cwd
 #$ -o salida.out
 #$ -j y
+#$ -pe openmp 8
 
+export OMP_NUM_THREADS=$NSLOTS
 
 # Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
 # Script to launch the exercses 1, 2, 3 and 4 scripts

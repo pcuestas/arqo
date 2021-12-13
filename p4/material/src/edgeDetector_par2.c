@@ -202,7 +202,7 @@ int main(int nargs, char **argv)
                 edges[x + y * width_edges] = sqrt(a * a + b * b);
             }
         }
-        int r, g, b;
+       
         #ifdef WRITEONTHEGO
         stbi_write_jpg(grad_image_filename, width - 2, height - 2, 1, edges, 10);
         free(grey_image);
@@ -256,7 +256,7 @@ int main(int nargs, char **argv)
                     y = j - radius;
                     sum = 0;
                     /*loop order changed*/
-                    
+
                     for (int p2 = 0; p2 <= 2 * radius; p2++)
                     {
                         for (int p1 = 0; p1 <= 2 * radius; p1++)
