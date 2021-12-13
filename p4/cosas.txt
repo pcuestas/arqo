@@ -6,6 +6,8 @@ pi_par2 da resultado incorrecto (a veces?!)
 
 
 
+ningun pi da error?
+paralelizar bucles en 5.
 
 
 
