@@ -206,7 +206,7 @@ We have sampled times for the different programs using matrices of size 3000, wh
 \begin{enumerate}[label=3.\arabic*,leftmargin=*]
 \greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
-The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. However, \emph{multiplication\_loop2.c} is not far behind, it ``forks'' $N$ times, which apparently is not relevant, at least for this sizes, as the times are very similar to the \emph{loop\_3} version.
+The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. However, \emph{multiplication\_loop2.c} is not far behind, it ``forks'' $N$ times.
 
 \greyItem{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
 
