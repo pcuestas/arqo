@@ -189,19 +189,35 @@ Changing the number of threads to 8, the number increases slightly, the threshol
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 3: Parallel matrix multiplication}
 
-We have sampled times for the different programs using matrices of size 3000, which yield high enough times to make a difference between the different implementations. Here are the results:
+Here are the requested tables for $N=1000$, which do not have big enough times. In fact, we can se the \emph{loop\_2} version being very similar to the \emph{loop\_3} one; however, that is not the case asymptotically (as can be seen in tables \ref{5000_times} and \ref{5000_ratios}).
 
-\begin{figure}[h]
+\begin{table}[h]
+    \input{./tables/table_e3_times_1000}
+    \centering
+    \caption{Times (seconds) for $N=1000$}
+\end{table}
+
+\begin{table}[h]
+    \input{./tables/table_e3_ratios_1000}
+    \centering
+    \caption{Ratios for $N=1000$}
+\end{table}
+
+For matrices of size $N=5000$, the programs take high enough times to make a difference between the different implementations. Here are the results:
+
+\begin{table}[!h]
     \input{./tables/table_e3_times}
     \centering
-    \caption{Times (seconds) for the requested tests}
-\end{figure}
+    \caption{Times (seconds) for the requested tests ($N=5000$)}
+    \label{5000_times}
+\end{table}
 
-\begin{figure}[h]
+\begin{table}[!h]
     \input{./tables/table_e3_ratios}
     \centering
-    \caption{Ratios for the requested tests}
-\end{figure}
+    \caption{Ratios for the requested tests ($N=5000$)}
+    \label{5000_ratios}
+\end{table}
 
 \begin{enumerate}[label=3.\arabic*,leftmargin=*]
 \greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
@@ -215,8 +231,6 @@ Based on these results, coarse-grained parallelization is preferable, as it avoi
 \end{enumerate}
 
 Taking the best parallel version (parallelizing the outermost loop) alongside the serial version, we have tested for $N$ between $512+P$ and $512+1024+P$ with increments of $64$. And with the parallel version, we have tested for $2$, $4$ and $6$ threads. These are the results: 
-
-\pagebreak
 
 \myFigure{../material/outputs/out3/test_cl0/t_fig.png}{Time in seconds.}{times_e3}{0.65}
 
@@ -310,8 +324,8 @@ The first step is to convert a RGB image into a greyscale one. To do so, the pro
 
 \begin{figure}[htbp]
     \centering
-    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/im4.jpg}} 
-    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/im4_grey.jpg}} 
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/im4}} 
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/im4_grey}} 
     \caption{(a) RGB image (b) Greyscale image }
     \label{fig:foobar}
 \end{figure}
@@ -334,9 +348,9 @@ in every pixel (except those on the borders) and, for each matrix computing the 
 
 \begin{figure}[h!]
     \centering
-    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/ejex.jpg}} 
-    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/ejey.jpg}} 
-    \subfigure[]{\includegraphics[width=0.24\textwidth]{../material/img/eje.jpg}}
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/ejex}} 
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/ejey}} 
+    \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/eje}}
     \caption{(a) Sobel in x direction (b) Sobel in y direction (c) Global Sobel}
     \label{fig:foobar}
     \label{sobel}
@@ -400,15 +414,52 @@ This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, a
     \begin{enumerate}
         \greyItem{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
             
+We have done 3 different versions. All modifications are made to the version that uses the optimal ordering of indexes in the loops (which is written in \emph{edgeDetector\_optLoops.c}).
+
+The first modification, \emph{par\_0} is such that each operation: rgb to gray, sobel transformation and gaussian denoising, has a parallelization of the outermost loop.
+
+In the second version, \emph{par\_1} we have done it such that each operation has a parallelization of the outermost loop, which is forced to create 4 threads (using \texttt{num\_threads()}); and the second loop has a parallelization which is forced to create 2 threads. In total, this version creates the same number of threads ($8$) for each operation as \emph{par\_0}, because we are executing with the MV machine, using 8 cores.
+
+The last version, \emph{par\_2} is the same as \emph{par\_1}, but this time, we do not force the number of threads that are created in each of the nested \emph{for} sections. We do not know how the threads will be created, but in the tests that we have made, both in the cluster and in the lab computers, the outermost loop creates all the possible threads, and the second loop does not create threads (the only thread is the main one).
+
         \greyItem{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
         document.}
+Of this 3 versions, it is expected that \emph{par\_0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
+However, the difference between versions \emph{par\_1} and \emph{par\_2} is not that clear. 
     \end{enumerate}
-
 
 %4
 \greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}
 
-For obtaining the results of this exercise, we have run \emph{scr5.sh}.
+For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order to see the improvement of optimizing the index order in the nested loops, we have included the times of the original version (\emph{edgeDetector}). However, the speedups are calculated using the one with optimized loops (because we are parallelizing optimized loops).
+
+\begin{table}[h]
+    \input{./tables/table_e5_normal_times}
+    \centering
+    \caption{Execution time (seconds)}
+\end{table}
+
+\begin{table}[h]
+    \input{./tables/table_e5_normal_ratios}
+    \centering
+    \caption{Speedups}
+    \emph{Note: in the table, speedups are calculated by columns, comparing the computations of an image with the serial version of the same image.}
+\end{table}
+
+\pagebreak
+
+Finally, here (table \ref{fps}) we have the fps of each program, for each image size.
+
+\begin{table}[h]
+    \input{./tables/table_e5_normal_fps}
+    \centering
+    \caption{Frames per second}
+    \label{fps}
+\end{table}
+
+COMMENT ON THE FPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+\pagebreak
 
 %5
 \greyItem{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
@@ -416,13 +467,36 @@ For obtaining the results of this exercise, we have run \emph{scr5.sh}.
 
 When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}. 
 
-\lstinputlisting[language=BASH]{tables/output_unroll}
+\lstinputlisting{tables/output_unroll}
 
 On the other hand, the optimizations related to vectorization are the following:
 
-\lstinputlisting[language=BASH]{tables/output_vector}
+\lstinputlisting{tables/output_vector}
 
 Finally, these are the execution results with the flag \emph{-O3}
+
+\begin{table}[h]
+    \input{./tables/table_e5_O3_times}
+    \centering
+    \caption{Execution time (seconds)}
+\end{table}
+
+\begin{table}[h]
+    \input{./tables/table_e5_O3_ratios}
+    \centering
+    \caption{Speedups}
+\end{table}
+
+
+\begin{table}[h]
+    \input{./tables/table_e5_O3_fps}
+    \centering
+    \caption{Frames per second}
+    \label{fps}
+\end{table}
+
+
+COMMENT ON THE FPS -COMPARE TO NORMAL (WITHOUT -O3)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 \end{enumerate}
 

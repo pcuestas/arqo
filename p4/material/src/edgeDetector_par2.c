@@ -170,7 +170,7 @@ int main(int nargs, char **argv)
         #pragma omp parallel for
         for (j = 0; j < height; j++)
         {   
-            #pragma omp parallel for
+            #pragma omp parallel for private(r,g,b)
             for (i = 0; i < width; i++)
             {
                 getRGB(rgb_image, width, height, 4, i, j, &r, &g, &b);

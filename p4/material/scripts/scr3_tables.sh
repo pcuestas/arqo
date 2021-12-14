@@ -1,12 +1,10 @@
-
 #!/bin/bash
 
 # inicializar variables 
 
-Tmin=4000
-STEP=400000
-Tmax=4000
-REP=4
+T=500
+THREADS_MAX=4 
+MAX_REP=4
 
 DAT_DIR="../outputs/out3/tables/"
 SRC_DIR="../src/"
@@ -16,29 +14,26 @@ LOOP1="${SRC_DIR}multiplication_loop1"
 LOOP2="${SRC_DIR}multiplication_loop2"
 LOOP3="${SRC_DIR}multiplication_loop3"
 
-fAUX="${DAT_DIR}table.dat"
-fPNG="${DAT_DIR}threshold.png"
+fAUX="${DAT_DIR}aux.dat"
+fDAT="${DAT_DIR}table.dat"
 
 TAB="\t"
 
 
 # borrar el fichero DAT y el fichero PNGtipo
-rm -f $fAUX
+rm -f $fAUX $fDAT
 mkdir -p ${DAT_DIR}
-
-# generar el fichero DAT vacío
-touch $fAUX
 
 echo "Running multiplication..."
 
-echo -e "threads${TAB}serial${TAB}loop1${TAB}loop2${TAB}loop3" >> $fAUX
+echo -e "threads${TAB}serial${TAB}loop1${TAB}loop2${TAB}loop3" > $fDAT
 
-mult=$($MULT $T | grep 'time' | awk '{print $3}') # only one time for the serial version
-
-for ((j = 1 ; j <= REP ; j += 1));do
-    echo "      Threads: $j"
-    export OMP_NUM_THREADS=$j
-    for (( T=Tmin; T <= Tmin; T += STEP)); do
+mult=$($MULT $T | grep 'time' | awk '{print $3}')
+for ((rep=0; rep<MAX_REP; rep++));do
+    echo "rep: $rep out of $MAX_REP"
+    for ((j = 1 ; j <= THREADS_MAX ; j += 1));do
+        echo "      Threads: $j"
+        export OMP_NUM_THREADS=$j
         #echo "T=$T"
         loop1=$($LOOP1 $T | grep 'time' | awk '{print $3}')
         loop2=$($LOOP2 $T | grep 'time' | awk '{print $3}')
@@ -47,3 +42,9 @@ for ((j = 1 ; j <= REP ; j += 1));do
         echo -e "$j${TAB}$mult${TAB}$loop1${TAB}$loop2${TAB}$loop3" >> $fAUX
     done
 done
+
+for N in $(awk '{ print $1 }' $fAUX | sort -n | uniq); do
+	means=$(grep -w $N $fAUX | awk '{ t0 += $2; t1 += $3; t2 += $4; t3 += $5; n++ } END { printf "%s\t%s\t%s\t%s\n", t0/n, t1/n, t2/n, t3/n }')
+    echo -e "$N${TAB}$means" >> $fDAT
+done
+

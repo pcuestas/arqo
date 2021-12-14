@@ -1,5 +1,5 @@
-\contentsline {section}{\numberline {1}Exercise 1: Basic OpenMP programs}{2}{section.1}%
-\contentsline {section}{\numberline {2}Exercise 2: Parallelize the dot product}{2}{section.2}%
-\contentsline {section}{\numberline {3}Exercise 3: Parallel matrix multiplication}{5}{section.3}%
-\contentsline {section}{\numberline {4}Exercise 4: Example of numerical integration}{8}{section.4}%
-\contentsline {section}{\numberline {5}Exercise 5: Optimization of calculation programs}{10}{section.5}%
+\contentsline {section}{\numberline {1}Exercise 1: Basic OpenMP programs}{2}{section.1}
+\contentsline {section}{\numberline {2}Exercise 2: Parallelize the dot product}{2}{section.2}
+\contentsline {section}{\numberline {3}Exercise 3: Parallel matrix multiplication}{5}{section.3}
+\contentsline {section}{\numberline {4}Exercise 4: Example of numerical integration}{8}{section.4}
+\contentsline {section}{\numberline {5}Exercise 5: Optimization of calculation programs}{10}{section.5}
