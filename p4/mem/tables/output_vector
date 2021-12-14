@@ -1,0 +1,5 @@
+$ make -f Makefile2 | grep vector
+  -ftree-loop-vectorize       		[enabled]
+  -ftree-slp-vectorize        		[enabled]
+  -ftree-vectorize            		[disabled]
+  Specifies the cost model for vectorization. -fvect-cost-model=[unlimited|dynamic|cheap] 	dynamic

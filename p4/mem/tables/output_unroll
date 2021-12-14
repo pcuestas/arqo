@@ -1,0 +1,5 @@
+$ make -f Makefile2 | grep unroll
+  -fsplit-ivs-in-unroller     		[enabled]
+  -funroll-all-loops          		[disabled]
+  -funroll-loops              		[disabled]
+  -fvariable-expansion-in-unroller 	[disabled]

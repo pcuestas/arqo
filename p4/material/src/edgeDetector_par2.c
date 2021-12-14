@@ -17,7 +17,7 @@
 
 /**
  * Version with the i and j loops parallelized with 
- * the caluse pragma for
+ * the caluse pragma for (without specifying number of threads)
  * 
  */
 
@@ -167,10 +167,10 @@ int main(int nargs, char **argv)
         int r, g, b;
         /*loop order changed*/
 
-        #pragma omp parallel  
+        #pragma omp parallel for
         for (j = 0; j < height; j++)
         {   
-            #pragma omp parallel for private(r,g,b)
+            #pragma omp parallel for
             for (i = 0; i < width; i++)
             {
                 getRGB(rgb_image, width, height, 4, i, j, &r, &g, &b);
@@ -186,10 +186,10 @@ int main(int nargs, char **argv)
 #define PIXEL_GREY(x, y) (grey_image[(x) + (y)*width])
         /*loop order changed*/
 
-        #pragma omp parallel for 
+        #pragma omp parallel for private(i)
         for( j = 1; j < height - 1; j++)
         {   
-            #pragma omp parallel for 
+            #pragma omp parallel for
             for( i = 1; i < width - 1; i++)
             {
                 int x = i - 1;
@@ -218,7 +218,7 @@ int main(int nargs, char **argv)
             printf("[info] Using median denoising...\n");
             /*loop order changed*/
 
-            #pragma omp parallel for 
+            #pragma omp parallel for
             for( j = radius; j < height_edges - radius; j++)
             {   
                 #pragma omp parallel for private(x,y,k)
@@ -246,9 +246,9 @@ int main(int nargs, char **argv)
             double sum = 0;
             /*loop order changed*/
 
-            #pragma omp parallel for 
+            #pragma omp parallel for
             for( j = radius; j < height_edges - radius; j++)
-            {   
+            {
                 #pragma omp parallel for private(x,y,sum)
                 for( i = radius; i < width_edges - radius; i++)
                 {

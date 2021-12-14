@@ -16,8 +16,8 @@
 
 
 /**
- * Version with the outter loops parallelized with 
- * the clause parallel for. we are parallelnig the "rows" loops
+ * Version with the i and j loops parallelized with 
+ * the caluse pragma for (specifying num_threads)
  * 
  */
 
@@ -164,14 +164,13 @@ int main(int nargs, char **argv)
 
         gettimeofday(&ini,NULL);
         // RGB to grey scale
-        
+        int r, g, b;
         /*loop order changed*/
 
-        #pragma omp parallel for private(i)
+        #pragma omp parallel for num_threads(4)
         for (j = 0; j < height; j++)
         {   
-            
-            int r, g, b;
+            #pragma omp parallel for num_threads(2)
             for (i = 0; i < width; i++)
             {
                 getRGB(rgb_image, width, height, 4, i, j, &r, &g, &b);
@@ -187,10 +186,11 @@ int main(int nargs, char **argv)
 #define PIXEL_GREY(x, y) (grey_image[(x) + (y)*width])
         /*loop order changed*/
 
-        #pragma omp parallel for private(i)
-        for (int j = 1; j < height - 1; j++)
-        {
-            for ( i = 1; i < width - 1; i++)
+        #pragma omp parallel for private(i) num_threads(4)
+        for( j = 1; j < height - 1; j++)
+        {   
+            #pragma omp parallel for num_threads(2)
+            for( i = 1; i < width - 1; i++)
             {
                 int x = i - 1;
                 int y = j - 1;
@@ -202,7 +202,7 @@ int main(int nargs, char **argv)
                 edges[x + y * width_edges] = sqrt(a * a + b * b);
             }
         }
-        
+       
         #ifdef WRITEONTHEGO
         stbi_write_jpg(grad_image_filename, width - 2, height - 2, 1, edges, 10);
         free(grey_image);
@@ -218,10 +218,11 @@ int main(int nargs, char **argv)
             printf("[info] Using median denoising...\n");
             /*loop order changed*/
 
-            #pragma omp parallel for private(i,y,x,k)
-            for ( j = radius; j < height_edges - radius; j++)
-            {
-                for ( i = radius; i < width_edges - radius; i++)
+            #pragma omp parallel for num_threads(4)
+            for( j = radius; j < height_edges - radius; j++)
+            {   
+                #pragma omp parallel for private(x,y,k) num_threads(2)
+                for( i = radius; i < width_edges - radius; i++)
                 {
                     y = j - radius;
                     x = i - radius;
@@ -245,15 +246,17 @@ int main(int nargs, char **argv)
             double sum = 0;
             /*loop order changed*/
 
-            #pragma omp parallel for private(i,x,y,sum)
-            for (int j = radius; j < height_edges - radius; j++)
-            {
-                for( int i = radius; i < width_edges - radius; i++)
+            #pragma omp parallel for num_threads(4)
+            for( j = radius; j < height_edges - radius; j++)
+            {   
+                #pragma omp parallel for private(x,y,sum) num_threads(2)
+                for( i = radius; i < width_edges - radius; i++)
                 {
                     x = i - radius;
                     y = j - radius;
                     sum = 0;
                     /*loop order changed*/
+
                     for (int p2 = 0; p2 <= 2 * radius; p2++)
                     {
                         for (int p1 = 0; p1 <= 2 * radius; p1++)

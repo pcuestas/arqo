@@ -408,8 +408,21 @@ This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, a
 %4
 \greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}
 
+For obtaining the results of this exercise, we have run \emph{scr5.sh}.
+
 %5
 \greyItem{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
+
+
+When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}. 
+
+\lstinputlisting[language=BASH]{tables/output_unroll}
+
+On the other hand, the optimizations related to vectorization are the following:
+
+\lstinputlisting[language=BASH]{tables/output_vector}
+
+Finally, these are the execution results with the flag \emph{-O3}
 
 \end{enumerate}
 

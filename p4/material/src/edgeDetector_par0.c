@@ -14,6 +14,13 @@
 
 #define TYPE_FILTER GAUSSIAN
 
+
+/**
+ * Version with only the outter loops parallelized with 
+ * the clause parallel for. we are parallelnig the "rows" loops
+ * 
+ */
+
 float* gaussian_kernel(int ksize, double sigma) {
     float* gauss = malloc(ksize*ksize*sizeof(float));
     double sum = 0;
@@ -55,14 +62,15 @@ int main(int nargs, char **argv)
 {
     int width, height, nchannels;
     struct timeval fin,ini;
-
+    int i,j;
+    
     if (nargs < 2)
     {
         printf("Usage: %s <image1> [<image2> ...]\n", argv[0]);
     }
     // For each image
     // Bucle 0
-
+  
     for (int file_i = 1; file_i < nargs; file_i++)
     {
         int tid = omp_get_thread_num();
@@ -111,7 +119,7 @@ int main(int nargs, char **argv)
         }
 
         // - Filenames 
-        for (int i = strlen(argv[file_i]) - 1; i >= 0; i--)
+        for( i = strlen(argv[file_i]) - 1; i >= 0; i--)
         {
             if (argv[file_i][i] == '.')
             {
@@ -156,11 +164,14 @@ int main(int nargs, char **argv)
 
         gettimeofday(&ini,NULL);
         // RGB to grey scale
-        int r, g, b;
+        
         /*loop order changed*/
-        for (int j = 0; j < height; j++)
-        {
-            for (int i = 0; i < width; i++)
+
+        #pragma omp parallel for private(i)
+        for (j = 0; j < height; j++)
+        {               
+            int r, g, b;
+            for (i = 0; i < width; i++)
             {
                 getRGB(rgb_image, width, height, 4, i, j, &r, &g, &b);
                 grey_image[j * width + i] = (int)(0.2989 * r + 0.5870 * g + 0.1140 * b);
@@ -174,9 +185,11 @@ int main(int nargs, char **argv)
         // Sobel edge detection
 #define PIXEL_GREY(x, y) (grey_image[(x) + (y)*width])
         /*loop order changed*/
+
+        #pragma omp parallel for private(i)
         for (int j = 1; j < height - 1; j++)
         {
-            for (int i = 1; i < width - 1; i++)
+            for ( i = 1; i < width - 1; i++)
             {
                 int x = i - 1;
                 int y = j - 1;
@@ -203,9 +216,11 @@ int main(int nargs, char **argv)
         {
             printf("[info] Using median denoising...\n");
             /*loop order changed*/
-            for (int j = radius; j < height_edges - radius; j++)
+
+            #pragma omp parallel for private(i,y,x,k)
+            for ( j = radius; j < height_edges - radius; j++)
             {
-                for (int i = radius; i < width_edges - radius; i++)
+                for ( i = radius; i < width_edges - radius; i++)
                 {
                     y = j - radius;
                     x = i - radius;
@@ -228,9 +243,11 @@ int main(int nargs, char **argv)
             float* kernel = gaussian_kernel(2*radius+1, 1.0);
             double sum = 0;
             /*loop order changed*/
+
+            #pragma omp parallel for private(i,x,y,sum)
             for (int j = radius; j < height_edges - radius; j++)
             {
-                for (int i = radius; i < width_edges - radius; i++)
+                for( int i = radius; i < width_edges - radius; i++)
                 {
                     x = i - radius;
                     y = j - radius;
