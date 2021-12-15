@@ -436,10 +436,10 @@ The last version, \emph{par2}, is simillar to \emph{par0}, parallelizing the out
         \greyItem{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
         document.}
 Of the first 2 versions, it is expected that \emph{par0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
-However, the difference between versions \emph{par0} and \emph{par2} is not that clear. 
+On the other hand, it seems that there is no difference between using the clause \emph{collapse()} for the square loops, as version \emph{par0} and \emph{par2} have the same performance.
 
-At first, we may think that \emph{par2} should be better, because it uses a openmp caluse that is speciffic to this type of problem. But perhaps, the improvement of this clause can only be seen for very high sizes, and it is possible that the tested images are not big enough. This situation is similar to the one in exercise 2, where for some sizes it was better not to parallelize; in this case, for some sizes is may be better not to make use of this clause.
-    \end{enumerate}
+The reason why usinng \emph{collapse} is making no difference relies on the number of iterations of the nested loops, in other words, the size of the image. Collpase makes sense when the outer loop has fewer iterations than threads available (so it prevetns any thread from being iddle) or when the work load is unevem among iterations.
+\end{enumerate}
 
 %4
 \greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}
@@ -470,7 +470,7 @@ Finally, here (table \ref{fps}) we have the fps of each program, for each image 
     \label{fps}
 \end{table}
 
-COMMENT ON THE FPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+As we commented before, the best version is \emph{par\_0} which could apply the algorithm to videos of SD or HD quality. If we increased the definition of the frames, our version could not keep the needed rate of 30fps. In fact, for the largest resolutions, the algorithm cannot even process an image per second.
 
 \pagebreak
 
@@ -478,17 +478,16 @@ COMMENT ON THE FPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 \greyItem{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
 
 
-When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}. 
+When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} in the \emph{Makefile} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}.\\
 
 \lstinputlisting{tables/output_unroll}
 
-On the other hand, the optimizations related to vectorization are the following:
+On the other hand, the optimizations related to vectorization are the following:\\
 
 \lstinputlisting{tables/output_vector}
 
-The results after compiling with the \emph{-O3} flag are the same as without it.
+If we compare these results with the ones from the previous section, we notice that the average execution time has decreased by a factor of 10 for all the versions and image resolutions.
 
-Finally, these are the execution results after the optimized compilation:
 
 \begin{table}[h]
     \input{./tables/table_e5_O3_times}
@@ -510,8 +509,7 @@ Finally, these are the execution results after the optimized compilation:
     \label{fps}
 \end{table}
 
-
-COMMENT ON THE FPS -COMPARE TO NORMAL (WITHOUT -O3)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Once again, we are only going to focus on the performance of the best version. If compared to the table from last section, we see that the fps rate has increased by a factor of 3, which would allow us to process videos for resolutions SD, HD and FHD. However, we are still unable to process video for higher definitions. In order to achieve so, further and more extensive parallelization would be needed as well as hardware of higher features; for instance, a larger number of cores.
 
 \end{enumerate}
 
