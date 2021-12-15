@@ -152,7 +152,7 @@ As we are calculating the dot product of two vectors of size M where all the com
     
 \greyItem{Run the parallelized code with the openmp pragma and answer the following questions in the document}
     
-The parallel version is not working due to the fact that variable sum is being shared (default mode). So we have severals threads writing in the same variable at the same time which produces a data race.
+The parallel version is not working due to the fact that variable sum is being shared (default mode). So we have severals threads writing in the same variable at the same time which leads to a data race.
 
 \greyItem{Modify the code and name the program pescalar\_par2. This version should give the correct result using the appropriate pragma:}
 
@@ -288,7 +288,7 @@ The tests have been made using the \emph{scr4\_test.sh} script. We have submitte
 
 As we can see, the results of the $\pi$ approximation are the same in all the programs. (And it is the best approximation that can be expressed with the precission that these programs have by default, just 6 decimal places).
 
-The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, {pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7.On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
+The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, {pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7. On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
 
 \greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
@@ -354,7 +354,7 @@ $\begin{bmatrix}
        -1 & -2 & -1
 \end{bmatrix}$
 \end{center}
-in every pixel (except those on the borders) and, for each matrix computing the sum (weighted by the matrix) of its neighbours elements. By applying each matrix, we get a measure of the variation of intensity near a pixel in the $x$ and $y$ direction. Then, we calculate the norm of the 2 dimesion vector whose components are the numbers just obtained before; that is to say, we calculate the norm of the ''intensity variation'' near each pixel. With this procedure, we get an image in greyscale where the edges are clearly marked. However, because we are using 3x3 integers matrices as the convolute operator, it is likely to happen that some lines are shown as edges when they are not. 
+in every pixel (except those on the borders) and, for each matrix. computing the sum (weighted by the matrix) of its neighbours elements. By applying each matrix, we get a measure of the variation of intensity near a pixel in the $x$ and $y$ direction. Then, we calculate the norm of the 2 dimesion vector whose components are the numbers just obtained before; that is to say, we calculate the norm of the ''intensity variation'' near each pixel. With this procedure, we get an image in greyscale where the edges are clearly marked. However, because we are using 3x3 integers matrices as the convolute operator, it is likely to happen that some lines are shown as edges when they are not. 
 
 
 \begin{figure}[h!]
@@ -368,7 +368,7 @@ in every pixel (except those on the borders) and, for each matrix computing the 
 \end{figure}
 
 
-To deal with this problem, denoising is carried out. For this part of the program, a gaussian kernel is used to ponderate the results obtained with the Sobel operator for each pixel with its local neighbours results. If a pixel mets a threshold to be considerated part of an edge, it is assigned color white and, if not, black. With this procedure, we get rid of the noise (the light blurred inside the shapes in \ref{sobel}) 
+To deal with this problem, denoising is carried out. For this part of the program, a gaussian kernel is used to ponderate the results obtained with the Sobel operator for each pixel with its local neighbours results. If a pixel mets a threshold to be considerated part of an edge, it is assigned colour white and, if not, black. With this procedure, we get rid of the noise (the light blurred inside the shapes in \ref{sobel}) 
 
 \myFigure{../material/img/im4_grad_denoised}{Imaged denoised}{denoised}{0.35}
 
@@ -438,7 +438,7 @@ The last version, \emph{par2}, is simillar to \emph{par0}, parallelizing the out
 Of the first 2 versions, it is expected that \emph{par0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
 On the other hand, it seems that there is no difference between using the clause \emph{collapse()} for the square loops, as version \emph{par0} and \emph{par2} have the same performance.
 
-The reason why usinng \emph{collapse} is making no difference relies on the number of iterations of the nested loops, in other words, the size of the image. Collpase makes sense when the outer loop has fewer iterations than threads available (so it prevetns any thread from being iddle) or when the work load is unevem among iterations.
+The reason why usinng \emph{collapse} is making no difference relies on the number of iterations of the nested loops, in other words, the size of the image. Collpase makes sense when the outer loop has fewer iterations than threads available (so it prevents any thread from being iddle) or when the work load is uneven among iterations.
 \end{enumerate}
 
 %4
