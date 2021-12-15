@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  15 DEC 2021 20:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  15 DEC 2021 23:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -798,23 +798,34 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 \Hy@SectionHShift=\skip64
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 57.
- (build/mem.aux)
+ (/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
+\ttl@box=\box49
+\beforetitleunit=\skip65
+\aftertitleunit=\skip66
+\ttl@plus=\dimen177
+\ttl@minus=\dimen178
+\ttl@toksa=\toks41
+\titlewidth=\dimen179
+\titlewidthlast=\dimen180
+\titlewidthfirst=\dimen181
+) (build/mem.aux)
 \openout1 = `mem.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -853,16 +864,16 @@ LaTeX Font Info:    ... okay on input line 84.
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count144
-\scratchdimen=\dimen177
-\scratchbox=\box49
+\scratchdimen=\dimen182
+\scratchbox=\box50
 \nofMPsegments=\count145
 \nofMParguments=\count146
-\everyMPshowfont=\toks41
+\everyMPshowfont=\toks42
 \MPscratchCnt=\count147
-\MPscratchDim=\dimen178
+\MPscratchDim=\dimen183
 \MPnumerator=\count148
 \makeMPintoPDFobject=\count149
-\everyMPtoPDFconversion=\toks42
+\everyMPtoPDFconversion=\toks43
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
  (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -876,8 +887,8 @@ Package grfext Info: Graphics extension search list:
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 )) ABD: EveryShipout initializing macros
 \c@lstlisting=\count150
-\AtBeginShipoutBox=\box50
-Package hyperref Info: Link coloring ON on input line 84.
+\AtBeginShipoutBox=\box51
+Package hyperref Info: Link coloring ON on input line 90.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -885,9 +896,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count151
 )
-LaTeX Info: Redefining \ref on input line 84.
-LaTeX Info: Redefining \pageref on input line 84.
-LaTeX Info: Redefining \nameref on input line 84.
+LaTeX Info: Redefining \ref on input line 90.
+LaTeX Info: Redefining \pageref on input line 90.
+LaTeX Info: Redefining \nameref on input line 90.
  (build/mem.out) (build/mem.out)
 \@outlinefile=\write7
 \openout7 = `mem.out'.
@@ -899,107 +910,119 @@ LaTeX Info: Redefining \nameref on input line 84.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \vbox (329.00226pt too high) has occurred while \output is active []
+
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.07225pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+[2]
+Overfull \hbox (32.29768pt too wide) in paragraph at lines 121--122
+\OT1/cmr/m/n/10 For a gen-eral sit-u-a-tion, the num-ber of threads to be used is the one de-ter-mined by the func-tion \OT1/cmr/m/it/10 omp[]get[]max[]threads()\OT1/cmr/m/n/10 .
+ []
+
+
+Overfull \hbox (21.04994pt too wide) in paragraph at lines 125--126
+\OT1/cmr/m/n/10 The pri-or-ity or-der is: \OT1/cmtt/m/n/10 OMP[]NUM[]THREADS $\OML/cmm/m/it/10 <$ \OT1/cmtt/m/n/10 omp[]set[]num[]threads() $\OML/cmm/m/it/10 <$ \OT1/cmr/m/n/10 #pragma omp par-al-lel num[]threads(numthr) 
+ []
+
+[3] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 ) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-) [3]
-<../material/outputs/out2_final/threshold0.png, id=91, 642.4pt x 481.8pt>
+) [4]
+<../material/outputs/out2_final/threshold0.png, id=298, 642.4pt x 481.8pt>
 File: ../material/outputs/out2_final/threshold0.png Graphic file (type png)
 <use ../material/outputs/out2_final/threshold0.png>
-Package pdftex.def Info: ../material/outputs/out2_final/threshold0.png  used on input line 199.
+Package pdftex.def Info: ../material/outputs/out2_final/threshold0.png  used on input line 201.
 (pdftex.def)             Requested size: 306.81741pt x 230.1145pt.
-<../material/outputs/out2_final/threshold_4proc.png, id=93, 642.4pt x 481.8pt>
+<../material/outputs/out2_final/threshold_4proc.png, id=300, 642.4pt x 481.8pt>
 File: ../material/outputs/out2_final/threshold_4proc.png Graphic file (type png)
 <use ../material/outputs/out2_final/threshold_4proc.png>
-Package pdftex.def Info: ../material/outputs/out2_final/threshold_4proc.png  used on input line 205.
+Package pdftex.def Info: ../material/outputs/out2_final/threshold_4proc.png  used on input line 207.
 (pdftex.def)             Requested size: 306.81741pt x 230.1145pt.
- [4 <../material/outputs/out2_final/threshold0.png> <../material/outputs/out2_final/threshold_4proc.png>]
-<../material/outputs/out2_final/threshold_8proc.png, id=103, 642.4pt x 481.8pt>
+ [5 <../material/outputs/out2_final/threshold0.png>]
+<../material/outputs/out2_final/threshold_8proc.png, id=307, 642.4pt x 481.8pt>
 File: ../material/outputs/out2_final/threshold_8proc.png Graphic file (type png)
 <use ../material/outputs/out2_final/threshold_8proc.png>
-Package pdftex.def Info: ../material/outputs/out2_final/threshold_8proc.png  used on input line 211.
+Package pdftex.def Info: ../material/outputs/out2_final/threshold_8proc.png  used on input line 213.
 (pdftex.def)             Requested size: 311.54234pt x 233.658pt.
- [5 <../material/outputs/out2_final/threshold_8proc.png>] (./tables/table_e3_times_1000) (./tables/table_e3_ratios_1000) (./tables/table_e3_times) (./tables/table_e3_ratios) [6]
-<../material/outputs/out3/test_cl0/t_fig.png, id=123, 481.8pt x 361.35pt>
+ [6 <../material/outputs/out2_final/threshold_4proc.png> <../material/outputs/out2_final/threshold_8proc.png>] (./tables/table_e3_times_1000) (./tables/table_e3_ratios_1000) (./tables/table_e3_times) (./tables/table_e3_ratios) [7]
+<../material/outputs/out3/test_cl0/t_fig.png, id=327, 481.8pt x 361.35pt>
 File: ../material/outputs/out3/test_cl0/t_fig.png Graphic file (type png)
 <use ../material/outputs/out3/test_cl0/t_fig.png>
-Package pdftex.def Info: ../material/outputs/out3/test_cl0/t_fig.png  used on input line 266.
+Package pdftex.def Info: ../material/outputs/out3/test_cl0/t_fig.png  used on input line 264.
 (pdftex.def)             Requested size: 306.81741pt x 230.11635pt.
-<../material/outputs/out3/test_cl0/r_fig.png, id=124, 481.8pt x 361.35pt>
+<../material/outputs/out3/test_cl0/r_fig.png, id=328, 481.8pt x 361.35pt>
 File: ../material/outputs/out3/test_cl0/r_fig.png Graphic file (type png)
 <use ../material/outputs/out3/test_cl0/r_fig.png>
-Package pdftex.def Info: ../material/outputs/out3/test_cl0/r_fig.png  used on input line 270.
+Package pdftex.def Info: ../material/outputs/out3/test_cl0/r_fig.png  used on input line 268.
 (pdftex.def)             Requested size: 306.81741pt x 230.11635pt.
- [7 <../material/outputs/out3/test_cl0/t_fig.png> <../material/outputs/out3/test_cl0/r_fig.png>]
-<../material/outputs/out3/test_cl0_extended/r_fig.png, id=135, 481.8pt x 361.35pt>
+<../material/outputs/out3/test_cl0_extended/r_fig.png, id=330, 481.8pt x 361.35pt>
 File: ../material/outputs/out3/test_cl0_extended/r_fig.png Graphic file (type png)
 <use ../material/outputs/out3/test_cl0_extended/r_fig.png>
-Package pdftex.def Info: ../material/outputs/out3/test_cl0_extended/r_fig.png  used on input line 282.
+Package pdftex.def Info: ../material/outputs/out3/test_cl0_extended/r_fig.png  used on input line 278.
 (pdftex.def)             Requested size: 297.38197pt x 223.0422pt.
- [8 <../material/outputs/out3/test_cl0_extended/r_fig.png>] (./tables/table_e4) [9] [10]
-<./img/im4.jpg, id=162, 180.9159pt x 256.0767pt>
+ [8 <../material/outputs/out3/test_cl0/t_fig.png>] (./tables/table_e4) [9 <../material/outputs/out3/test_cl0/r_fig.png> <../material/outputs/out3/test_cl0_extended/r_fig.png>] [10] [11]
+<./img/im4.jpg, id=356, 180.9159pt x 256.0767pt>
 File: ./img/im4.jpg Graphic file (type jpg)
 <use ./img/im4.jpg>
-Package pdftex.def Info: ./img/im4.jpg  used on input line 358.
+Package pdftex.def Info: ./img/im4.jpg  used on input line 347.
 (pdftex.def)             Requested size: 113.29008pt x 160.35623pt.
-<./img/im4_grey.jpg, id=163, 753.81625pt x 1066.98625pt>
+<./img/im4_grey.jpg, id=357, 753.81625pt x 1066.98625pt>
 File: ./img/im4_grey.jpg Graphic file (type jpg)
 <use ./img/im4_grey.jpg>
-Package pdftex.def Info: ./img/im4_grey.jpg  used on input line 359.
+Package pdftex.def Info: ./img/im4_grey.jpg  used on input line 348.
 (pdftex.def)             Requested size: 113.29008pt x 160.35037pt.
-<./img/ejex.jpg, id=164, 751.80875pt x 1064.97874pt>
+<./img/ejex.jpg, id=358, 751.80875pt x 1064.97874pt>
 File: ./img/ejex.jpg Graphic file (type jpg)
 <use ./img/ejex.jpg>
-Package pdftex.def Info: ./img/ejex.jpg  used on input line 381.
+Package pdftex.def Info: ./img/ejex.jpg  used on input line 370.
 (pdftex.def)             Requested size: 113.29008pt x 160.47118pt.
-<./img/ejey.jpg, id=165, 751.80875pt x 1064.97874pt>
+<./img/ejey.jpg, id=359, 751.80875pt x 1064.97874pt>
 File: ./img/ejey.jpg Graphic file (type jpg)
 <use ./img/ejey.jpg>
-Package pdftex.def Info: ./img/ejey.jpg  used on input line 382.
+Package pdftex.def Info: ./img/ejey.jpg  used on input line 371.
 (pdftex.def)             Requested size: 113.29008pt x 160.47118pt.
-<./img/eje.jpg, id=166, 751.80875pt x 1064.97874pt>
+<./img/eje.jpg, id=360, 751.80875pt x 1064.97874pt>
 File: ./img/eje.jpg Graphic file (type jpg)
 <use ./img/eje.jpg>
-Package pdftex.def Info: ./img/eje.jpg  used on input line 383.
+Package pdftex.def Info: ./img/eje.jpg  used on input line 372.
 (pdftex.def)             Requested size: 113.29008pt x 160.47118pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<../material/img/im4_grad_denoised.jpg, id=168, 749.80125pt x 1062.97125pt>
+<../material/img/im4_grad_denoised.jpg, id=362, 749.80125pt x 1062.97125pt>
 File: ../material/img/im4_grad_denoised.jpg Graphic file (type jpg)
 <use ../material/img/im4_grad_denoised.jpg>
-Package pdftex.def Info: ../material/img/im4_grad_denoised.jpg  used on input line 391.
+Package pdftex.def Info: ../material/img/im4_grad_denoised.jpg  used on input line 380.
 (pdftex.def)             Requested size: 165.2138pt x 234.21123pt.
-[11 <./img/im4.jpg> <./img/im4_grey.jpg>] [12 <./img/ejex.jpg> <./img/ejey.jpg> <./img/eje.jpg> <../material/img/im4_grad_denoised.jpg>] [13] (./tables/table_e5_normal_times) [14] (./tables/table_e5_normal_ratios) (./tables/table_e5_normal_fps) (./tables/output_unroll) (./tables/output_vector) [15] (./tables/table_e5_O3_times) (./tables/table_e5_O3_ratios) (./tables/table_e5_O3_fps) [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 563.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 563.
+[12 <./img/im4.jpg> <./img/im4_grey.jpg>] [13 <./img/ejex.jpg> <./img/ejey.jpg> <./img/eje.jpg> <../material/img/im4_grad_denoised.jpg>] [14] (./tables/table_e5_normal_times) [15] (./tables/table_e5_normal_ratios) (./tables/table_e5_normal_fps) (./tables/output_unroll) (./tables/output_vector [16]) (./tables/table_e5_O3_times) (./tables/table_e5_O3_ratios) (./tables/table_e5_O3_fps) [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 538.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 538.
  (build/mem.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 563.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 563.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 538.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 538.
 Package rerunfilecheck Info: File `mem.out' has not changed.
-(rerunfilecheck)             Checksum: 85F5F7532B4EBECFF5ABBEE538217EEC;465.
+(rerunfilecheck)             Checksum: 1E974E8B0C7FA198A011DA75F4909E0E;7094.
  ) 
 Here is how much of TeX's memory you used:
- 18872 strings out of 492982
- 334072 string characters out of 6134896
- 509557 words of memory out of 5000000
- 21968 multiletter control sequences out of 15000+600000
- 10348 words of font info for 39 fonts, out of 8000000 for 9000
+ 19146 strings out of 492982
+ 338005 string characters out of 6134896
+ 525245 words of memory out of 5000000
+ 22237 multiletter control sequences out of 15000+600000
+ 10707 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 54i,12n,73p,1318b,1954s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on build/mem.pdf (16 pages, 641919 bytes).
+ 54i,13n,73p,1318b,1796s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on build/mem.pdf (17 pages, 672874 bytes).
 PDF statistics:
- 315 PDF objects out of 1000 (max. 8388607)
- 263 compressed objects within 3 object streams
+ 501 PDF objects out of 1000 (max. 8388607)
+ 445 compressed objects within 5 object streams
  117 named destinations out of 1000 (max. 500000)
- 121 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 401 words of extra memory for PDF output out of 10000 (max. 10000000)
 

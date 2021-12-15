@@ -62,7 +62,9 @@
 \lhead{Pablo Cuesta Sierra, Álvaro Zamanillo Sáez}
 \cfoot{\thepage}
 
-
+\usepackage{titlesec}
+\titleformat*{\subsection}{\normalsize\bfseries\itshape\color{darkgray}}
+\titleformat*{\subsubsection}{\normalsize\itshape\color{darkgray}}
 
 %\setlength{\parskip}{0.15cm}
 
@@ -77,7 +79,11 @@
     \end{figure}
 }
 %grey item for enumerate
-\newcommand{\greyItem}[1]{\item\emph{\textcolor{darkgray}{#1}}\vspace{2.5pt}}
+\renewcommand{\thesubsubsection}{(\thesubsection.\alph{subsubsection})}
+\setcounter{secnumdepth}{4}
+\newcommand{\question}[1]{\subsection{#1}}
+\newcommand{\subquestion}[1]{\subsubsection{#1}}
+
 
 \setcounter{section}{-1}
 
@@ -104,54 +110,50 @@ For the bigger tests, we used the \emph{MV} machine from the cluster; it has 8 c
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 1: Basic OpenMP programs}
 
-\begin{enumerate}[label=1.\arabic*,leftmargin=*]
-\greyItem{Is it possible run more threads than cores on the system? Does it make sense to do it?}
+\question{Is it possible run more threads than cores on the system? Does it make sense to do it?}
 
 It is possible to do so: if we first execute omp1 without arguments to see the available cores and then we execute it again with a number of threads higher than the amount of cores, we will see that the execution is carried out without problems. Using more threads than cores may make no sense when the goal is simply to parrallelize a single task because the threads will interrupt each other. However, if there are several tasks to be run at the same time and any of them may provoke the thread to go asleep, then using more threads could help to take advantage of the time that particular thread is asleep. 
 
 %Quitar ultimo párrafo??
 
-\greyItem{How many threads should you use on the computers in the lab? And in the cluster? And on your own team?} 
+\question{How many threads should you use on the computers in the lab? And in the cluster? And on your own team?} 
 
 For a general situation, the number of threads to be used is the one determined by the function \emph{omp\_get\_max\_threads()}. Indeed this value used by default.
 
-\greyItem{Modify the omp1.c program to use the three ways to choose the number of threads and try to guess the priority among them}
+\question{Modify the omp1.c program to use the three ways to choose the number of threads and try to guess the priority among them}
 
-The priority order is: \texttt{}{OMP\_NUM\_THREADS} $<$ \texttt{omp\_set\_num\_threads()} $<$ \#pragma\ omp parallel num\_threads(numthr) 
+The priority order is: \texttt{OMP\_NUM\_THREADS} $<$ \texttt{omp\_set\_num\_threads()} $<$ \#pragma\ omp parallel num\_threads(numthr) 
 
-\greyItem{How does OpenMP behave when we declare a private variable?}
+\question{How does OpenMP behave when we declare a private variable?}
 
 Each thread created will create its own (new) variable.
 
-\greyItem{What happens to the value of a private variable when the parallel region starts executing?}
+\question{What happens to the value of a private variable when the parallel region starts executing?}
 
 The variable is not necessarily initialized when allocated in each thread stack, although when executing \texttt{omp2} in the lab computers, it is initialized as if it were a \emph{firstprivate} variable (with the value of the variable previous to the parallel section). Furthermore, it is private to each thread so its value will only change because of instructions performed by that specific thread.
 
-\greyItem{What happens to the value of a private variable at the end of the parallel region?}
+\question{What happens to the value of a private variable at the end of the parallel region?}
 
 After the parallel region, the master threads resumes execution and the value of the variable is the one from before the parallel execution. Privates variable are local to the threads and the parallel region, so they are deleted when the threads terminate.
 
-\greyItem{Does the same happen with public variables?}
+\question{Does the same happen with public variables?}
 
 Public variables are shared by all threads (no copies of the variable are created for each thread); threfore, after the parallel region, the value will be determined by the code executed in the parallel region (and, perhaps, by the order of execution of the several threads).
 
-\end{enumerate}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 2: Parallelize the dot product}
 
-\begin{enumerate}[label=2.\arabic*,leftmargin=*]
-
-\greyItem{Run the serial version and understand what the result should be for different vector sizes.} 
+\question{Run the serial version and understand what the result should be for different vector sizes.} 
     
 As we are calculating the dot product of two vectors of size M where all the components are 1, the expected output is M.
     
-\greyItem{Run the parallelized code with the openmp pragma and answer the following questions in the document. Is the result correct? What is happening?}
+\question{Run the parallelized code with the openmp pragma and answer the following questions in the document. Is the result correct? What is happening?}
     
 The parallel version is not working due to the fact that variable sum is being shared (default mode). So we have severals threads writing in the same variable at the same time which leads to a data race.
 
-\greyItem{Modify the code and name the program pescalar\_par2. This version should give the correct result using the appropriate pragma:}
+\question{Modify the code and name the program pescalar\_par2. This version should give the correct result using the appropriate pragma:}
 
 The modification needed is adding a \emph{pragma clause} just before the critical operation (the sum).
 Both of the mentioned \emph{pragmas} solve the data race. Nonetheless, the way they achieved so is different. The \emph{critial} pragma implies the use of a mutex so only one thread can access the block at a time (which is quite expensive in execution time) whereas \emph{atomic} ensures that the whole calculation (line 42) is executed as a single operation. The result is exactly the same as we are enclosing just a sentence of code, however, the second option is considerably faster.
@@ -176,7 +178,7 @@ This are the two modifications:
       } 
 \end{lstlisting}
 
-\greyItem{Modify the code and name the resulting program pescalar\_par3. This version should give the correct result using the appropriate pragma. Comparing with the previous point, which option will be chosen and why?}
+\question{Modify the code and name the resulting program pescalar\_par3. This version should give the correct result using the appropriate pragma. Comparing with the previous point, which option will be chosen and why?}
 
 If we use \emph{reduction} we get better results than the ones obtained with \emph{atomic}. This is the appropriate solution in this case, because it is the optimized version meant for this specific task.
 
@@ -192,13 +194,13 @@ The optimal version:
 
 \pagebreak
 
-\greyItem{Run time analysis}
+\question{Run time analysis}
 
 We have written a script to test this (\emph{scr2\_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in our own computers, which uses 4 threads) is very inconsistent. However, the first value that meets the requirements is $T=1200000$:
 
 \myFigure{../material/outputs/out2_final/threshold0.png}{Search for threshold in the lab computers}{threshold}{.65}
 
-\greyItem{(Optional) Exhaustive analysis}
+\question{(Optional) Exhaustive analysis}
 
 Executing the same tests in the cluster, using also 4 cores, we have reached the value that meets the requirements at, aproximately, $T=81000$, as can be seen in the following figure (\ref{threshold_cluster4}):
 
@@ -209,8 +211,6 @@ Executing the same tests in the cluster, using also 4 cores, we have reached the
 Changing the number of threads to 8, the number increases slightly, the threshold would be around $T=90000$. This makes sense, because, although using 8 threads would yield a much better performance for very large matrix sizes, the threshold for which creating a higher number of threads is worth the time spent creating them is also a bit higher.
 
 \myFigure{../material/outputs/out2_final/threshold_8proc.png}{Search for threshold in the cluster: 8 cores}{threshold_cluster8}{.66}
-
-\end{enumerate}
 
 
 \pagebreak
@@ -248,18 +248,16 @@ For matrices of size $N=5000$, the programs take high enough times to make a dif
     \label{5000_ratios}
 \end{table}
 
-\begin{enumerate}[label=3.\arabic*,leftmargin=*]
-\greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
+\question{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
 The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. (However, \emph{multiplication\_loop2.c} ``forks'' $N$ times).
 
 In consequence, the best performing version is better than the others because it avoids the time cost caused by creating and destroying threads, as it only creates and destroys threads once. In all of the other aspects, they all perform the same operations.
 
-\greyItem{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
+\question{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
 
 Based on these results, coarse-grained parallelization is preferable, as it avoids slowing the execution by killing and creating threads multiple times. 
 
-\end{enumerate}
 
 Taking the best parallel version (parallelizing the outermost loop) alongside the serial version, we have tested for $N$ between $512+P$ and $512+1024+P$ with increments of $64$. And with the parallel version, we have tested for $2$, $4$ and $6$ threads. These are the results: 
 
@@ -271,9 +269,7 @@ As expected, the plots have a cubic behaviour. Comparing the different plots, as
 
 As commented before, for the sizes that we have tested, the asymptotic behaviour is already present (as $N$ is big enough). The four time fuctions have a complexity of $\mathcal{O}(N^3)$, which means that if we calculate the speedup for each parallel version (with different number of threads), it will stabilize around a constant in each case. This constant behaviour of the ratios is what can be seen in this plot. Again, as lower number of threads is worse than higher number of threads for big enough values of $N$, the constant in question is higher when the number of threads is higher.
 
-\begin{enumerate}[label=3.\arabic*,leftmargin=*]
-    \setcounter{enumi}{2}
-\greyItem{If in the previous chart you did not obtain a behavior of the acceleration as a function of N that stabilizes or decreases with increasing the size of the matrix, continue increasing the value of N until you get a chart with this behavior and indicate for which value of N you begin to see the change in trend.}
+\question{If in the previous chart you did not obtain a behavior of the acceleration as a function of N that stabilizes or decreases with increasing the size of the matrix, continue increasing the value of N until you get a chart with this behavior and indicate for which value of N you begin to see the change in trend.}
 
 The values that we got already stabilize the speedup; as can be seen in figure \ref{ratios}, the values stabilize: for 2 threads, around $2.6$; for 4 threads, around $3.1$; and 6 threads, $4.6$.
 
@@ -284,19 +280,16 @@ In order to check the values of $N$ that stabilize the speedup, we have to check
 As we can see, with increasing number of threads, the sabilizing value increases slightly. For 2 threads, the value is around $N=100$; for 4 threads, between $N=130$ and $N=400$, and for 6 threads, between $N=160$ and $N=450$.
 
 
-\end{enumerate}
-
 \pagebreak
 
 \section{Exercise 4: Example of numerical integration}
 
-\begin{enumerate}[label=4.\arabic*,leftmargin=*]
 
-\greyItem{How many rectangles are used in the program? Which value does h take?}
+\question{How many rectangles are used in the program? Which value does h take?}
 
 The numer of rectangles is determined by the variable \emph{n}, whose value is ${10^8}$. The variable \emph{h} takes the length of the segments in which the interval $[0,1]$ is divided (the base of the rectangles), so it is $h=1/n$. In this case, $h=10^{-8}$.
 
-\greyItem{ Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
+\question{ Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
 
 The tests have been made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster, in order to make a sufficiently large number of repetitions (50) and be able to get good results by making the means.
 
@@ -310,13 +303,13 @@ As we can see, the results of the $\pi$ approximation are the same in all the pr
 
 The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, \emph{pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7.On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
 
-\greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
+\question{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
 In pi\_par2, the variable sum (a pointer) is marked with the clause \emph{firstprivate}. As a result, each thread creates a copy of the pointer and the value its initialized with the one before the parallel region. So even though each thread has its own pointer, all of them point to the same memory position. Indeed, if the clause \emph{private} is used instead of \emph{firstprivate}, we would possibly get a \emph{segmentation fault} as the pointer in each thread would point to an ``unknown'' position outside the proccess memory region.
 
 Regarding how this change affects the performance, as we expect, there is no difference between \emph{pi\_par1} and \emph{pi\_par2}; aside from \emph{pi\_par2} being slightly slower (by about 10 ms). Although we could think this higher execution time is caused because \emph{pi\_par2} has to do more operations when creating the threads, because of the allocation of this new variable for each thread, this is insignificant and the slightly higher execution time that we get may be just a coincidence.
 
-\greyItem{What are the differences between pi\_par5, pi\_par3 and pi\_par1? Explain the concept of false sharing. 
+\question{What are the differences between pi\_par5, pi\_par3 and pi\_par1? Explain the concept of false sharing. 
 Why does pi\_par3 obtain the linesize of the cache?}
 
 False sharing occurs when even though different threads are wiriting in different memory addresses, all of these addresses are contained in the same cache block. Every time one thread modifies its part of the block, the block becomes invalid for the rest of the threads, and threfore they need to replace the block in their cache.
@@ -325,29 +318,25 @@ Version \emph{pi\_par1} (and \emph{pi\_par2}) is a clear example of false sharin
 
 The version \emph{pi\_par3} obstains the linesize of the cache to ensure that the positions of the array \emph{sum} that are modified by each thread are located in different blocks. That is to say, the postion modifies by thread 1 will be placed in a different block that the position modified by thread 2 and so on. The small drawback is that we are allocating more memory than used: in each block (64 bytes), we are only using 8 bytes. 
 
-\greyItem{What is the effect of using the pragma critical? How is the performance? Why does this happen?}
+\question{What is the effect of using the pragma critical? How is the performance? Why does this happen?}
 
 As mentioned before, this clause ensures mutual exclusion for an specific part of the code (in \emph{pi\_par5}). This clause is used just before the threads end. By using this clause, false sharing is avoided and we get a speedup of around 7.4. 
 
-\greyItem{Regarding pi\_par6, how is the performance compared to other versions? Why does this effect happen?}
+\question{Regarding pi\_par6, how is the performance compared to other versions? Why does this effect happen?}
 
 The execution time for version \emph{pi\_par6} is almost the same as the one for the first version. Indeed, both programs are an example of false sharing. In version 6, a new caluse is used: \emph{for}. This clause divides the iterations of the loop among the threads, declare the index varibales as private... but inside the loop, once again each thread modifies a position of the array \emph{sum} so it becomes unvalid for the rest of the threads.
 
-\greyItem{Which version is optimal and why?} 
+\question{Which version is optimal and why?} 
 
 Accoriding to the results obtained, the best version in terms of execution time is the third one (by a slight difference of hundreds of seconds). However, as discused before, this version is allocating more memory than needed. So overall, one could say that the optimal version is either the forth, the fifth or the seventh.
-
-\end{enumerate}
 
 \pagebreak
 
 \section{Exercise 5: Optimization	of	calculation	programs}
-
-\begin{enumerate}[label=5.\arabic*,leftmargin=*]
-    \setcounter{enumi}{-1}
+\setcounter{subsection}{-1}
 
 %0
-\greyItem{Compile and run the program using some images as arguments. Examine the results that were generated and analyze briefly the provided program.}
+\question{Compile and run the program using some images as arguments. Examine the results that were generated and analyze briefly the provided program.}
 
 After executing the program, we see that we get three new images. A grey scale version, another in grey scale but with the edges significantly diferenciated and finally, a black and white image where the edges are clear. 
 
@@ -393,34 +382,29 @@ To deal with this problem, denoising is carried out. For this part of the progra
 
 \newpage
 %1
-\greyItem{The program includes an outermost loop that iterates over the arguments applying the algorithms to each of the arguments (indicated as Loop 0). Is this loop optimal to be parallelized?}
+\question{The program includes an outermost loop that iterates over the arguments applying the algorithms to each of the arguments (indicated as Loop 0). Is this loop optimal to be parallelized?}
 
 It may make sense to think that this loop could be parallelized when the task we want to perform is processing a high number of images. This way, each thread would process a different image at a time.
 
 However, this may not be the optimal approach. For example, if the images vary in size, some thread would have a lot more work to do than others, wasting resources that could help finish the task. There are other drawbacks, as explained in the next questions.
 
-    \begin{enumerate}
-        \greyItem{What happens if fewer arguments are passed than number of cores?}
+    \subquestion{What happens if fewer arguments are passed than number of cores?}
             
-        The remaining cores will be idle, while the others work. This is a pretty inefficient way to distribute the tasks.
+    The remaining cores will be idle, while the others work. This is a pretty inefficient way to distribute the tasks.
 
-        \greyItem{Suppose you are processing images from a space telescope that occupy up to 6GB each, is this the right option? Comment how much memory each thread consumes based on the size in pixels of the input image.}
+    \subquestion{Suppose you are processing images from a space telescope that occupy up to 6GB each, is this the right option? Comment how much memory each thread consumes based on the size in pixels of the input image.}
 
-        Each thread would need to allocate memory for the RGB image and for the three new images created during the algorithm. In an RGB image, each pixel is represented with 3 bytes, one for each colour. So, if the images occupy up to 6GB, the corresponding number of pixels per image is given by: ${6\text{GB}}*\frac{2^{30}\text{B}}{1\text{GB}}*\frac{1\text{pixel}}{3\text{B}}=2^{31}\text{ pixels}$. (The program also accepts RGBA images which have an extra byte per pixel for the alpha channel).
+    Each thread would need to allocate memory for the RGB image and for the three new images created during the algorithm. In an RGB image, each pixel is represented with 3 bytes, one for each colour. So, if the images occupy up to 6GB, the corresponding number of pixels per image is given by: ${6\text{GB}}*\frac{2^{30}\text{B}}{1\text{GB}}*\frac{1\text{pixel}}{3\text{B}}=2^{31}\text{ pixels}$. (The program also accepts RGBA images which have an extra byte per pixel for the alpha channel).
         
-        Then, each thread would need to allocate memory for the three new images it creates (grey, edges and edges\_denoised version). All of them consist of an array of bytes, one for each pixel. So it would sum up to $3\text{ grey images}*\frac{2^{31}\text{(1 channel) pixel}}{\text{1 grey image}}*\frac{1\text{B}}{\text{(1 channel) pixel}}= 6 \text{GB}$ of memory needed (apart from loading the original image of 6GB). There are other memory allocations but are insignificant when compared to the ones just commented. To sum up, every thread would need the double of memory of the image it is processing. Furthermore, this memory is freed at the end of the algorithm instead of just after where it has been used, so the total comsumption of memory of all the threads together would be even greater.
-        
-    \end{enumerate}
+    Then, each thread would need to allocate memory for the three new images it creates (grey, edges and edges\_denoised version). All of them consist of an array of bytes, one for each pixel. So it would sum up to $3\text{ grey images}*\frac{2^{31}\text{(1 channel) pixel}}{\text{1 grey image}}*\frac{1\text{B}}{\text{(1 channel) pixel}}= 6 \text{GB}$ of memory needed (apart from loading the original image of 6GB). There are other memory allocations but are insignificant when compared to the ones just commented. To sum up, every thread would need the double of memory of the image it is processing. Furthermore, this memory is freed at the end of the algorithm instead of just after where it has been used, so the total comsumption of memory of all the threads together would be even greater.
+
 
 %2
-\greyItem{During the previous task (task 3), we observed that the order of access to the data is important. Are there any loops that are accessing the data in a suboptimal order? Please correct it in such case.}
+\question{During the previous task (task 3), we observed that the order of access to the data is important. Are there any loops that are accessing the data in a suboptimal order? Please correct it in such case.}
 
-
-    \begin{enumerate}
-        \greyItem{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
+    \subquestion{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
             
-        \greyItem{Explain why the order is not correct if you change it.}
-    \end{enumerate}
+    \subquestion{Explain why the order is not correct if you change it.}
     
 All nested loops in \emph{main()} access data in the suboptimal order. For instance, accessing: 
 \begin{equation}\label{array}
@@ -439,9 +423,9 @@ Lastly, in the \emph{denoising} filters, there is a nested loop on indices $i$ a
 This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, and in all of the following parallel improvements.
 
 %3
-\greyItem{Bypassing Loop 0, test different parallelizations with OpenMP explaining which ones should get better performance.}
-    \begin{enumerate}
-        \greyItem{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
+\question{Bypassing Loop 0, test different parallelizations with OpenMP explaining which ones should get better performance.}
+
+    \subquestion{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
             
 We have done 3 different versions. All modifications are made to the version that uses the optimal ordering of indexes in the loops (which is written in \emph{edgeDetector\_optLoops.c}).
 
@@ -451,21 +435,17 @@ In the second version, \emph{par1} we have done it such that each operation has 
 
 The last version, \emph{par2}, is simillar to \emph{par0}, parallelizing the outermost loops. This time, however, we use the clause \texttt{collapse(2)}, which has been implemented speciffically to parallelize 2 nested loops of this kind: ``square loops''.
 
-        \greyItem{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
+    \subquestion{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
         document.}\label{question:expected}
 Of the first 2 versions, it is expected that \emph{par0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
 On the other hand, there should be no difference between \emph{par2} and \emph{par0}.
 
 The reason why using \texttt{collapse} makes no difference relies on the number of iterations of the nested loops, in other words, the size of the image. \texttt{collpase} makes sense when the outer loop has fewer iterations than threads available (so it prevents some thread(s) from being iddle) or when the workload is uneven among iterations. But in this case, where all threads are going to be busy at all times because the number of iterations of the first loop is much higher than the number of threads, \emph{par2} and \emph{par0} are going to have similar performances.
 
-    \end{enumerate}
-
 %4
-\greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}\label{question:5.4}
+\question{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}\label{question:5.4}
 
 For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order to illustrate the improvement of optimizing the index order in the nested loops, we have included the times of the original version (\emph{edgeDetector}). However, the speedups are calculated using the one with optimized loops (because we are parallelizing optimized loops).
-
-\end{enumerate}
 
 \begin{table}[h]
     \input{./tables/table_e5_normal_times}
@@ -505,10 +485,7 @@ The best version, \emph{par2}, could processes images from a
 video stream in real time for videos of SD or HD definitions. If we increased the definitions of the frames, our version could not process the rate of 30 fps. In fact, for the largest resolutions, our programs cannot even process one image per second.
 
 %5
-
-\begin{enumerate}[label=5.\arabic*,leftmargin=*]
-    \setcounter{enumi}{4}
-\greyItem{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
+\question{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
 
 
 When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} in the \emph{Makefile} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}.
@@ -526,8 +503,6 @@ On the other hand, the optimizations related to vectorization are the following:
 Which means that some kind of vectorization is implemented. However, loop unrolling is disabled. 
 
 In any case, the resulting images that are output by the compiled with \emph{-O3} programs are the same as the ones output by the normally compiled programs.
-
-\end{enumerate}
 
 If we compare these results with the ones from the previous section, we notice that the average execution time has decreased by a factor of (roughly) 3 for all the versions and image resolutions. This behaviour is better observed in the fps tables: table \ref{fps} and table \ref{fps2}.
 
