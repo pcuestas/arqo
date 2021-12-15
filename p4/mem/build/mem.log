@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  15 DEC 2021 13:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  15 DEC 2021 13:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -982,12 +982,22 @@ File: ../material/img/im4_grad_denoised.jpg Graphic file (type jpg)
 <use ../material/img/im4_grad_denoised.jpg>
 Package pdftex.def Info: ../material/img/im4_grad_denoised.jpg  used on input line 395.
 (pdftex.def)             Requested size: 165.2138pt x 234.21123pt.
-[11 <./img/im4.jpg> <./img/im4_grey.jpg>] [12 <./img/ejex.jpg> <./img/ejey.jpg> <./img/eje.jpg> <../material/img/im4_grad_denoised.jpg>] [13] (./tables/table_e5_normal_times) (./tables/table_e5_normal_ratios) [14] (./tables/table_e5_normal_fps) [15] (./tables/output_unroll) (./tables/output_vector) (./tables/table_e5_O3_times) (./tables/table_e5_O3_ratios) (./tables/table_e5_O3_fps) [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 542.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 542.
+[11 <./img/im4.jpg> <./img/im4_grey.jpg>] [12 <./img/ejex.jpg> <./img/ejey.jpg> <./img/eje.jpg> <../material/img/im4_grad_denoised.jpg>] [13] (./tables/table_e5_normal_times) (./tables/table_e5_normal_ratios) [14] (./tables/table_e5_normal_fps) [15]
+Underfull \hbox (badness 10000) in paragraph at lines 503--504
+
+ []
+
+(./tables/output_unroll)
+Underfull \hbox (badness 10000) in paragraph at lines 507--508
+
+ []
+
+(./tables/output_vector) (./tables/table_e5_O3_times) (./tables/table_e5_O3_ratios) (./tables/table_e5_O3_fps) [16] [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 540.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 540.
  (build/mem.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 542.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 542.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 540.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 540.
 Package rerunfilecheck Info: File `mem.out' has not changed.
 (rerunfilecheck)             Checksum: 85F5F7532B4EBECFF5ABBEE538217EEC;465.
 
@@ -996,18 +1006,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 18871 strings out of 492982
- 334054 string characters out of 6134896
+ 18872 strings out of 492982
+ 334061 string characters out of 6134896
  509373 words of memory out of 5000000
  21966 multiletter control sequences out of 15000+600000
  10701 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  54i,13n,73p,1318b,1345s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on build/mem.pdf (16 pages, 646513 bytes).
+Output written on build/mem.pdf (17 pages, 647588 bytes).
 PDF statistics:
- 315 PDF objects out of 1000 (max. 8388607)
- 262 compressed objects within 3 object streams
- 117 named destinations out of 1000 (max. 500000)
+ 319 PDF objects out of 1000 (max. 8388607)
+ 265 compressed objects within 3 object streams
+ 118 named destinations out of 1000 (max. 500000)
  121 words of extra memory for PDF output out of 10000 (max. 10000000)
 
