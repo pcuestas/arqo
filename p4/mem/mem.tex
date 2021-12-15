@@ -77,7 +77,7 @@
     \end{figure}
 }
 %grey item for enumerate
-\newcommand{\greyItem}[1]{\item\emph{\textcolor{darkgray}{#1}}}
+\newcommand{\greyItem}[1]{\item\emph{\textcolor{darkgray}{#1}}\vspace{2.5pt}}
 
 \setcounter{section}{-1}
 
@@ -100,10 +100,6 @@
 We have used the lab computers, which have 6 cores, with hyperthreading not activated. (This is because in the file \emph{/proc/cpuinfo} the number of pysical cores is the same as the number of virtual cores, which is 6).
 
 For the bigger tests, we used the \emph{MV} machine from the cluster; it has 8 cores, we already mentioned this in last practice (3), exercise 0.
-
-These are the configurations:
-
-CONFIGURATIONS!!!!!!!!!!!!!!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 1: Basic OpenMP programs}
@@ -436,11 +432,11 @@ In each of the nested loops inside \emph{Loop 0} we can change the order, becaus
 
 In the first loop (RGB to grey scale), an element of an array is accessed in each iteration (using \ref{array}). So there is no problem.
 
-The next loop (Sobel edge detection) does something similar, writing in array \emph{edges}. It also reads from array \emph{grey\_image}, but reading does not matter when we worry about changing order of insstructions. Again, there is no alteration in the result if we change the order of this loop.
+The next loop (Sobel edge detection) does something similar, writing in array \emph{edges}. It also reads from array \emph{grey\_image}, but reading does not matter when we worry about changing order of instructions. Again, there is no alteration in the result if we change the order of this loop.
 
-Lastly, in the \emph{salt\$peper filer}, there is a nested loop on indices $i$ and $j$, which contains another nested loop on indices $p_1$ and $p_2$. The loops on $i$ and $j$, apart from iterating on $p_1$ and $p_2$, only write to an array: \emph{edges\_denoised}, in different positions each time. The $p_1$ and $p_2$ loops write into an array in order. This is something to take into account, as changing order in the indices would alter the result of this array; however, this array is later sorted, so the order in which it was filled is not relevant. At last, this loop can also be optimized without changing the result of the computation. In the case of the gaussian filter, the loops on indices $p_1$ and $p_2$ are used to perform an addition over the acumulator \emph{sum}; becuase the sum is conmutative, there is nothing to worry about. 
+Lastly, in the \emph{denoising} filters, there is a nested loop on indices $i$ and $j$, which contains another nested loop on indices $p_1$ and $p_2$. The loops on $i$ and $j$, apart from iterating on $p_1$ and $p_2$, only write to an array: \emph{edges\_denoised}, in different positions each time. The $p_1$ and $p_2$ loops write into an array in order. This is something to take into account, as changing order in the indices would alter the result of this array; however, this array is later sorted, so the order in which it was filled is not relevant. At last, this loop can also be optimized without changing the result of the computation. In the case of the gaussian filter, the loops on indices $p_1$ and $p_2$ are used to perform an addition over the acumulator \emph{sum}; becuase the sum is conmutative, there is nothing to worry about. 
 
-This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, and in all of the parallel improvements.
+This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, and in all of the following parallel improvements.
 
 %3
 \greyItem{Bypassing Loop 0, test different parallelizations with OpenMP explaining which ones should get better performance.}
@@ -458,9 +454,10 @@ The last version, \emph{par2}, is simillar to \emph{par0}, parallelizing the out
         \greyItem{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
         document.}
 Of the first 2 versions, it is expected that \emph{par0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
-On the other hand, it seems that there is no difference between using the clause \emph{collapse()} for the square loops, as version \emph{par0} and \emph{par2} have the same performance.
+On the other hand, there should be no difference between \emph{par2} and \emph{par0}.
 
-The reason why usinng \emph{collapse} is making no difference relies on the number of iterations of the nested loops, in other words, the size of the image. Collpase makes sense when the outer loop has fewer iterations than threads available (so it prevents any thread from being iddle) or when the work load is uneven among iterations.
+The reason why using \texttt{collapse} makes no difference relies on the number of iterations of the nested loops, in other words, the size of the image. \texttt{collpase} makes sense when the outer loop has fewer iterations than threads available (so it prevents some thread(s) from being iddle) or when the workload is uneven among iterations. But in this case, where all threads are going to be busy at all times because the number of iterations of the first loop is much higher than the number of threads, \emph{par2} and \emph{par0} are going to have similar performances.
+
 \end{enumerate}
 
 %4
