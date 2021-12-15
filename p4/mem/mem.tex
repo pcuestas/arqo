@@ -15,6 +15,7 @@
 \usepackage{listings}  
 \usepackage{xcolor}
 \usepackage{subfigure}
+\usepackage[htt]{hyphenat}
 
 \definecolor{codegreen}{rgb}{.2,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -86,6 +87,8 @@
 
 
 \setcounter{section}{-1}
+\setcounter{tocdepth}{1} % only sections in the table of contents
+
 
 \begin{document}
 
@@ -118,11 +121,11 @@ It is possible to do so: if we first execute omp1 without arguments to see the a
 
 \question{How many threads should you use on the computers in the lab? And in the cluster? And on your own team?} 
 
-For a general situation, the number of threads to be used is the one determined by the function \emph{omp\_get\_max\_threads()}. Indeed this value used by default.
+For a general situation, the number of threads to be used is the one determined by the function \texttt{omp\_get\_max\_threads()}. Indeed this value used by default.
 
 \question{Modify the omp1.c program to use the three ways to choose the number of threads and try to guess the priority among them}
 
-The priority order is: \texttt{OMP\_NUM\_THREADS} $<$ \texttt{omp\_set\_num\_threads()} $<$ \#pragma\ omp parallel num\_threads(numthr) 
+The priority order is: $$\texttt{OMP\_NUM\_THREADS} < \texttt{omp\_set\_num\_threads()} < \texttt{\#pragma\ omp parallel num\_threads(numthr})$$
 
 \question{How does OpenMP behave when we declare a private variable?}
 
@@ -134,7 +137,7 @@ The variable is not necessarily initialized when allocated in each thread stack,
 
 \question{What happens to the value of a private variable at the end of the parallel region?}
 
-After the parallel region, the master threads resumes execution and the value of the variable is the one from before the parallel execution. Privates variable are local to the threads and the parallel region, so they are deleted when the threads terminate.
+After the parallel region, the master threads resumes execution and the value of the variable is the one from before the parallel execution. Privates variables are local to the threads and the parallel region, so they are deleted when the threads terminate.
 
 \question{Does the same happen with public variables?}
 
@@ -147,20 +150,20 @@ Public variables are shared by all threads (no copies of the variable are create
 
 \question{Run the serial version and understand what the result should be for different vector sizes.} 
     
-As we are calculating the dot product of two vectors of size M where all the components are 1, the expected output is M.
+As we are calculating the dot product of two vectors of size M whose components are 1, the expected output is M.
     
 \question{Run the parallelized code with the openmp pragma and answer the following questions in the document. Is the result correct? What is happening?}
     
-The parallel version is not working due to the fact that variable sum is being shared (default mode). So we have severals threads writing in the same variable at the same time which leads to a data race.
+The parallel version is not working due to the fact that variable \emph{sum} is shared (default mode). So we have severals threads writing in the same variable at the same time which leads to data races.
 
 \question{Modify the code and name the program pescalar\_par2. This version should give the correct result using the appropriate pragma:}
 
-The modification needed is adding a \emph{pragma clause} just before the critical operation (the sum).
-Both of the mentioned \emph{pragmas} solve the data race. Nonetheless, the way they achieved so is different. The \emph{critial} pragma implies the use of a mutex so only one thread can access the block at a time (which is quite expensive in execution time) whereas \emph{atomic} ensures that the whole calculation (line 42) is executed as a single operation. The result is exactly the same as we are enclosing just a sentence of code, however, the second option is considerably faster.
+The modification needed is adding a the clause \emph{pragma omp critical} or \emph{pragma omp atomic} just before the critical operation: the sum.
+Both of the mentioned \emph{pragmas} solve the data race. Nonetheless, the way they achieved so is different. The \emph{critial} pragma implies the use of a mutex so only one thread can access the block at a time (which is quite expensive in execution time), whereas \emph{atomic} ensures that the whole calculation (line 42) is executed as a single operation. The result is exactly the same as we are enclosing just a sentence of code, however, the second option is considerably faster.
 
-This are the two modifications:
+These are the two modifications:
 
-\begin{lstlisting}[language=C, texcl=true]
+\begin{lstlisting}[texcl=true]
     #pragma omp parallel for 
       for(k=0;k<M;k++)
       {	
@@ -169,7 +172,7 @@ This are the two modifications:
       } 
 \end{lstlisting}
 
-\begin{lstlisting}[language=C, texcl=true]
+\begin{lstlisting}[texcl=true]
     #pragma omp parallel for 
       for(k=0;k<M;k++)
       {	
@@ -250,9 +253,9 @@ For matrices of size $N=5000$, the programs take high enough times to make a dif
 
 \question{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
-The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. (However, \emph{multiplication\_loop2.c} ``forks'' $N$ times).
+The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times , which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. (However, \emph{multiplication\_loop2.c} ``forks'' $N$ times).
 
-In consequence, the best performing version is better than the others because it avoids the time cost caused by creating and destroying threads, as it only creates and destroys threads once. In all of the other aspects, they all perform the same operations.
+In the three versions, the key aspect that leads to different execution times is the fact that creating and terminating threads is quite an expensive operation. In all of the other aspects, they all perform the same operations.
 
 \question{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
 
@@ -271,7 +274,7 @@ As commented before, for the sizes that we have tested, the asymptotic behaviour
 
 \question{If in the previous chart you did not obtain a behavior of the acceleration as a function of N that stabilizes or decreases with increasing the size of the matrix, continue increasing the value of N until you get a chart with this behavior and indicate for which value of N you begin to see the change in trend.}
 
-The values that we got already stabilize the speedup; as can be seen in figure \ref{ratios}, the values stabilize: for 2 threads, around $2.6$; for 4 threads, around $3.1$; and 6 threads, $4.6$.
+The values that we got already stabilize the speedup; as can be seen in figure \ref{ratios}, the values stabilize: for 2 threads, around $2.6$; for 4 threads, around $3.1$; and for 6 threads, around $4.6$.
 
 In order to check the values of $N$ that stabilize the speedup, we have to check lower values:
 

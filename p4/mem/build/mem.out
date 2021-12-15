@@ -1,41 +1,6 @@
 \BOOKMARK [1][-]{section.0}{Exercise 0: Information about the system topology}{}% 1
 \BOOKMARK [1][-]{section.1}{Exercise 1: Basic OpenMP programs}{}% 2
-\BOOKMARK [2][-]{subsection.1.1}{Is it possible run more threads than cores on the system? Does it make sense to do it?}{section.1}% 3
-\BOOKMARK [2][-]{subsection.1.2}{How many threads should you use on the computers in the lab? And in the cluster? And on your own team?}{section.1}% 4
-\BOOKMARK [2][-]{subsection.1.3}{Modify the omp1.c program to use the three ways to choose the number of threads and try to guess the priority among them}{section.1}% 5
-\BOOKMARK [2][-]{subsection.1.4}{How does OpenMP behave when we declare a private variable?}{section.1}% 6
-\BOOKMARK [2][-]{subsection.1.5}{What happens to the value of a private variable when the parallel region starts executing?}{section.1}% 7
-\BOOKMARK [2][-]{subsection.1.6}{What happens to the value of a private variable at the end of the parallel region?}{section.1}% 8
-\BOOKMARK [2][-]{subsection.1.7}{Does the same happen with public variables?}{section.1}% 9
-\BOOKMARK [1][-]{section.2}{Exercise 2: Parallelize the dot product}{}% 10
-\BOOKMARK [2][-]{subsection.2.1}{Run the serial version and understand what the result should be for different vector sizes.}{section.2}% 11
-\BOOKMARK [2][-]{subsection.2.2}{Run the parallelized code with the openmp pragma and answer the following questions in the document. Is the result correct? What is happening?}{section.2}% 12
-\BOOKMARK [2][-]{subsection.2.3}{Modify the code and name the program pescalar\137par2. This version should give the correct result using the appropriate pragma:}{section.2}% 13
-\BOOKMARK [2][-]{subsection.2.4}{Modify the code and name the resulting program pescalar\137par3. This version should give the correct result using the appropriate pragma. Comparing with the previous point, which option will be chosen and why?}{section.2}% 14
-\BOOKMARK [2][-]{subsection.2.5}{Run time analysis}{section.2}% 15
-\BOOKMARK [2][-]{subsection.2.6}{\(Optional\) Exhaustive analysis}{section.2}% 16
-\BOOKMARK [1][-]{section.3}{Exercise 3: Parallel matrix multiplication}{}% 17
-\BOOKMARK [2][-]{subsection.3.1}{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}{section.3}% 18
-\BOOKMARK [2][-]{subsection.3.2}{Based on the results, do you think fine-grained \(innermost loop\) or coarse-grained \(outermost loop\) parallelization is preferable in other algorithms?}{section.3}% 19
-\BOOKMARK [2][-]{subsection.3.3}{If in the previous chart you did not obtain a behavior of the acceleration as a function of N that stabilizes or decreases with increasing the size of the matrix, continue increasing the value of N until you get a chart with this behavior and indicate for which value of N you begin to see the change in trend.}{section.3}% 20
-\BOOKMARK [1][-]{section.4}{Exercise 4: Example of numerical integration}{}% 21
-\BOOKMARK [2][-]{subsection.4.1}{How many rectangles are used in the program? Which value does h take?}{section.4}% 22
-\BOOKMARK [2][-]{subsection.4.2}{ Run all versions of the program. Analyze the performance \(mean execution time and speedup\) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}{section.4}% 23
-\BOOKMARK [2][-]{subsection.4.3}{Regarding pi\137par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}{section.4}% 24
-\BOOKMARK [2][-]{subsection.4.4}{What are the differences between pi\137par5, pi\137par3 and pi\137par1? Explain the concept of false sharing. Why does pi\137par3 obtain the linesize of the cache?}{section.4}% 25
-\BOOKMARK [2][-]{subsection.4.5}{What is the effect of using the pragma critical? How is the performance? Why does this happen?}{section.4}% 26
-\BOOKMARK [2][-]{subsection.4.6}{Regarding pi\137par6, how is the performance compared to other versions? Why does this effect happen?}{section.4}% 27
-\BOOKMARK [2][-]{subsection.4.7}{Which version is optimal and why?}{section.4}% 28
-\BOOKMARK [1][-]{section.5}{Exercise 5: Optimization of calculation programs}{}% 29
-\BOOKMARK [2][-]{subsection.5.0}{Compile and run the program using some images as arguments. Examine the results that were generated and analyze briefly the provided program.}{section.5}% 30
-\BOOKMARK [2][-]{subsection.5.1}{The program includes an outermost loop that iterates over the arguments applying the algorithms to each of the arguments \(indicated as Loop 0\). Is this loop optimal to be parallelized?}{section.5}% 31
-\BOOKMARK [3][-]{subsubsection.5.1.1}{What happens if fewer arguments are passed than number of cores?}{subsection.5.1}% 32
-\BOOKMARK [3][-]{subsubsection.5.1.2}{Suppose you are processing images from a space telescope that occupy up to 6GB each, is this the right option? Comment how much memory each thread consumes based on the size in pixels of the input image.}{subsection.5.1}% 33
-\BOOKMARK [2][-]{subsection.5.2}{During the previous task \(task 3\), we observed that the order of access to the data is important. Are there any loops that are accessing the data in a suboptimal order? Please correct it in such case.}{section.5}% 34
-\BOOKMARK [3][-]{subsubsection.5.2.1}{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}{subsection.5.2}% 35
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Explain why the order is not correct if you change it.}{subsection.5.2}% 36
-\BOOKMARK [2][-]{subsection.5.3}{Bypassing Loop 0, test different parallelizations with OpenMP explaining which ones should get better performance.}{section.5}% 37
-\BOOKMARK [3][-]{subsubsection.5.3.1}{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}{subsection.5.3}% 38
-\BOOKMARK [3][-]{subsubsection.5.3.2}{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the document.}{subsection.5.3}% 39
-\BOOKMARK [2][-]{subsection.5.4}{Fill in a table with time and speedup results compared to the serial version for images of different resolutions \(SD, HD, FHD, UHD-4k, UHD-8k\). You must include a column with the fps at which the program would process}{section.5}% 40
-\BOOKMARK [2][-]{subsection.5.5}{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements \(and how they might affect our parallelization\). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}{section.5}% 41
+\BOOKMARK [1][-]{section.2}{Exercise 2: Parallelize the dot product}{}% 3
+\BOOKMARK [1][-]{section.3}{Exercise 3: Parallel matrix multiplication}{}% 4
+\BOOKMARK [1][-]{section.4}{Exercise 4: Example of numerical integration}{}% 5
+\BOOKMARK [1][-]{section.5}{Exercise 5: Optimization of calculation programs}{}% 6
