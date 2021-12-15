@@ -1,6 +1,6 @@
 \begin{tabular}{lrrrrrrl}
 \hline
-            Program &       SD &       HD &      FHD &      UHD &   UHD-4k & UHD-8k
+Program &       SD &       HD &      FHD &      UHD &   UHD-4k & UHD-8k
    \\
 \hline
  optLoops &  1        & 1        & 1        & 1        & 1        &  1       &           \\

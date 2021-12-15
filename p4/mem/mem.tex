@@ -416,22 +416,24 @@ This improvement has been implemented in file \emph{edgeDetector\_optLoops.c}, a
             
 We have done 3 different versions. All modifications are made to the version that uses the optimal ordering of indexes in the loops (which is written in \emph{edgeDetector\_optLoops.c}).
 
-The first modification, \emph{par\_0} is such that each operation: rgb to gray, sobel transformation and gaussian denoising, has a parallelization of the outermost loop.
+The first modification, \emph{par0} is such that each operation: rgb to gray, sobel transformation and gaussian denoising, has a parallelization of the outermost loop.
 
-In the second version, \emph{par\_1} we have done it such that each operation has a parallelization of the outermost loop, which is forced to create 4 threads (using \texttt{num\_threads()}); and the second loop has a parallelization which is forced to create 2 threads. In total, this version creates the same number of threads ($8$) for each operation as \emph{par\_0}, because we are executing with the MV machine, using 8 cores.
+In the second version, \emph{par1} we have done it such that each operation has a parallelization of the outermost loop, which is forced to create 4 threads (using \texttt{num\_threads()}); and the second loop has a parallelization which is forced to create 2 threads. In total, this version creates the same number of threads ($8$) for each operation as \emph{par0}, because we are executing with the MV machine, using 8 cores.
 
-The last version, \emph{par\_2} is the same as \emph{par\_1}, but this time, we do not force the number of threads that are created in each of the nested \emph{for} sections. We do not know how the threads will be created, but in the tests that we have made, both in the cluster and in the lab computers, the outermost loop creates all the possible threads, and the second loop does not create threads (the only thread is the main one).
+The last version, \emph{par2}, is simillar to \emph{par0}, parallelizing the outermost loops. This time, however, we use the clause \texttt{collapse(2)}, which has been implemented speciffically to parallelize 2 nested loops of this kind: ``square loops''.
 
         \greyItem{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
         document.}
-Of this 3 versions, it is expected that \emph{par\_0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
-However, the difference between versions \emph{par\_1} and \emph{par\_2} is not that clear. 
+Of the first 2 versions, it is expected that \emph{par0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
+However, the difference between versions \emph{par0} and \emph{par2} is not that clear. 
+
+At first, we may think that \emph{par2} should be better, because it uses a openmp caluse that is speciffic to this type of problem. But perhaps, the improvement of this clause can only be seen for very high sizes, and it is possible that the tested images are not big enough. This situation is similar to the one in exercise 2, where for some sizes it was better not to parallelize; in this case, for some sizes is may be better not to make use of this clause.
     \end{enumerate}
 
 %4
 \greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}
 
-For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order to see the improvement of optimizing the index order in the nested loops, we have included the times of the original version (\emph{edgeDetector}). However, the speedups are calculated using the one with optimized loops (because we are parallelizing optimized loops).
+For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order to observe the improvement of optimizing the index order in the nested loops, we have included the times of the original version (\emph{edgeDetector}). However, the speedups are calculated using the one with optimized loops (because we are parallelizing optimized loops).
 
 \begin{table}[h]
     \input{./tables/table_e5_normal_times}
@@ -473,7 +475,9 @@ On the other hand, the optimizations related to vectorization are the following:
 
 \lstinputlisting{tables/output_vector}
 
-Finally, these are the execution results with the flag \emph{-O3}
+The results after compiling with the \emph{-O3} flag are the same as without it.
+
+Finally, these are the execution results after the optimized compilation:
 
 \begin{table}[h]
     \input{./tables/table_e5_O3_times}
