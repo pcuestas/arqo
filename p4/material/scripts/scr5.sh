@@ -74,10 +74,10 @@ sed "1d" $MEANS | while read n t;do
 	j=1
 	ratios=""
 	for s in ${t[@]};do
-		ratios="$ratios$(echo "scale=$DECIMALS;${T0[$j]}/$s" | bc)${TAB}"
+		ratios="$ratios${TAB}$(echo "scale=$DECIMALS;${T0[$j]}/$s" | bc)"
 		j=$(( $j + 1 ))
 	done
-  echo -e "$n${TAB}${ratios[@]}" >> $RATIOS_AUX
+  echo -e "$n${ratios[@]}" >> $RATIOS_AUX
 done 
 return 
 

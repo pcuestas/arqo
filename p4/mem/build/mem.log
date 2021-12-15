@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  15 DEC 2021 13:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.11.1)  15 DEC 2021 18:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -798,11 +798,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 \Hy@SectionHShift=\skip64
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 57.
- (build/mem.aux
-
-LaTeX Warning: Label `fps' multiply defined.
-
-)
+ (build/mem.aux)
 \openout1 = `mem.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
@@ -1000,21 +996,17 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 540.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 540.
 Package rerunfilecheck Info: File `mem.out' has not changed.
 (rerunfilecheck)             Checksum: 85F5F7532B4EBECFF5ABBEE538217EEC;465.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 18872 strings out of 492982
- 334061 string characters out of 6134896
+ 18873 strings out of 492982
+ 334067 string characters out of 6134896
  509373 words of memory out of 5000000
- 21966 multiletter control sequences out of 15000+600000
+ 21967 multiletter control sequences out of 15000+600000
  10701 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  54i,13n,73p,1318b,1345s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on build/mem.pdf (17 pages, 647588 bytes).
+Output written on build/mem.pdf (17 pages, 647593 bytes).
 PDF statistics:
  319 PDF objects out of 1000 (max. 8388607)
  265 compressed objects within 3 object streams
