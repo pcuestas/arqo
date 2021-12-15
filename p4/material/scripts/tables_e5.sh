@@ -1,5 +1,5 @@
 #!/bin/bash
-DIR_DATA="../outputs/out5/cluster_correct/"
+DIR_DATA="../outputs/out5/tarde1/"
 DIR_TABLES="../../mem/tables/"
 
 python3 table_e4.py ${DIR_DATA}O3/ratios.dat > ${DIR_TABLES}table_e5_O3_ratios
