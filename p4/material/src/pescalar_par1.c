@@ -35,7 +35,7 @@ int main(void)
 	/* Bloque de computo */
 	sum = 0;
 	
-  #pragma omp parallel for //reduction(+:sum)
+  #pragma omp parallel for
 		for(k=0;k<M;k++)
 		{	
 			#pragma omp critical
