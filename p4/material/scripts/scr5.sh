@@ -78,8 +78,7 @@ sed "1d" $MEANS | while read n t;do
 		j=$(( $j + 1 ))
 	done
   echo -e "$n${ratios[@]}" >> $RATIOS_AUX
-done 
-return 
+done
 
 #reordenamiento de lineas
 echo -e "${COLUMN_NAMES}" > $RATIOS #column names
