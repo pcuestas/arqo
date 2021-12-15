@@ -97,14 +97,15 @@
 \newpage
 \section{Exercise 0: Information about the system topology}
 
-We have used the lab computers, which have 6 cores, with hyperthreading not activated.
-For the bigger tests, we used the MV machine from the cluster; it has 8 cores with no hyperthreading.
+We have used the lab computers, which have 6 cores, with hyperthreading not activated. (This is because in the file \emph{/proc/cpuinfo} the number of pysical cores is the same as the number of virtual cores, which is 6).
+
+For the bigger tests, we used the \emph{MV} machine from the cluster; it has 8 cores, we already mentioned this in last practice (3), exercise 0.
 
 These are the configurations:
 
-
 CONFIGURATIONS!!!!!!!!!!!!!!
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 1: Basic OpenMP programs}
 
 \begin{enumerate}[label=1.\arabic*,leftmargin=*]
@@ -150,43 +151,64 @@ Public variables are shared by all threads (no copies of the variable are create
     
 As we are calculating the dot product of two vectors of size M where all the components are 1, the expected output is M.
     
-\greyItem{Run the parallelized code with the openmp pragma and answer the following questions in the document}
+\greyItem{Run the parallelized code with the openmp pragma and answer the following questions in the document. Is the result correct? What is happening?}
     
 The parallel version is not working due to the fact that variable sum is being shared (default mode). So we have severals threads writing in the same variable at the same time which produces a data race.
 
 \greyItem{Modify the code and name the program pescalar\_par2. This version should give the correct result using the appropriate pragma:}
 
-The modification needed is adding the pragma clause just before the calculation.
-Both \emph{pragmas} solve the data race. Nonetheless, the way they achieved so is different. \emph{Critial} pragma implies the use of a mutex so only one thread can access the block at a time (which is quite expensive in execution time) whereas \emph{atomic} ensures that the whole calculation (line 42) is executed as a single operation. The result is exactly the same as we are enclosing just a sentence of code, however, the second option is considerably faster.
+The modification needed is adding a \emph{pragma clause} just before the critical operation (the sum).
+Both of the mentioned \emph{pragmas} solve the data race. Nonetheless, the way they achieved so is different. The \emph{critial} pragma implies the use of a mutex so only one thread can access the block at a time (which is quite expensive in execution time) whereas \emph{atomic} ensures that the whole calculation (line 42) is executed as a single operation. The result is exactly the same as we are enclosing just a sentence of code, however, the second option is considerably faster.
+
+This are the two modifications:
 
 \begin{lstlisting}[language=C, texcl=true]
-    ...
     #pragma omp parallel for 
-    for(k=0;k<M;k++)
-    {	
-        #pragma omp atomic
-            sum = sum + A[k]*B[k];
-    } 
-    ...
+      for(k=0;k<M;k++)
+      {	
+        #pragma omp critical
+          sum = sum + A[k]*B[k];
+      } 
 \end{lstlisting}
 
-\greyItem{Modify the code and name the resulting program pescalar\_par3. This version should give the correct result using the appropriate pragma: }
+\begin{lstlisting}[language=C, texcl=true]
+    #pragma omp parallel for 
+      for(k=0;k<M;k++)
+      {	
+        #pragma omp atomic
+          sum = sum + A[k]*B[k];
+      } 
+\end{lstlisting}
+
+\greyItem{Modify the code and name the resulting program pescalar\_par3. This version should give the correct result using the appropriate pragma. Comparing with the previous point, which option will be chosen and why?}
 
 If we use \emph{reduction} we get better results than the ones obtained with \emph{atomic}. This is the appropriate solution in this case, because it is the optimized version meant for this specific task.
 
-\greyItem{Run time analysis}
+The optimal version:
 
-We have written a script to test this (\emph{scr2\_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in the lab computers, that use 4 threads) is very inconsistent. However, the first value that meets the requirements is $T=1200000$:
-
-\myFigure{../material/outputs/out2_final/threshold0.png}{Search for threshold in the lab computers}{threshold}{.7}
+\begin{lstlisting}[language=C]
+    #pragma omp parallel for reduction(+:sum)
+      for(k=0;k<size;k++)
+      {	
+        sum = sum + A[k]*B[k];
+      }
+\end{lstlisting}
 
 \pagebreak
+
+\greyItem{Run time analysis}
+
+We have written a script to test this (\emph{scr2\_threshold.sh}). As can be seen in the following figure (fig. \ref{threshold}), the parallel version (in our own computers, which uses 4 threads) is very inconsistent. However, the first value that meets the requirements is $T=1200000$:
+
+\myFigure{../material/outputs/out2_final/threshold0.png}{Search for threshold in the lab computers}{threshold}{.65}
 
 \greyItem{(Optional) Exhaustive analysis}
 
 Executing the same tests in the cluster, using also 4 cores, we have reached the value that meets the requirements at, aproximately, $T=81000$, as can be seen in the following figure (\ref{threshold_cluster4}):
 
-\myFigure{../material/outputs/out2_final/threshold_4proc.png}{Search for threshold in the cluster: 4 cores}{threshold_cluster4}{.66}
+\myFigure{../material/outputs/out2_final/threshold_4proc.png}{Search for threshold in the cluster: 4 cores}{threshold_cluster4}{.65}
+
+\pagebreak
 
 Changing the number of threads to 8, the number increases slightly, the threshold would be around $T=90000$. This makes sense, because, although using 8 threads would yield a much better performance for very large matrix sizes, the threshold for which creating a higher number of threads is worth the time spent creating them is also a bit higher.
 
@@ -200,7 +222,7 @@ Changing the number of threads to 8, the number increases slightly, the threshol
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Exercise 3: Parallel matrix multiplication}
 
-Here are the requested tables for $N=1000$, which do not have big enough times. In fact, we can se the \emph{loop\_2} version being very similar to the \emph{loop\_3} one; however, that is not the case asymptotically (as can be seen in tables \ref{5000_times} and \ref{5000_ratios}).
+Here are the requested tables for $N=1000$, which do not have big enough times to see a significant difference in some cases. In fact, we can se the \emph{loop\_2} version being very similar to the \emph{loop\_3} one; however, that is not the case asymptotically (as can be seen in tables \ref{5000_times} and \ref{5000_ratios}).
 
 \begin{table}[h]
     \input{./tables/table_e3_times_1000}
@@ -233,11 +255,13 @@ For matrices of size $N=5000$, the programs take high enough times to make a dif
 \begin{enumerate}[label=3.\arabic*,leftmargin=*]
 \greyItem{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
-The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. However, \emph{multiplication\_loop2.c} is not far behind, it ``forks'' $N$ times.
+The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. (However, \emph{multiplication\_loop2.c} ``forks'' $N$ times).
+
+In consequence, the best performing version is better than the others because it avoids the time cost caused by creating and destroying threads, as it only creates and destroys threads once. In all of the other aspects, they all perform the same operations.
 
 \greyItem{Based on the results, do you think fine-grained (innermost loop) or coarse-grained (outermost loop) parallelization is preferable in other algorithms?}
 
-Based on these results, coarse-grained parallelization is preferable, as it avoids slowing the execution by killing and creating threads multiple times. Although this may not be the general rule.
+Based on these results, coarse-grained parallelization is preferable, as it avoids slowing the execution by killing and creating threads multiple times. 
 
 \end{enumerate}
 
@@ -288,11 +312,11 @@ The tests have been made using the \emph{scr4\_test.sh} script. We have submitte
 
 As we can see, the results of the $\pi$ approximation are the same in all the programs. (And it is the best approximation that can be expressed with the precission that these programs have by default, just 6 decimal places).
 
-The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, {pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7.On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
+The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, \emph{pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7.On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
 
 \greyItem{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
-In pi\_par2, the variable sum (a pointer) is marked with the clause \emph{firstprivate}. As a result, each thread creates a copy of the pointer and the value its initialized with the one before the parallel region. So even though each thread has its own pointer, all of them point to the same memory position. Indeed, if the clause \emph{private} is used instead of \emph{firstprivate}, we would possibly get segmentation fault as the pointer in each thread would point to an ``unknown'' position outside the proccess memory region.
+In pi\_par2, the variable sum (a pointer) is marked with the clause \emph{firstprivate}. As a result, each thread creates a copy of the pointer and the value its initialized with the one before the parallel region. So even though each thread has its own pointer, all of them point to the same memory position. Indeed, if the clause \emph{private} is used instead of \emph{firstprivate}, we would possibly get a \emph{segmentation fault} as the pointer in each thread would point to an ``unknown'' position outside the proccess memory region.
 
 Regarding how this change affects the performance, as we expect, there is no difference between \emph{pi\_par1} and \emph{pi\_par2}; aside from \emph{pi\_par2} being slightly slower (by about 10 ms). Although we could think this higher execution time is caused because \emph{pi\_par2} has to do more operations when creating the threads, because of the allocation of this new variable for each thread, this is insignificant and the slightly higher execution time that we get may be just a coincidence.
 
@@ -307,11 +331,11 @@ The version \emph{pi\_par3} obstains the linesize of the cache to ensure that th
 
 \greyItem{What is the effect of using the pragma critical? How is the performance? Why does this happen?}
 
-As mentioned before, this clause ensures mutual exclusion for an specific part of the code. This clause is used just before the threads end. By using this clause, false sharing is avoided and we get a speedup of 7.4. 
+As mentioned before, this clause ensures mutual exclusion for an specific part of the code (in \emph{pi\_par5}). This clause is used just before the threads end. By using this clause, false sharing is avoided and we get a speedup of around 7.4. 
 
 \greyItem{Regarding pi\_par6, how is the performance compared to other versions? Why does this effect happen?}
 
-The execution time for version pi\_par6 is almost the same as the one for the first version. Indeed, both programs are an example of false sharing. In version 6, a new caluse is used: \emph{for}. This clause divides the iterations of the loop among the threads, declare the index varibales as private... but inside the loop, once again each thread modifies a position of the array \emph{sum} so it becomes unvalid for the rest of the threads.
+The execution time for version \emph{pi\_par6} is almost the same as the one for the first version. Indeed, both programs are an example of false sharing. In version 6, a new caluse is used: \emph{for}. This clause divides the iterations of the loop among the threads, declare the index varibales as private... but inside the loop, once again each thread modifies a position of the array \emph{sum} so it becomes unvalid for the rest of the threads.
 
 \greyItem{Which version is optimal and why?} 
 
@@ -338,7 +362,6 @@ The first step is to convert a RGB image into a greyscale one. To do so, the pro
     \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/im4}} 
     \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/im4_grey}} 
     \caption{(a) RGB image (b) Greyscale image }
-    \label{fig:foobar}
 \end{figure}
 
 Then it applies the Sobel operator. This consist of placing two matrices
@@ -363,12 +386,11 @@ in every pixel (except those on the borders) and, for each matrix computing the 
     \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/ejey}} 
     \subfigure[]{\includegraphics[width=0.24\textwidth]{./img/eje}}
     \caption{(a) Sobel in x direction (b) Sobel in y direction (c) Global Sobel}
-    \label{fig:foobar}
     \label{sobel}
 \end{figure}
 
 
-To deal with this problem, denoising is carried out. For this part of the program, a gaussian kernel is used to ponderate the results obtained with the Sobel operator for each pixel with its local neighbours results. If a pixel mets a threshold to be considerated part of an edge, it is assigned color white and, if not, black. With this procedure, we get rid of the noise (the light blurred inside the shapes in \ref{sobel}) 
+To deal with this problem, denoising is carried out. For this part of the program, a gaussian kernel is used to ponderate the results obtained with the Sobel operator for each pixel with its local neighbours results. If a pixel mets a threshold to be considerated part of an edge, it is assigned color white and, if not, black. With this procedure, we get rid of the noise (the light blurred inside the shapes in figure \ref{sobel}) 
 
 \myFigure{../material/img/im4_grad_denoised}{Imaged denoised}{denoised}{0.35}
 

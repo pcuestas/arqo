@@ -38,7 +38,7 @@ int main(void)
     #pragma omp parallel for
 			for(k=0;k<M;k++)
 			{	
-				#pragma omp critical
+				#pragma omp atomic
 					sum = sum + A[k]*B[k];
 			}
 	/* Fin del computo */
