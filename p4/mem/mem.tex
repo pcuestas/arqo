@@ -253,7 +253,7 @@ For matrices of size $N=5000$, the programs take high enough times to make a dif
 
 \question{ Which of the three versions performs the worst? Why? Which of the three versions performs better? Why?}
 
-The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times , which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. (However, \emph{multiplication\_loop2.c} ``forks'' $N$ times).
+The worst performing version is the one that parallelizes the innermost loop, because it is forced to ``fork'' itself $N^2$ times, which causes the execution to be a lot slower. The best performing one, as could be expected, is the one that parallelizes the outermost loop, it has to separate into different threads only once. (However, \emph{multiplication\_loop2.c} ``forks'' $N$ times).
 
 In the three versions, the key aspect that leads to different execution times is the fact that creating and terminating threads is quite an expensive operation. In all of the other aspects, they all perform the same operations.
 
