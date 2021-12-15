@@ -416,7 +416,7 @@ However, this may not be the optimal approach. For example, if the images vary i
 \greyItem{During the previous task (task 3), we observed that the order of access to the data is important. Are there any loops that are accessing the data in a suboptimal order? Please correct it in such case.}
 
 
-\begin{enumerate}
+    \begin{enumerate}
         \greyItem{It is imperative that the program continue to perform the same algorithm, so only changes should be made to the program that do not change the output.}
             
         \greyItem{Explain why the order is not correct if you change it.}
@@ -452,18 +452,20 @@ In the second version, \emph{par1} we have done it such that each operation has 
 The last version, \emph{par2}, is simillar to \emph{par0}, parallelizing the outermost loops. This time, however, we use the clause \texttt{collapse(2)}, which has been implemented speciffically to parallelize 2 nested loops of this kind: ``square loops''.
 
         \greyItem{It is not necessary to fully explore all the possible parallels. It is necessary to use the knowledge obtained in this task to define which would be the best solutions. Explain the reasons in the
-        document.}
+        document.}\label{question:expected}
 Of the first 2 versions, it is expected that \emph{par0} will be the best one. This is because parallelizing the outermost loop has the best results, as we have seen in exercise 3.
 On the other hand, there should be no difference between \emph{par2} and \emph{par0}.
 
 The reason why using \texttt{collapse} makes no difference relies on the number of iterations of the nested loops, in other words, the size of the image. \texttt{collpase} makes sense when the outer loop has fewer iterations than threads available (so it prevents some thread(s) from being iddle) or when the workload is uneven among iterations. But in this case, where all threads are going to be busy at all times because the number of iterations of the first loop is much higher than the number of threads, \emph{par2} and \emph{par0} are going to have similar performances.
 
-\end{enumerate}
+    \end{enumerate}
 
 %4
-\greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}
+\greyItem{Fill in a table with time and speedup results compared to the serial version for images of different resolutions (SD, HD, FHD, UHD-4k, UHD-8k). You must include a column with the fps at which the program would process}\label{question:5.4}
 
-For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order to observe the improvement of optimizing the index order in the nested loops, we have included the times of the original version (\emph{edgeDetector}). However, the speedups are calculated using the one with optimized loops (because we are parallelizing optimized loops).
+For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order to illustrate the improvement of optimizing the index order in the nested loops, we have included the times of the original version (\emph{edgeDetector}). However, the speedups are calculated using the one with optimized loops (because we are parallelizing optimized loops).
+
+\end{enumerate}
 
 \begin{table}[h]
     \input{./tables/table_e5_normal_times}
@@ -471,16 +473,24 @@ For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order
     \caption{Execution time (seconds)}
 \end{table}
 
+\pagebreak
+
 \begin{table}[h]
     \input{./tables/table_e5_normal_ratios}
     \centering
     \caption{Speedups}
     \emph{Note: in the table, speedups are calculated by columns, comparing the computations of an image with the serial version of the same image.}
+    \raggedright
 \end{table}
 
-\pagebreak
+The speedup of \emph{par1} clearly grows from 1.28 to 3.02 as the image size increases.
 
-Finally, here (table \ref{fps}) we have the fps of each program, for each image size.
+Speedups of \emph{par2} are quite stable around 5.0-5.4. The peedups of \emph{par0} are similar, but for images SD and FHD they fall to 3.84 and 4.78, respectively. In both of this versions, we cannot clearly observe a higher speedup for bigger images.
+
+Finally, here (table \ref{fps}) we have the fps of each program, for each image size. 
+\[
+    \text{fps} = \text{(time in seconds per image)} ^{-1}
+\]
 
 \begin{table}[h]
     \input{./tables/table_e5_normal_fps}
@@ -489,48 +499,64 @@ Finally, here (table \ref{fps}) we have the fps of each program, for each image 
     \label{fps}
 \end{table}
 
-As we commented before, the best version is \emph{par\_0}, which could apply the algorithm (in real time) to videos of SD or HD quality. If we increased the definition of the frames, our version could not keep the needed rate of 30fps. In fact, for the largest resolutions, the algorithm cannot even process an image per second.
+As expected, \emph{par0} is much better than \emph{par1} (we commented this in question \ref{question:expected}). As we also commented, \emph{par2} and \emph{par0} perfom similarly. In each of the images, the results obtained by \emph{par2} are slightly better; the difference being very small for big image sizes (UHD, 4k, 8k), and higher for smaller sized images: with a difference of a 24.3\% in the case of SD quality.
 
-\pagebreak
+The best version, \emph{par2}, could processes images from a 
+video stream in real time for videos of SD or HD definitions. If we increased the definitions of the frames, our version could not process the rate of 30 fps. In fact, for the largest resolutions, our programs cannot even process one image per second.
 
 %5
+
+\begin{enumerate}[label=5.\arabic*,leftmargin=*]
+    \setcounter{enumi}{4}
 \greyItem{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
 
 
-When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} in the \emph{Makefile} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}.\\
+When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} in the \emph{Makefile} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}.
+
+\vspace{5pt}
 
 \lstinputlisting{tables/output_unroll}
 
-On the other hand, the optimizations related to vectorization are the following:\\
+On the other hand, the optimizations related to vectorization are the following:
+
+\vspace{5pt}
 
 \lstinputlisting{tables/output_vector}
 
-If we compare these results with the ones from the previous section, we notice that the average execution time has decreased by a factor of 10 for all the versions and image resolutions.
+Which means that some kind of vectorization is implemented. However, loop unrolling is disabled. 
+
+In any case, the resulting images that are output by the compiled with \emph{-O3} programs are the same as the ones output by the normally compiled programs.
+
+\end{enumerate}
+
+If we compare these results with the ones from the previous section, we notice that the average execution time has decreased by a factor of (roughly) 3 for all the versions and image resolutions. This behaviour is better observed in the fps tables: table \ref{fps} and table \ref{fps2}.
 
 
 \begin{table}[h]
     \input{./tables/table_e5_O3_times}
     \centering
-    \caption{Execution time (seconds)}
+    \caption{Execution time (seconds) (compiling with \emph{-O3})}
 \end{table}
 
 \begin{table}[h]
     \input{./tables/table_e5_O3_ratios}
     \centering
-    \caption{Speedups}
+    \caption{Speedups (compiling with \emph{-O3})}
 \end{table}
 
+This time, we can see a higher variance in the speedups of both \emph{par0} and \emph{par2}. However, \emph{par1} increases the speedup with the image size, just like in the previous question (\ref{question:5.4}).
+
+It is also worth noting that there are images in which \emph{par0} outperforms \emph{par2}.
 
 \begin{table}[h]
     \input{./tables/table_e5_O3_fps}
     \centering
-    \caption{Frames per second}
+    \caption{Frames per second (compiling with \emph{-O3})}
     \label{fps2}
 \end{table}
 
-Once again, we are only going to focus on the performance of the best version. If compared to the table from last section, we see that the fps rate has increased by a factor of 3, which would allow us to process videos for resolutions SD, HD and FHD. However, we are still unable to process video for higher definitions. In order to achieve so, further and more extensive parallelization would be needed as well as hardware of higher features; for instance, a larger number of cores.
+Once again, if we only focus on the performance of the best versions; comparing this to the table from last section, we see that the fps rate has increased by a factor of 3, which would allow us to process videos in real time (30 fps) for resolutions SD, HD and FHD. However, we are still unable to process video for higher image definitions. In order to achieve so, further and more extensive parallelization would be needed as well as hardware of higher features; for instance, a larger number of cores.
 
-\end{enumerate}
 
 
 
