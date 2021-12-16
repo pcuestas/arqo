@@ -294,7 +294,7 @@ The numer of rectangles is determined by the variable \emph{n}, whose value is $
 
 \question{ Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
 
-The tests have been made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster, in order to make a sufficiently large number of repetitions (50) and be able to get good results by making the means.
+The tests have been made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster in order to run a sufficiently large number of repetitions (50) and be able to get good results by making the means.
 
 \begin{figure}[h]
     \input{./tables/table_e4}
@@ -304,7 +304,7 @@ The tests have been made using the \emph{scr4\_test.sh} script. We have submitte
 
 As we can see, the results of the $\pi$ approximation are the same in all the programs. (And it is the best approximation that can be expressed with the precission that these programs have by default, just 6 decimal places).
 
-The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, \emph{pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7.On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
+The best performance is given by versions \emph{pi\_par3}, \emph{pi\_par4}, \emph{pi\_par5}  and \emph{pi\_par7}, which have a speedup (with respect to \emph{pi\_serie}) higher than 7. On the other hand, the worst are \emph{pi\_par1}, \emph{pi\_par2} and \emph{pi\_par6}, with a speedup of just over 2.3.
 
 \question{Regarding pi\_par2, does it make sense to declare sum as private variable? What does it happen when you declare a pointer as private}
 
@@ -317,7 +317,7 @@ Why does pi\_par3 obtain the linesize of the cache?}
 
 False sharing occurs when even though different threads are wiriting in different memory addresses, all of these addresses are contained in the same cache block. Every time one thread modifies its part of the block, the block becomes invalid for the rest of the threads, and threfore they need to replace the block in their cache.
 
-Version \emph{pi\_par1} (and \emph{pi\_par2}) is a clear example of false sharing: the k-th thread modifies the posisiton \emph{k} of the array \emph{sum} provoking that the block is no longer valid for the rest of threads. This occurs for every iteration of the loop and as result the execution time is higher than the one obtained with the serial version. At first glance, one could say that version pi\_par4 is another example of false sharing as different threads modify the same block of an array. However, this time, this only happens when the value of \emph{priv\_sum} is copied to the array \emph{sum}; that is to say, once for every thread. After that, threads do not access any data of that array again. So we can conclude that is not the case of false sharing. On the other hand, \emph{pi\_par3} still uses an array for storing the partial sums of each thread but avoids false sharing (as discussed in the next paragraph). Finaly, version \emph{pi\_par5} uses a private variable for storing the partial sums (\emph{sum}) and after the calcultion each threads add the result to the shared variable \emph{pi}. To avoid data races, that part of the code is encapsulated with the clause \emph{critical} which ensures mutual exclusion between the threads.
+Version \emph{pi\_par1} (and \emph{pi\_par2}) is a clear example of false sharing: the k-th thread modifies the posisiton \emph{k} of the array \emph{sum} provoking that the block is no longer valid for the rest of threads. This occurs for every iteration of the loop and as result the execution time is higher than the one obtained with the serial version. At first glance, one could say that version pi\_par4 is another example of false sharing as different threads modify the same block of an array. However, this time, this only happens when the value of \emph{priv\_sum} is copied to the array \emph{sum}; that is to say, once for every thread. After that, threads do not access any data of that array again. So we can conclude that is not the case of false sharing. On the other hand, \emph{pi\_par3} still uses an array for storing the partial sums of each thread but avoids false sharing (as discussed in the next paragraph). Finaly, version \emph{pi\_par5} uses a private variable for storing the partial sums (\emph{sum}) and after the calcultion each thread adds the result to the shared variable \emph{pi}. To avoid data races, that part of the code is encapsulated with the clause \emph{critical} which ensures mutual exclusion between the threads.
 
 The version \emph{pi\_par3} obstains the linesize of the cache to ensure that the positions of the array \emph{sum} that are modified by each thread are located in different blocks. That is to say, the postion modifies by thread 1 will be placed in a different block that the position modified by thread 2 and so on. The small drawback is that we are allocating more memory than used: in each block (64 bytes), we are only using 8 bytes. 
 
@@ -341,7 +341,7 @@ Accoriding to the results obtained, the best version in terms of execution time 
 %0
 \question{Compile and run the program using some images as arguments. Examine the results that were generated and analyze briefly the provided program.}
 
-After executing the program, we see that we get three new images. A grey scale version, another in grey scale but with the edges significantly diferenciated and finally, a black and white image where the edges are clear. 
+After executing the program, we get three new images. A grey scale version, another in grey scale but with the edges significantly diferenciated and finally, a black and white image where the edges are clear. 
 
 The first step is to convert a RGB image into a greyscale one. To do so, the program iterates through all the pixels in the image and applies the following conversion:  grey value = 0.2989R + 0.5870G + 0.1140B - where R,G,B are the values for each primary colour of the original image.
 
