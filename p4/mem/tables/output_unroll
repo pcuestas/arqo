@@ -1,4 +1,4 @@
-$ make -f Makefile2 | grep unroll
+$ make OPT_FLAG="-O3 -Q --help=optimizers" | grep unroll
   -fsplit-ivs-in-unroller     		[enabled]
   -funroll-all-loops          		[disabled]
   -funroll-loops              		[disabled]

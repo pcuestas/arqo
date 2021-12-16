@@ -187,7 +187,7 @@ If we use \emph{reduction} we get better results than the ones obtained with \em
 
 The optimal version:
 
-\begin{lstlisting}[language=C]
+\begin{lstlisting}[]
     #pragma omp parallel for reduction(+:sum)
       for(k=0;k<size;k++)
       {	
@@ -292,7 +292,7 @@ As we can see, with increasing number of threads, the sabilizing value increases
 
 The numer of rectangles is determined by the variable \emph{n}, whose value is ${10^8}$. The variable \emph{h} takes the length of the segments in which the interval $[0,1]$ is divided (the base of the rectangles), so it is $h=1/n$. In this case, $h=10^{-8}$.
 
-\question{ Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
+\question{Run all versions of the program. Analyze the performance (mean execution time and speedup) and assessed whether the result the program yields is correct or not. Display all this information in a table and add brief explanation of why some programs are not giving the correct result}
 
 The tests have been made using the \emph{scr4\_test.sh} script. We have submitted them to the cluster in order to run a sufficiently large number of repetitions (50) and be able to get good results by making the means.
 
@@ -468,9 +468,9 @@ For obtaining the results of this exercise, we have run \emph{scr5.sh}. In order
 
 The speedup of \emph{par1} clearly grows from 1.28 to 3.02 as the image size increases.
 
-Speedups of \emph{par2} are quite stable around 5.0-5.4. The peedups of \emph{par0} are similar, but for images SD and FHD they fall to 3.84 and 4.78, respectively. In both of this versions, we cannot clearly observe a higher speedup for bigger images.
+Speedups of \emph{par2} are quite stable around 5.0-5.4. The speedups of \emph{par0} are similar, but for images SD and FHD they fall to 3.84 and 4.78, respectively. In both of this versions, we cannot clearly observe a higher speedup for larger images.
 
-Finally, here (table \ref{fps}) we have the fps of each program, for each image size. 
+Finally, here (table \ref{fps}) we have the fps of each program and for each image size. 
 \[
     \text{fps} = \text{(time in seconds per image)} ^{-1}
 \]
@@ -491,7 +491,7 @@ video stream in real time for videos of SD or HD definitions. If we increased th
 \question{Something that we have left aside is to use compiler optimizations. Repeat the previous section adding the -O3 flag to the gcc command. Obtain information about the optimizations the compiler implements (and how they might affect our parallelization). Does the compile implement loop unrolling? Is this option activated? Does the compiler implement some kind of vectorization? Note: the -O3 option can generate warnings when compiled. Check that the output remains the same in any case.}
 
 
-When de flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} in the \emph{Makefile} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}.
+When the flag \emph{-O3} is included for the compilation, many optimizations are carried out; however, loop unrolling is not one of those as shown in the next image (result of adding \emph{-Q --help=optimizers} in the \emph{Makefile} to see the enabled ones). If we want the compiler to unroll loops we have to add one of these flags: \emph{-funroll-loops} or \emph{-funroll-all-loops}.
 
 \vspace{5pt}
 
