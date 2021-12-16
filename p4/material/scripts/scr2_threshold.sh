@@ -1,7 +1,11 @@
 
 #!/bin/bash
 
-# ceiling function. use: ceil "number"
+
+## Authors: Pablo Cuesta Sierra and Álvaro Zamanillo Sáez
+## Tests for exercise 2 - threshold calculation
+
+# ceiling function. Use: ceil "number"
 ceil () {
     echo `echo "($1 > $1/1)*($1/1 + 1) + ($1 == $1/1)*($1/1)" | bc`
 }

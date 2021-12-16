@@ -11,7 +11,7 @@ export OMP_NUM_THREADS=$NSLOTS
 export OMP_NESTED=TRUE
 
 # Pablo Cuesta Sierra, Álvaro Zamanillo Sáez
-# Script to launch the exercses 1, 2, 3 and 4 scripts
+# Script to launch the scripts in the cluster
 
 
 # Anadir valgrind y gnuplot al path

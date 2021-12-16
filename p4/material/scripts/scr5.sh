@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# inicializar variables
+## Authors: Pablo Cuesta Sierra and Álvaro Zamanillo Sáez
+## Tests for questions 5.4 and 5.5
 
-REP=1
+REP=30
 
 DAT_DIR="../outputs/out5/"
 SRC_DIR="../src/"

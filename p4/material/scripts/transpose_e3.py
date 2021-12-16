@@ -1,7 +1,11 @@
 import sys
 from tabulate import tabulate
 
-file = sys.argv[1]#"../outputs/out3/table.dat"
+'''
+transpose the table from scr3_tables.sh and generate latex table
+'''
+
+file = sys.argv[1]
 
 try:
 	t1=(sys.argv[2]=="1")

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## Authors: Pablo Cuesta Sierra and Álvaro Zamanillo Sáez
+## Tests for exercise 4
+
+
 # max function. use: max "number"
 max () {
     echo `echo "($1 > $2)*($1) + ($1 <= $2)*($2)" | bc`

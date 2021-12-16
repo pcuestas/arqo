@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## Authors: Pablo Cuesta Sierra and Álvaro Zamanillo Sáez
+## Tests for exercise 3
+
 # inicializar variables 
 
 P=5

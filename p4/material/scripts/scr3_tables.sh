@@ -1,8 +1,12 @@
 #!/bin/bash
 
+
+## Authors: Pablo Cuesta Sierra and Álvaro Zamanillo Sáez
+## Tests for exercise 3 initial tables
+
 # inicializar variables 
 
-T=500
+T=5000
 THREADS_MAX=4 
 MAX_REP=4
 
@@ -42,6 +46,8 @@ for ((rep=0; rep<MAX_REP; rep++));do
         echo -e "$j${TAB}$mult${TAB}$loop1${TAB}$loop2${TAB}$loop3" >> $fAUX
     done
 done
+
+#calculate means
 
 for N in $(awk '{ print $1 }' $fAUX | sort -n | uniq); do
 	means=$(grep -w $N $fAUX | awk '{ t0 += $2; t1 += $3; t2 += $4; t3 += $5; n++ } END { printf "%s\t%s\t%s\t%s\n", t0/n, t1/n, t2/n, t3/n }')

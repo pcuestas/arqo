@@ -5,7 +5,7 @@ from tabulate import tabulate
 file with data to latex table
 '''
 
-file = sys.argv[1]#"../outputs/out3/table.dat"
+file = sys.argv[1]
 
 A=[]
 f=open(file)

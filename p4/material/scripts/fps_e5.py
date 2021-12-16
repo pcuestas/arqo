@@ -2,10 +2,10 @@ import sys
 from tabulate import tabulate
 
 '''
-file with times to latex table of fps (1/time)
+file with times to latex table of fps=(1/time)
 '''
 
-file = sys.argv[1]#"../outputs/out3/table.dat"
+file = sys.argv[1]
 
 A=[]
 f=open(file)
@@ -17,6 +17,6 @@ for line in A:
 		try:
 			line[i]=str(1/float(line[i]))
 		except:
-			line[i]=line[i]
+			line[i]=line[i] #in case it is just a string, not a float
 
 print(tabulate(A, headers='firstrow', tablefmt='latex'))
